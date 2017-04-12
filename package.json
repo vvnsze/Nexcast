@@ -221,6 +221,9 @@
     "ip": "1.1.4",
     "lodash": "4.17.2",
     "minimist": "1.2.0",
+    "passport": "^0.3.2",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
     "react": "15.4.1",
     "react-dom": "15.4.1",
     "react-helmet": "3.2.2",
@@ -234,6 +237,7 @@
     "redux-saga": "0.14.0",
     "reselect": "2.5.4",
     "sanitize.css": "4.1.0",
+    "sequelize": "^3.30.4",
     "styled-components": "1.1.2",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.1"
