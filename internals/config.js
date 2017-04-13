@@ -28,6 +28,11 @@ const ReactBoilerplate = {
         'ip',
         'minimist',
         'sanitize.css',
+        'fs',
+        'sequelize',
+        'pg',
+        'net',
+        'passport-jwt'
       ],
 
       /**
