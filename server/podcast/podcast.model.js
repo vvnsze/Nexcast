@@ -6,20 +6,20 @@ const Podcast = sequelize.define('podcasts', {
   full_name: {
     type: Sequelize.STRING(100),
   },
-  feed_url:{
-    type: Sequelize.INTEGER
+  feed_url: {
+    type: Sequelize.INTEGER,
   },
-  description:{
-    type: Sequelize.STRING(2000)
+  description: {
+    type: Sequelize.STRING(2000),
   },
-  image_url:{
-    type: Sequelize.
+  image_url: {
+    type: Sequelize.STRING(2680),
   },
-  email:{
+  email: {
     type: Sequelize.STRING(80),
     isEmail: true,
   },
-  verified:{
+  verified: {
     type: Sequelize.BOOLEAN(),
   },
   underscored: true,

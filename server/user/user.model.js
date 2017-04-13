@@ -12,10 +12,10 @@ const User = sequelize.define('users', {
   },
   password: {
     type: Sequelize.STRING,
-  }
+  },
 });
 
-//User.sync();
+// User.sync();
 console.log(chalk.cyan('+++line 52 this is users table in users model: ', User));
 
 module.exports = User;

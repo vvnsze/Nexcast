@@ -32,7 +32,7 @@ const ReactBoilerplate = {
         'sequelize',
         'pg',
         'net',
-        'passport-jwt'
+        'passport-jwt',
       ],
 
       /**

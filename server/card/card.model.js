@@ -6,13 +6,13 @@ const Card = sequelize.define('episodes', {
   tagged_timestamp: {
     type: Sequelize.TIME,
   },
-  description:{
+  description: {
     type: Sequelize.TEXT,
   },
-  button_text:{
+  button_text: {
     type: Sequelize.STRING(50),
   },
-  button_link:{
+  button_link: {
     type: Sequelize.STRING(3000),
   },
   underscored: true,
