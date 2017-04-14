@@ -33,6 +33,7 @@ const ReactBoilerplate = {
         'pg',
         'net',
         'passport-jwt',
+        'morgan',
       ],
 
       /**
