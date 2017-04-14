@@ -35,7 +35,7 @@ const ReactBoilerplate = {
         'passport-jwt',
         'bcrypt',
         'jwt-simple',
-        'passport'
+        'passport',
       ],
 
       /**

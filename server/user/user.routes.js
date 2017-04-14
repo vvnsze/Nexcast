@@ -8,8 +8,7 @@ router.post('/user', (req, res) => {
 });
 
 router.get('/user', (req, res) => {
-  res.send('+++ line 12: this is get user from user/routes.js');
-  // controller.userById(req, res)
+  controller.show(req, res);
 });
 
 router.delete('/user', (req, res) => {
