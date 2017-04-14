@@ -5,7 +5,7 @@ const controller = require('./media.controller');
 
 
 router.post('/media', (req, res) => {
-  //controller.login(req, res);
+  // controller.login(req, res);
 });
 
 router.get('/media', (req, res) => {
@@ -18,7 +18,7 @@ router.get('/media',(req,res)=>{
 })
 
 router.delete('/media', (req, res) => {
-  //controller.signup(req, res);
+  // controller.signup(req, res);
 });
 
 module.exports = router;

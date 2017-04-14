@@ -9,10 +9,15 @@ const User = sequelize.define('users', {
   email: {
     type: Sequelize.STRING(80),
     isEmail: true,
+    unique: true,
   },
   password: {
     type: Sequelize.STRING,
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  }
 });
 
 // User.sync();
