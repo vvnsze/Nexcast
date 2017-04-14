@@ -17,7 +17,7 @@ const User = sequelize.define('users', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  }
+  },
 });
 
 // User.sync();
