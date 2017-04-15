@@ -37,7 +37,7 @@ const User = sequelize.define('users', {
           if (err) { return err; }
           // overwrite plain text password with encrypted password
           user.password = hash;
-          cb(null,options)
+          cb(null,options);
         });
       });
     }
@@ -49,6 +49,5 @@ const User = sequelize.define('users', {
 
 
 // User.sync();
-console.log(chalk.cyan('+++line 52 this is users table in users model: ', User));
 
 module.exports = User;
