@@ -19,11 +19,11 @@ exports.signup = function(req, res, next) {
   const password = req.body.password;
 
   if (!email || !password) {
-    return res.status(422).send({ error: 'You must provide email and password'});
+    return res.status(422).send( { error: 'You must provide email and password'} );
   }
 
   // See if a user with the given email exists
-  User.findOne({ where: { email: email } })
+  User.findOne( { where: { email: email } } )
   .then((user) => {
     if (user) {
       return res.status(422).send({ error: 'Email is in use' });
@@ -34,9 +34,9 @@ exports.signup = function(req, res, next) {
         password: password,
       })
       .then((user) => {
-        res.status(200).send({
-          user: user, token: tokenForUser(user)
-        })
+        res.status(200).send( {
+          user: user, token: tokenForUser(user),
+        } )
       })
       .catch((err) => res.status(401).send(err));
     }

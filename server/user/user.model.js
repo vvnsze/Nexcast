@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
-const chalk = require('chalk');
 const bcrypt = require('bcrypt');
 
 const User = sequelize.define('users', {
@@ -21,33 +20,29 @@ const User = sequelize.define('users', {
   },
 }, {
   instanceMethods: {
-    comparePassword: function(candidatePassword, callback) {
-      bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    comparePassword: function compare(candidatePassword, callback) {
+      return bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
         if (err) { return callback(err); }
-        callback(null, isMatch);
+        return callback(null, isMatch);
       });
-    }
+    },
   },
   hooks: {
-    beforeCreate: function(user, options, cb) {
-      bcrypt.genSalt(10, (err, salt) => {
-        if (err) { return next(err); }
+    beforeCreate: function hashPassword(_user, options, cb) {
+      const user = _user;
+      return bcrypt.genSalt(10, (err, salt) => {
+        if (err) { return cb(err, null); }
         // hash (encrypt) our password using the salt
-        bcrypt.hash(user.password, salt, (err, hash) => {
-          if (err) { return err; }
+        return bcrypt.hash(user.password, salt, (error, hash) => {
+          if (error) { return error; }
           // overwrite plain text password with encrypted password
           user.password = hash;
-          cb(null,options);
+          return cb(null, options);
         });
       });
-    }
-  }
+    },
+  },
 });
-
-
-
-
-
 // User.sync();
 
 module.exports = User;
