@@ -1,43 +1,18 @@
-const User = require('../user/user.model');
+const User = require('./user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
-const config = require('../config/config.js');
-
-const tokenForUser = (user) => {
-  const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
-};
 
 module.exports = {
   create: (req, res) => {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(req.body.password, salt, (er, hash) => {
-        User.create({
-          name: req.body.name,
-          email: req.body.email,
-          password: hash,
-        })
-        .then((user) => res.status(200).send({ user, token: tokenForUser(user) }))
-        .catch((error) => res.status(401).send(error));
-      });
-    });
+    User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    })
+    .then((user) => res.status(200).send({ user: user[0], token: tokenForUser(user) }))
+    .catch((error) => res.status(401).send(error));
   },
   delete: (req, res) => {
     res.send('not implemented yet');
-  },
-  show: (req, res) => {
-    User.findAll({
-      where: { email: req.query.email }
-    }).then((user) => {
-      bcrypt.compare(req.query.password, user[0].password, (err, response) => {
-        if(user[0].email === req.query.email && response){
-          res.status(200).send({ user })
-        } else {
-          res.status(400).send('wrong email or password')
-        }
-      })
-    }).catch((error) => {
-      res.status(400).send(error)
-    });
-  },
+  }
 };

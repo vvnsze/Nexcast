@@ -8,7 +8,7 @@ router.post('/user', (req, res) => {
 });
 
 router.get('/user', (req, res) => {
-  controller.show(req, res);
+  controller.login(req, res);
 });
 
 router.delete('/user', (req, res) => {
