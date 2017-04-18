@@ -7,38 +7,31 @@ const tokenForUser = (user) => {
   return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 };
 
-exports.signin = function(req, res, next) {
-  // User has already had their email and password auth'd
-  // We just need to give them a token
+exports.signin = (req, res) => {
   res.send({ token: tokenForUser(req.user) });
-}
+};
 
-exports.signup = function(req, res, next) {
+exports.signup = (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
 
   if (!email || !password) {
-    return res.status(422).send( { error: 'You must provide email and password'} );
+    res.status(422).send({ error: 'You must provide email and password' });
   }
 
-  // See if a user with the given email exists
-  User.findOne( { where: { email: email } } )
+  User.findOne({ where: { email } })
   .then((user) => {
     if (user) {
-      return res.status(422).send({ error: 'Email is in use' });
-    } else {
-      User.create({
-        name: name,
-        email: email,
-        password: password,
-      })
-      .then((user) => {
-        res.status(200).send( {
-          user: user, token: tokenForUser(user),
-        } )
-      })
-      .catch((err) => res.status(401).send(err));
+      res.status(422).send({ error: 'Email is in use' });
     }
-  })
-}
+
+    User.create({ name, email, password })
+    .then((_user) => {
+      res.status(200).send({
+        user: _user, token: tokenForUser(_user),
+      });
+    })
+    .catch((err) => res.status(401).send(err));
+  });
+};
