@@ -10,6 +10,6 @@ import {
 
 export function signUp(payload) {
   return {
-    type: SIGNUP, payload
+    type: SIGNUP, payload,
   };
 }

@@ -2,13 +2,12 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import makeSelectSignUp from './selectors';
-import * as actions from './actions'
+import * as actions from './actions';
 
 export class SignUp extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props){
-      super(props);
-
-      this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  constructor(props) {
+    super(props);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleFormSubmit(event) {
@@ -16,24 +15,23 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
 
     this.props.dispatch(actions.signUp({
       email: event.target.email.value,
-      password: event.target.password.value
+      password: event.target.password.value,
     }));
   }
 
   render() {
-
     return (
-      <form onSubmit={ this.handleFormSubmit }>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <input type='text' name='email' className="form-control" value={ this.props.email } />
+      <form onSubmit={this.handleFormSubmit}>
+        <fieldset>
+          <label htmlFor="email">Email:</label>
+          <input type="text" name="email" value={this.props.email} />
         </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <input type='text' name='password' className="form-control" value={ this.props.password } type="password" />
+        <fieldset>
+          <label htmlFor="password">Password:</label>
+          <input type="text" name="password" value={this.props.password} />
         </fieldset>
 
-        <button action="submit" className="btn btn-primary">Sign up!</button>
+        <button action="submit">Sign up!</button>
       </form>
     );
   }
@@ -42,6 +40,8 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
 
 SignUp.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  email: PropTypes.string,
+  password: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
