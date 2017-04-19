@@ -4,12 +4,12 @@
  *
  */
 
-import {
-  DEFAULT_ACTION,
-} from './constants';
+ import {
+   SIGNIN,
+ } from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+ export function signIn(payload) {
+   return {
+     type: SIGNIN, payload,
+   };
+ }

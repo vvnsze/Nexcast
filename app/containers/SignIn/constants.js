@@ -4,4 +4,5 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/SignIn/DEFAULT_ACTION';
+ export const SIGNIN = 'app/SignUp/SIGNIN';
+ export const USER_SIGNED_IN = 'app/SignUp/USER_SIGNED_IN';
