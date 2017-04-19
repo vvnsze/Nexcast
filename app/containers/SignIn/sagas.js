@@ -4,7 +4,7 @@ import {
   SIGNIN,
   USER_SIGNED_IN,
 } from './constants';
-import { setUserToken } from '../Authorization/helpers'
+import { setUserToken } from '../Authorization/helpers';
 
 // Individual exports for testing
 export function* signInUser() {
@@ -14,7 +14,7 @@ export function* signInUser() {
 function* signInUserAsync(action) {
   try {
     const user = yield call(signInAccount(action.payload));
-    yield setUserToken(user)
+    yield setUserToken(user);
     yield put({ type: USER_SIGNED_IN, payload: user });
   } catch (e) {
     console.error(e);

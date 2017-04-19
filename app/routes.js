@@ -75,6 +75,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/searchpodcast',
+      name: 'searchPodcast',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/SearchPodcast/reducer'),
+          import('containers/SearchPodcast/sagas'),
+          import('containers/SearchPodcast'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('searchPodcast', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
