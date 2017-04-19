@@ -4,6 +4,7 @@ import {
   SIGNUP,
   USER_CREATED,
 } from './constants';
+import { setUserToken } from '../Authorization/helpers'
 
 // Individual exports for testing
 export function* signUpUser() {
@@ -13,6 +14,7 @@ export function* signUpUser() {
 function* signUpUserAsync(action) {
   try {
     const user = yield call(createAccount(action.payload));
+    yield setUserToken(user)
     yield put({ type: USER_CREATED, payload: user });
   } catch (e) {
     console.error(e);
@@ -24,7 +26,6 @@ function createAccount(params) {
   return () => (Axios.post('/signup', params));
 }
 
-// All sagas to be loaded
 export default [
   signUpUser,
 ];

@@ -18,7 +18,7 @@ function signInReducer(state = initialState, action) {
       console.log('+++line 18 signinReducer: ', action.payload);
       return state;
     case USER_SIGNED_IN:
-      console.log('+++line 21 signinReducer: ', action.payload);
+      console.log('+++line 21 signinReducer: ', action.payload.data.token);
       return state;
     default:
       return state;
