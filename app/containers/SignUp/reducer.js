@@ -18,7 +18,7 @@ function signUpReducer(state = initialState, action) {
       console.log(action.payload);
       return state;
     case USER_CREATED:
-      console.log(action.payload)
+      console.log(action.payload);
       return state;
     default:
       return state;

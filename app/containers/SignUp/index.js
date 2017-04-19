@@ -14,6 +14,7 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
     event.preventDefault();
 
     this.props.dispatch(actions.signUp({
+      name: event.target.email.name,
       email: event.target.email.value,
       password: event.target.password.value,
     }));
@@ -22,6 +23,10 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
   render() {
     return (
       <form onSubmit={this.handleFormSubmit}>
+        <fieldset>
+          <label htmlFor="Name">Name:</label>
+          <input type="text" name="name" value={this.props.name} />
+        </fieldset>
         <fieldset>
           <label htmlFor="email">Email:</label>
           <input type="text" name="email" value={this.props.email} />
@@ -40,6 +45,7 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
 
 SignUp.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  name: PropTypes.string,
   email: PropTypes.string,
   password: PropTypes.string,
 };
