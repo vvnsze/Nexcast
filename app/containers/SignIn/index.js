@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import makeSelectSignIn from './selectors';
 import * as actions from './actions';
 
 export class SignIn extends React.Component {
@@ -44,9 +42,6 @@ SignIn.propTypes = {
   password: PropTypes.string,
 };
 
-const mapStateToProps = createStructuredSelector({
-  signIn: makeSelectSignIn(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -54,4 +49,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapDispatchToProps)(SignIn);

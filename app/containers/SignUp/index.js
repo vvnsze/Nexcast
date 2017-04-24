@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import makeSelectSignUp from './selectors';
 import * as actions from './actions';
 
 export class SignUp extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -14,7 +12,7 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
     event.preventDefault();
 
     this.props.dispatch(actions.signUp({
-      name: event.target.email.name,
+      name: event.target.name.value,
       email: event.target.email.value,
       password: event.target.password.value,
     }));
@@ -50,9 +48,6 @@ SignUp.propTypes = {
   password: PropTypes.string,
 };
 
-const mapStateToProps = createStructuredSelector({
-  signUp: makeSelectSignUp(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -60,4 +55,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapDispatchToProps)(SignUp);

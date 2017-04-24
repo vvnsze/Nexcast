@@ -4,6 +4,7 @@ import {
   SIGNUP,
   USER_CREATED,
 } from './constants';
+import { SET_CURRENT_USER } from '../Authorization/constants'
 import { setUserToken } from '../Authorization/helpers';
 
 // Individual exports for testing
@@ -15,6 +16,7 @@ function* signUpUserAsync(action) {
   try {
     const user = yield call(createAccount(action.payload));
     yield setUserToken(user);
+    yield put({ type: SET_CURRENT_USER, payload: user });
     yield put({ type: USER_CREATED, payload: user });
   } catch (e) {
     console.error(e);

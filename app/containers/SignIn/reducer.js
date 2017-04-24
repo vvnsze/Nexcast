@@ -15,11 +15,13 @@ const initialState = fromJS({});
 function signInReducer(state = initialState, action) {
   switch (action.type) {
     case SIGNIN:
-      console.log('+++line 18 signinReducer: ', action.payload);
+      // set loading to true
       return state;
     case USER_SIGNED_IN:
-      console.log('+++line 21 signinReducer: ', action.payload);
-      return {...state, authenticated: true};
+      // loading false
+      // welcome message true
+      // maybe a way to push new route from here.
+      return state;
     default:
       return state;
   }

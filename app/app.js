@@ -20,11 +20,11 @@ import 'sanitize.css/sanitize.css';
 // Import root app
 import App from 'containers/App';
 
+
 // Import selector for `syncHistoryWithStore`
-import { makeSelectLocationState } from 'containers/App/selectors';
+// import { makeSelectLocationState } from 'containers/App/selectors';
 
 // Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
 
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
@@ -51,9 +51,23 @@ import createRoutes from './routes';
 const initialState = {};
 const store = configureStore(initialState, browserHistory);
 
-// Sync history and store, as the react-router-redux reducer
-// is under the non-default key ("routing"), selectLocationState
-// must be provided for resolving how to retrieve the "route" in the state
+// Modified by uninstalling reselect
+const makeSelectLocationState = () => {
+  let prevRoutingState;
+  let prevRoutingStateJS;
+
+  return (state) => {
+    const routingState = state.get('route'); // or state.route
+
+    if (!routingState.equals(prevRoutingState)) {
+      prevRoutingState = routingState;
+      prevRoutingStateJS = routingState.toJS();
+    }
+
+    return prevRoutingStateJS;
+  };
+};
+
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: makeSelectLocationState(),
 });
@@ -67,17 +81,15 @@ const rootRoute = {
 const render = (messages) => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
+      <Router
+        history={history}
+        routes={rootRoute}
+        render={
             // Scroll to top when going to a new page, imitating default browser
             // behaviour
             applyRouterMiddleware(useScroll())
           }
-        />
-      </LanguageProvider>
+      />
     </Provider>,
     document.getElementById('app')
   );

@@ -6,13 +6,17 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import makeSelectHeader from './selectors';
 
-export class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
+// import makeSelectHeader from './selectors';
+
+export class Header extends React.Component {
+  // function definition: if(this.props.currentUser)
   render() {
+    console.log(this.props.currentUser);
     return (
       <div>
+        <div>Hello Woeful World </div>
+
       </div>
     );
   }
@@ -22,9 +26,6 @@ Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  Header: makeSelectHeader(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -32,4 +33,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapDispatchToProps)(Header);

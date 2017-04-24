@@ -6,19 +6,16 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import makeSelectSearchPodcast from './selectors';
 
 export class SearchPodcast extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { searchPodcast: ''};
+    this.state = { searchPodcast: '' };
   }
 
   onInputChange(term) {
-   this.setState({term});
-   this.props.onSearchTermChange(term);
- }
+    this.setState({ term });
+  }
 
   // populatePodcasts(results){
   //   return <div>
@@ -29,8 +26,13 @@ export class SearchPodcast extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" placeholder="Search podcasts" name="searchPodcast" value={this.state.term}
-        onChange={event => this.onInputChange(event.target.value)} />
+        <input
+          type="text"
+          placeholder="Search podcasts"
+          name="searchPodcast"
+          value={this.state.term}
+          onChange={(event) => this.onInputChange(event.target.value)}
+        />
         <div>Search for your podcast and claim it to start tagging</div>
       </div>
     );
@@ -42,9 +44,6 @@ SearchPodcast.propTypes = {
   // searchPodcast: Proptypes.string,
 };
 
-const mapStateToProps = createStructuredSelector({
-  // SearchPodcast: makeSelectSearchPodcast(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -52,4 +51,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPodcast);
+export default connect(mapDispatchToProps)(SearchPodcast);
