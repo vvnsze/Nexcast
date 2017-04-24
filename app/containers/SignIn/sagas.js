@@ -4,7 +4,7 @@ import {
   SIGNIN,
   USER_SIGNED_IN,
 } from './constants';
-import { SET_CURRENT_USER } from '../Authorization/constants'
+import { SET_CURRENT_USER } from '../Authorization/constants';
 import { setUserToken } from '../Authorization/helpers';
 
 // Individual exports for testing

@@ -12,7 +12,7 @@
  */
 
 import React from 'react';
-import Header from '../Header'
+import Header from '../Header';
 
 export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 

@@ -54,17 +54,15 @@ const store = configureStore(initialState, browserHistory);
 // Modified by uninstalling reselect
 const makeSelectLocationState = () => {
   let prevRoutingState;
-  let prevRoutingStateJS;
 
   return (state) => {
-    const routingState = state.get('route'); // or state.route
+    const routingState = state.route; // or state.route
 
-    if (!routingState.equals(prevRoutingState)) {
+    if (routingState !== prevRoutingState) {
       prevRoutingState = routingState;
-      prevRoutingStateJS = routingState.toJS();
     }
 
-    return prevRoutingStateJS;
+    return prevRoutingState;
   };
 };
 
@@ -78,7 +76,8 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-const render = (messages) => {
+// Used to  have  variable messages
+const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <Router

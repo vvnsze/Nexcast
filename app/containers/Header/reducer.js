@@ -3,13 +3,11 @@
  * Header reducer
  *
  */
-
-import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = {};
 
 function headerReducer(state = initialState, action) {
   switch (action.type) {

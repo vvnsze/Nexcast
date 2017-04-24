@@ -3,14 +3,12 @@
  * SignIn reducer
  *
  */
-
-import { fromJS } from 'immutable';
 import {
   SIGNIN,
   USER_SIGNED_IN,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = {};
 
 function signInReducer(state = initialState, action) {
   switch (action.type) {

@@ -10,13 +10,22 @@ import { connect } from 'react-redux';
 // import makeSelectHeader from './selectors';
 
 export class Header extends React.Component {
-  // function definition: if(this.props.currentUser)
+
+  showLinks = () => {
+    // console.log('CHEESE: ', this.props.currentUser);
+    // if (this.props.currentUser) {
+    //   return <div>{this.props.currentUser}</div>;
+    // } else {
+    //   return (<div>
+    //     Not signed in
+    //   </div>);
+    // }
+  }
   render() {
-    console.log(this.props.currentUser);
     return (
       <div>
         <div>Hello Woeful World </div>
-
+        <div>{this.showLinks()}</div>
       </div>
     );
   }
@@ -26,6 +35,11 @@ Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser.user,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -33,4 +47,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
