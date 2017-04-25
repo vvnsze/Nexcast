@@ -33,20 +33,61 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
-    }, {
-      path: '/login',
-      name: 'login',
+    },
+    {
+      path: '/signup',
+      name: 'signUp',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/Login/reducer'),
-          import('containers/Login/sagas'),
-          import('containers/Login'),
+          import('containers/SignUp/reducer'),
+          import('containers/SignUp/sagas'),
+          import('containers/SignUp'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('login', reducer.default);
+          injectReducer('signUp', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/signin',
+      name: 'signIn',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/SignIn/reducer'),
+          import('containers/SignIn/sagas'),
+          import('containers/SignIn'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('signIn', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/searchpodcast',
+      name: 'searchPodcast',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/SearchPodcast/reducer'),
+          import('containers/SearchPodcast/sagas'),
+          import('containers/SearchPodcast'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('searchPodcast', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
