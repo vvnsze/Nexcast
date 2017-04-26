@@ -1,9 +1,3 @@
-/*
- *
- * Header
- *
- */
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -12,14 +6,12 @@ import { connect } from 'react-redux';
 export class Header extends React.Component {
 
   showLinks = () => {
-    // console.log('CHEESE: ', this.props.currentUser);
-    // if (this.props.currentUser) {
-    //   return <div>{this.props.currentUser}</div>;
-    // } else {
-    //   return (<div>
-    //     Not signed in
-    //   </div>);
-    // }
+    console.log('CHEESE', this.props.currentUser);
+    console.log('BURGER', this.props.currentUserAuth);
+    if (this.props.currentUser) {
+      return <div>{this.props.currentUser.name}</div>;
+    }
+    return <div>Not signed in</div>;
   }
   render() {
     return (
@@ -33,11 +25,14 @@ export class Header extends React.Component {
 
 Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
+  currentUserAuth: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser.user,
+    currentUserAuth: state.currentUser.authenticated,
   };
 }
 

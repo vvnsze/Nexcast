@@ -1,15 +1,9 @@
-/*
- *
- * Header actions
- *
- */
-
 import {
-  DEFAULT_ACTION,
+  SEARCH_PODCAST_TERM,
 } from './constants';
 
-export function defaultAction() {
+export function searchTerm(payload) {
   return {
-    type: DEFAULT_ACTION,
+    type: SEARCH_PODCAST_TERM, payload,
   };
 }

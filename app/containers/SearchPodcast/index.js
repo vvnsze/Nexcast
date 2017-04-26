@@ -1,22 +1,23 @@
-/*
- *
- * SearchPodcast
- *
- */
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import * as actions from './actions';
 
 export class SearchPodcast extends React.Component {
   constructor(props) {
     super(props);
     this.state = { searchPodcast: '' };
+    this.searchPodcastTerm = this.searchPodcastTerm.bind(this);
   }
 
   onInputChange(term) {
     this.setState({ term });
   }
 
+  searchPodcastTerm() {
+    this.props.dispatch(actions.searchTerm({
+      term: this.state.term,
+    }));
+  }
   // populatePodcasts(results){
   //   return <div>
   //

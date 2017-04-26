@@ -1,18 +1,14 @@
-/*
- *
- * SearchPodcast reducer
- *
- */
+
 import {
-  DEFAULT_ACTION,
+  PODCAST_SEARCH_RESULTS,
 } from './constants';
 
 const initialState = {};
 
 function searchPodcastReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case PODCAST_SEARCH_RESULTS:
+      return ({ podcast: action });
     default:
       return state;
   }

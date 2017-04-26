@@ -5,11 +5,11 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  PODCAST_SEARCH_RESULTS,
 } from './constants';
 
-export function defaultAction() {
+export function searchTerm() {
   return {
-    type: DEFAULT_ACTION,
+    type: PODCAST_SEARCH_RESULTS,
   };
 }
