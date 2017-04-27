@@ -10,12 +10,14 @@ export class SearchPodcast extends React.Component {
   }
 
   onInputChange(term) {
-    this.setState({ term });
+    this.setState({ searchPodcast: term });
+    this.searchPodcastTerm(term);
   }
 
-  searchPodcastTerm() {
+  searchPodcastTerm(word) {
+    console.log('this is word', word);
     this.props.dispatch(actions.searchTerm({
-      term: this.state.term,
+      term: word,
     }));
   }
   // populatePodcasts(results){
@@ -31,8 +33,8 @@ export class SearchPodcast extends React.Component {
           type="text"
           placeholder="Search podcasts"
           name="searchPodcast"
-          value={this.state.term}
           onChange={(event) => this.onInputChange(event.target.value)}
+          value={this.state.term}
         />
         <div>Search for your podcast and claim it to start tagging</div>
       </div>
@@ -42,7 +44,7 @@ export class SearchPodcast extends React.Component {
 
 SearchPodcast.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  // searchPodcast: Proptypes.string,
+  // searchPodcast: PropTypes.string,
 };
 
 

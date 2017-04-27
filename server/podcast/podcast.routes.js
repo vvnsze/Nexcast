@@ -6,7 +6,11 @@ const controller = require('./podcast.controller');
 
 router.post('/podcast', (req, res) => {
 
-  //controller.login(req, res);
+  // controller.login(req, res);
+});
+
+router.get('/list', (req, res) => {
+  controller.searchItunes(req, res);
 });
 
 router.get('/podcast', (req, res) => {
@@ -15,7 +19,7 @@ router.get('/podcast', (req, res) => {
 });
 
 router.delete('/podcast', (req, res) => {
-  //controller.signup(req, res);
+  // controller.signup(req, res);
 });
 
 module.exports = router;

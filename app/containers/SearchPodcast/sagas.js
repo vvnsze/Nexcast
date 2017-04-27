@@ -5,14 +5,16 @@ import {
   PODCAST_SEARCH_RESULTS,
 } from './constants';
 
-// Individual exports for testing
 export function* initiatePodcastSearch() {
   yield takeLatest(SEARCH_PODCAST_TERM, podcastSearchAsync);
 }
 
 function* podcastSearchAsync(action) {
+  console.log('+++inside saga action payload: ', action.payload);
+  const searchTerm = { term: action.payload.term };
   try {
-    const searchResults = yield call(searchPodcasts(action));
+    const searchResults = yield call(searchPodcasts({ params: searchTerm }));
+    console.log('searchResults', searchResults.data);
     yield put({ type: PODCAST_SEARCH_RESULTS, podcasts: searchResults });
   } catch (e) {
     console.error(e);
@@ -20,7 +22,7 @@ function* podcastSearchAsync(action) {
 }
 
 function searchPodcasts(params) {
-  return () => Axios.get(`https://itunes.apple.com/search?entity=podcast&term=${params}`);
+  return () => Axios.get('/itunes', params);
 }
 // All sagas to be loaded
 export default [

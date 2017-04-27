@@ -6,10 +6,12 @@
 
 import {
   PODCAST_SEARCH_RESULTS,
+  SEARCH_PODCAST_TERM,
 } from './constants';
 
-export function searchTerm() {
+export function searchTerm(term) {
   return {
-    type: PODCAST_SEARCH_RESULTS,
+    type: SEARCH_PODCAST_TERM,
+    payload: term,
   };
 }
