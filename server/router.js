@@ -19,15 +19,13 @@ module.exports = function (app) {
 
   app.get('/itunes', (req, res) => {
     const searchTerm = req.query.term;
-    console.log('this is searchTerm: ', searchTerm);
     const url = `https://itunes.apple.com/search?entity=podcast&term=${searchTerm}`;
 
     Axios({
       method: 'get',
       url,
     }).then((response) => {
-      console.log('response: ', response.data);
-      res.send({ response: response.data });
+      res.send({ podcasts: response.data });
     }).catch((e) => {
       res.send(e);
     });

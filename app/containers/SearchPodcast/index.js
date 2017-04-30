@@ -1,30 +1,36 @@
+import debounce from 'lodash/throttle';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import PodcastList from '../../components/PodcastList';
 
 export class SearchPodcast extends React.Component {
   constructor(props) {
     super(props);
     this.state = { searchPodcast: '' };
     this.searchPodcastTerm = this.searchPodcastTerm.bind(this);
+    this.showPodcastList = this.showPodcastList.bind(this);
   }
 
   onInputChange(term) {
     this.setState({ searchPodcast: term });
-    this.searchPodcastTerm(term);
+    debounce(() => { this.searchPodcastTerm(term); }, 2000)();
   }
 
   searchPodcastTerm(word) {
-    console.log('this is word', word);
     this.props.dispatch(actions.searchTerm({
       term: word,
     }));
   }
-  // populatePodcasts(results){
-  //   return <div>
-  //
-  //   </div>
-  // }
+
+  showPodcastList() {
+    if (this.props.podcasts) {
+      return (<div>
+        <PodcastList podcastList={this.props.podcasts.podcasts.results} />
+      </div>);
+    }
+    return (<div>Search for your podcast and claim it to start tagging</div>);
+  }
 
   render() {
     return (
@@ -36,7 +42,7 @@ export class SearchPodcast extends React.Component {
           onChange={(event) => this.onInputChange(event.target.value)}
           value={this.state.term}
         />
-        <div>Search for your podcast and claim it to start tagging</div>
+        {this.showPodcastList()}
       </div>
     );
   }
@@ -44,8 +50,14 @@ export class SearchPodcast extends React.Component {
 
 SearchPodcast.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  // searchPodcast: PropTypes.string,
+  podcasts: PropTypes.object,
 };
+
+function mapStateToProps(state) {
+  return {
+    podcasts: state.podcasts.podcast,
+  };
+}
 
 
 function mapDispatchToProps(dispatch) {
@@ -54,4 +66,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapDispatchToProps)(SearchPodcast);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPodcast);

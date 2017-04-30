@@ -14,8 +14,8 @@ function* podcastSearchAsync(action) {
   const searchTerm = { term: action.payload.term };
   try {
     const searchResults = yield call(searchPodcasts({ params: searchTerm }));
-    console.log('searchResults', searchResults.data);
-    yield put({ type: PODCAST_SEARCH_RESULTS, podcasts: searchResults });
+    console.log('searchResults', searchResults.data.podcasts);
+    yield put({ type: PODCAST_SEARCH_RESULTS, podcasts: searchResults.data.podcasts });
   } catch (e) {
     console.error(e);
   }
