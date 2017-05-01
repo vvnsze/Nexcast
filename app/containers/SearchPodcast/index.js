@@ -10,11 +10,12 @@ export class SearchPodcast extends React.Component {
     this.state = { searchPodcast: '' };
     this.searchPodcastTerm = this.searchPodcastTerm.bind(this);
     this.showPodcastList = this.showPodcastList.bind(this);
+    this.selectPodcast = this.selectPodcast.bind(this);
   }
 
   onInputChange(term) {
     this.setState({ searchPodcast: term });
-    debounce(() => { this.searchPodcastTerm(term); }, 2000)();
+    debounce(() => { this.searchPodcastTerm(term); }, 6000)();
   }
 
   searchPodcastTerm(word) {
@@ -23,10 +24,20 @@ export class SearchPodcast extends React.Component {
     }));
   }
 
+  selectPodcast(selectedPodcast) {
+    this.props.dispatch(actions.confirmPodcast({
+      trackId: selectedPodcast,
+    }));
+    console.log('this is selectedPodcast: ', selectedPodcast);
+  }
+
   showPodcastList() {
     if (this.props.podcasts) {
+      if (this.props.podcasts.podcasts.results.length === 0) {
+        return (<div>No results, please try again</div>);
+      }
       return (<div>
-        <PodcastList podcastList={this.props.podcasts.podcasts.results} />
+        <PodcastList onSelectPodcast={this.selectPodcast} podcastList={this.props.podcasts.podcasts.results} />
       </div>);
     }
     return (<div>Search for your podcast and claim it to start tagging</div>);
