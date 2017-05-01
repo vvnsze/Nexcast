@@ -13,10 +13,6 @@ module.exports = function (app) {
 
   app.use('/api', requireAuth);
 
-  app.get('/api/pie', (req, res) => {
-    res.send('hi from pie');
-  });
-
   app.get('/itunes', (req, res) => {
     const searchTerm = req.query.term;
     const url = `https://itunes.apple.com/search?entity=podcast&term=${searchTerm}`;
@@ -29,13 +25,11 @@ module.exports = function (app) {
     }).catch((e) => {
       res.send(e);
     });
+  });
 
-
-    // res.send({ cheese: 'pillow' });
-    // function getStuff(request) {
-    //
-    // }
-    // getStuff(searchTerm)
+  app.get('/podcastverification', (req, res) => {
+    console.log('this is in /podcastverification: ', req.query);
+    res.send({ apple: 'pie' });
   });
 
   app.post('/signin', requireSignin, Authentication.signin);

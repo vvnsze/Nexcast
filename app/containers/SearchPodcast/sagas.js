@@ -30,10 +30,10 @@ export function* initiatePodcastConfirmation() {
 }
 
 function* confirmPodcastAsync(action) {
-  const selectedPodcast = action.payload;
-  console.log('+++i am in here!', action.payload);
+  const selectedPodcast = { trackId: action.payload.trackId, feedUrl: action.payload.feedUrl };
   try {
-    const emailPodcastVerification = yield call(confirmPodcastEmail(selectedPodcast));
+    const emailPodcastVerification = yield call(confirmPodcastEmail({ params: selectedPodcast }));
+    console.log('server return results:', emailPodcastVerification.data);
     yield put({ type: PODCAST_EMAIL_VERIFICATION, verification: emailPodcastVerification.data });
   } catch (e) {
     console.error(e);
