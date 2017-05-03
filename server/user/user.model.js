@@ -3,6 +3,13 @@ const sequelize = require('../config/database');
 const bcrypt = require('bcrypt');
 
 const User = sequelize.define('users', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    allowNull: false,
+    autoIncrement: true,
+    unique: true,
+  },
   name: {
     type: Sequelize.STRING(60),
   },
@@ -43,6 +50,5 @@ const User = sequelize.define('users', {
     },
   },
 });
-// User.sync();
 
 module.exports = User;

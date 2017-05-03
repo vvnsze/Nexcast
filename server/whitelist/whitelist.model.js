@@ -17,6 +17,7 @@ const Whitelist = sequelize.define('whitelist', {
   },
 });
 
-Whitelist.sync();
+
+// Whitelist.sync().then(() => { console.log('success in getting whitelist'); });
 
 module.exports = Whitelist;
