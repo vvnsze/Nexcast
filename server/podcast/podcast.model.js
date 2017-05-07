@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
-const chalk = require('chalk');
 
 const Podcast = sequelize.define('podcasts', {
   id: {
@@ -25,9 +24,6 @@ const Podcast = sequelize.define('podcasts', {
   email: {
     type: Sequelize.STRING(80),
     isEmail: true,
-  },
-  verified: {
-    type: Sequelize.BOOLEAN,
   },
 }, {
   underscored: true,

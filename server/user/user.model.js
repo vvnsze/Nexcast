@@ -25,6 +25,10 @@ const User = sequelize.define('users', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  isVerified: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 }, {
   instanceMethods: {
     comparePassword: function compare(candidatePassword, callback) {
@@ -48,6 +52,7 @@ const User = sequelize.define('users', {
         });
       });
     },
+    afterCreate: function hashEmail() {},
   },
 });
 

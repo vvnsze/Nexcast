@@ -6,6 +6,7 @@ const Axios = require('axios');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+const sendMail = require('./authentication/mailgun');
 
 module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,6 +26,11 @@ module.exports = function (app) {
     }).catch((e) => {
       res.send(e);
     });
+  });
+
+  app.post('/sendit', (req, res) => {
+    sendMail('cheese');
+    res.send({ cheese: 'cheese' });
   });
 
   app.get('/podcastverification', (req, res) => {

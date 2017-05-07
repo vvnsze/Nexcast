@@ -18,5 +18,5 @@ const UserPodcast = sequelize.define('userPodcast', {
 // Podcast.sync({ force: true });
 // Whitelist.sync();
 
-User.belongsToMany(Podcast, { through: UserPodcast, foreignKey: 'userId' });
-Podcast.belongsToMany(User, { through: UserPodcast, foreignKey: 'podcastId' });
+// User.belongsToMany(Podcast, { through: UserPodcast, foreignKey: 'userId' });
+// Podcast.belongsToMany(User, { through: UserPodcast, foreignKey: 'podcastId' });
