@@ -35,13 +35,11 @@ export class SignIn extends React.Component {
   }
 }
 
-
 SignIn.propTypes = {
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
   password: PropTypes.string,
 };
-
 
 function mapDispatchToProps(dispatch) {
   return {

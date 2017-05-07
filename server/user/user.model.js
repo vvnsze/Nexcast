@@ -3,6 +3,13 @@ const sequelize = require('../config/database');
 const bcrypt = require('bcrypt');
 
 const User = sequelize.define('users', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    allowNull: false,
+    autoIncrement: true,
+    unique: true,
+  },
   name: {
     type: Sequelize.STRING(60),
   },
@@ -15,6 +22,10 @@ const User = sequelize.define('users', {
     type: Sequelize.STRING,
   },
   isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  isVerified: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
@@ -41,8 +52,8 @@ const User = sequelize.define('users', {
         });
       });
     },
+    afterCreate: function hashEmail() {},
   },
 });
-// User.sync();
 
 module.exports = User;

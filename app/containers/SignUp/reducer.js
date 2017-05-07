@@ -17,8 +17,8 @@ function signUpReducer(state = initialState, action) {
     case USER_CREATED:
       return { ...state,
         authenticated: true,
-        name: action.payload.data.user.name,
-        email: action.payload.data.user.email,
+        name: action.user.name,
+        email: action.user.email,
       };
     default:
       return state;

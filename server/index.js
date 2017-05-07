@@ -8,6 +8,7 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const router = require('./router');
 const app = express();
+require('./config/initialize');
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 router(app);
@@ -23,7 +24,7 @@ const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
-const port = argv.port || process.env.PORT || 1337;
+const port = argv.port || process.env.PORT || 8080;
 
 // Start your app.
 app.listen(port, host, (err) => {

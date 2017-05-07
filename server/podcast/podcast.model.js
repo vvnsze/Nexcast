@@ -1,8 +1,14 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
-const chalk = require('chalk');
 
 const Podcast = sequelize.define('podcasts', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    allowNull: false,
+    autoIncrement: true,
+    unique: true,
+  },
   full_name: {
     type: Sequelize.STRING(100),
   },
@@ -19,13 +25,8 @@ const Podcast = sequelize.define('podcasts', {
     type: Sequelize.STRING(80),
     isEmail: true,
   },
-  verified: {
-    type: Sequelize.BOOLEAN(),
-  },
+}, {
   underscored: true,
 });
-
-Podcast.sync();
-console.log(chalk.cyan('+++line 19 this is users table in podcast model: ', Podcast));
 
 module.exports = Podcast;

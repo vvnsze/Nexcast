@@ -14,10 +14,10 @@ export function* signUpUser() {
 
 function* signUpUserAsync(action) {
   try {
-    const user = yield call(createAccount(action.payload));
-    yield setUserToken(user);
-    yield put({ type: SET_CURRENT_USER, payload: user });
-    yield put({ type: USER_CREATED, payload: user });
+    const response = yield call(createAccount(action.payload));
+    yield setUserToken(response);
+    yield put({ type: SET_CURRENT_USER, user: response.data.user });
+    yield put({ type: USER_CREATED, user: response.data.user });
   } catch (e) {
     console.error(e);
   }
