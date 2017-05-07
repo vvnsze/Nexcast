@@ -5,7 +5,6 @@ const uniq = require('lodash/uniq');
 const ReactBoilerplate = {
   // This refers to the react-boilerplate version this project is based on.
   version: '3.4.0',
-
   /**
    * The DLL Plugin provides a dramatic speed increase to webpack build and hot module reloading
    * by caching the module metadata for all of our npm dependencies. We enable it by default
@@ -31,14 +30,18 @@ const ReactBoilerplate = {
         'fs',
         'sequelize',
         'pg',
+        'pg-hstore',
         'net',
         'passport-jwt',
         'bcrypt',
         'jwt-simple',
         'passport',
         'passport-local',
+        'mailgun-js',
+        'mailcomposer',
+        'ftp',
+        'nodemailer',
       ],
-
       /**
        * Specify any additional dependencies here. We include core-js and lodash
        * since a lot of our dependencies depend on them and they get picked up by webpack.
