@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('postgres://vvnsze@localhost:5432/nexcast');
+const db = new Sequelize('postgres://jeremyazzari@localhost:5432/nexcast');
 
 db.authenticate()
     .then(() => {
