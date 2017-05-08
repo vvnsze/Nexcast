@@ -1,16 +1,14 @@
 const bodyParser = require('body-parser');
 const Authentication = require('./authentication/controller');
-const passportService = require('./authentication/passport');
 const passport = require('passport');
 const Axios = require('axios');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
-const sendMail = require('./authentication/mailgun');
 const FeedMe = require('feedme');
 const http = require('http');
 
-module.exports = function (app) {
+module.exports = function baseRoutes(app) {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
@@ -30,11 +28,6 @@ module.exports = function (app) {
     });
   });
 
-  app.post('/sendit', (req, res) => {
-    sendMail('cheese');
-    res.send({ cheese: 'cheese' });
-  });
-
   app.get('/podcastverification', (req, response) => {
     http.get(req.query.feedUrl, (res) => {
       const parser = new FeedMe(true);
@@ -50,4 +43,5 @@ module.exports = function (app) {
 
   app.post('/signin', requireSignin, Authentication.signin);
   app.post('/signup', Authentication.signup);
+  app.get('/verify-user-account', Authentication.verifyUserAccount);
 };

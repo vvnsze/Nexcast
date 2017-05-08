@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 const bcrypt = require('bcrypt');
+const sendConfirmationEmail = require('../services/mailgun');
 
 const User = sequelize.define('users', {
   id: {
@@ -19,6 +20,9 @@ const User = sequelize.define('users', {
     unique: true,
   },
   password: {
+    type: Sequelize.STRING,
+  },
+  confirmationToken: {
     type: Sequelize.STRING,
   },
   isAdmin: {
@@ -43,16 +47,20 @@ const User = sequelize.define('users', {
       const user = _user;
       return bcrypt.genSalt(10, (err, salt) => {
         if (err) { return cb(err, null); }
-        // hash (encrypt) our password using the salt
         return bcrypt.hash(user.password, salt, (error, hash) => {
           if (error) { return error; }
-          // overwrite plain text password with encrypted password
           user.password = hash;
-          return cb(null, options);
+          return bcrypt.hash(user.email, salt, (_error, _hash) => {
+            if (_error) { return _error; }
+            user.confirmationToken = _hash;
+            return cb(null, options);
+          });
         });
       });
     },
-    afterCreate: function hashEmail() {},
+    afterCreate: function emailConfirm(_user) {
+      sendConfirmationEmail(_user);
+    },
   },
 });
 

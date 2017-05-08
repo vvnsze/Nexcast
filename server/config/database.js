@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('postgres://vvnsze@localhost:5432/nexcast');
-
+const db = new Sequelize(process.env.DB_URI);
+/* eslint-disable no-console */
 db.authenticate()
     .then(() => {
       console.log('Successful Connection to the database');
