@@ -6,7 +6,6 @@ export class Header extends React.Component {
 
   showLinks = () => {
     if (this.props.currentUser) {
-      console.log('this is currentUser:', this.props.currentUser);
       return <div>{this.props.currentUser.name}</div>;
     }
     return <div>Not signed in</div>;
@@ -24,7 +23,6 @@ export class Header extends React.Component {
 Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
-  currentUserAuth: PropTypes.bool,
 };
 
 function mapStateToProps(state) {

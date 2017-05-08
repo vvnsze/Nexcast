@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
@@ -6,6 +7,12 @@ export class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  componentDidUpdate() {
+    if (this.props.currentUser !== undefined) {
+      browserHistory.push('/searchPodcast');
+    }
   }
 
   handleFormSubmit(event) {
@@ -39,7 +46,15 @@ SignIn.propTypes = {
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
   password: PropTypes.string,
+  currentUser: PropTypes.object,
 };
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser.user,
+    currentUserAuth: state.currentUser.authenticated,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -47,4 +62,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
