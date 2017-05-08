@@ -36,13 +36,17 @@ exports.signup = (req, res) => {
 };
 
 exports.verifyUserAccount = (req, res) => {
-  const token = req.params.t;
-  User.findOne({ confirmationToken: token })
+  const token = req.query.t;
+
+  User.findOne({ where: { confirmationToken: token } })
     .then((user) => {
-      const suser = user;
-      user.update({ isVerified: true })
+      const aUser = user;
+      aUser.isVerified = true;
+      aUser.save()
         .then(() => {
-          res.redirect(`/searchpodcast?t=${suser.id}`);
-        });
-    });
+          res.redirect(`/searchpodcast?user_id=${aUser.id}`);
+        })
+        .catch((error) => (res.send(error)));
+    })
+    .catch((error) => (res.send(error)));
 };

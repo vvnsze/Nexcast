@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { useScroll } from 'react-router-scroll';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
@@ -72,6 +73,10 @@ const rootRoute = {
   component: App,
   childRoutes: createRoutes(store),
 };
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 // Used to  have  variable messages
 const render = () => {
