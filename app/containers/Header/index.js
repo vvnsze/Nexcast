@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import makeSelectHeader from './selectors';
 
 export class Header extends React.Component {
-
   showLinks = () => {
     if (this.props.currentUser) {
       console.log('this is currentUser:', this.props.currentUser);
@@ -11,12 +9,16 @@ export class Header extends React.Component {
     }
     return <div>Not signed in</div>;
   }
+
   render() {
     return (
-      <div>
-        <div>Hello Woeful World </div>
-        <div>{this.showLinks()}</div>
-      </div>
+      <nav className="cyan darken-4" role="navigation">
+        <div className="nav-wrapper container"><a id="logo-container" href="#" className="brand-logo">Logo</a>
+          <ul className="right hide-on-med-and-down">
+            <li>{this.showLinks()}</li>
+          </ul>
+        </div>
+      </nav>
     );
   }
 }

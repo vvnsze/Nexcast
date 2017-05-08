@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import Axios from 'axios';
+import HttpClient from '../../httpClient';
 import {
   SEARCH_PODCAST_TERM,
   PODCAST_SEARCH_RESULTS,
@@ -22,7 +22,7 @@ function* podcastSearchAsync(action) {
 }
 
 function searchPodcasts(params) {
-  return () => Axios.get('/itunes', params);
+  return () => HttpClient.get('/api/itunes', params);
 }
 
 export function* initiatePodcastConfirmation() {
@@ -41,7 +41,7 @@ function* confirmPodcastAsync(action) {
 }
 
 function confirmPodcastEmail(params) {
-  return () => Axios.get('/podcastverification', params);
+  return () => HttpClient.get('/api/podcastverification', params);
 }
 
 // All sagas to be loaded

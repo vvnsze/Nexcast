@@ -1,25 +1,51 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./podcast.controller');
-// const passport = require('passport');
+const FeedMe = require('feedme');
+const http = require('http');
+const Axios = require('axios')
 
-
-router.post('/podcast', (req, res) => {
-
+router.post('/api/podcast', (req, res) => {
   // controller.login(req, res);
 });
 
-router.get('/list', (req, res) => {
+router.get('/api/list', (req, res) => {
   controller.searchItunes(req, res);
 });
 
-router.get('/podcast', (req, res) => {
+router.get('/api/podcast', (req, res) => {
   res.send('get podcast!');
   // controller.userById(req, res)
 });
 
-router.delete('/podcast', (req, res) => {
+router.delete('/api/podcast', (req, res) => {
   // controller.signup(req, res);
+});
+
+router.get('/api/itunes', (req, res) => {
+  const searchTerm = req.query.term;
+  const url = `https://itunes.apple.com/search?entity=podcast&term=${searchTerm}`;
+  Axios({
+    method: 'get',
+    url,
+  }).then((response) => {
+    res.send({ podcasts: response.data });
+  }).catch((e) => {
+    res.send(e);
+  });
+});
+
+router.get('/api/podcastverification', (req, response) => {
+  http.get(req.query.feedUrl, (res) => {
+    const parser = new FeedMe(true);
+    res.pipe(parser);
+    parser.on('end', () => {
+      const podcastJSON = parser.done();
+      console.log('this is podcastJSON: ', podcastJSON['itunes:owner']);
+      // response.send({ apple: podcastJSON });
+    });
+  });
+  response.send({ apple: 'pie' });
 });
 
 module.exports = router;
