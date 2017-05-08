@@ -1,11 +1,19 @@
+import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 
 export class SignUp extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  componentDidUpdate() {
+    if (this.props.currentUser !== undefined) {
+      browserHistory.push('/searchPodcast');
+    }
   }
 
   handleFormSubmit(event) {
@@ -46,8 +54,15 @@ SignUp.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
   password: PropTypes.string,
+  currentUser: PropTypes.object,
 };
 
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser.user,
+    currentUserAuth: state.currentUser.authenticated,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -55,4 +70,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

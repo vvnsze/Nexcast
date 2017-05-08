@@ -3,7 +3,7 @@
 // const User = require('../user/user.model');
 // const Podcast = require('../podcast/podcast.model');
 // const Whitelist = require('../whitelist/whitelist.model');
-
+//
 // const UserPodcast = sequelize.define('userPodcast', {
 //   userId: {
 //     type: Sequelize.INTEGER,
@@ -12,7 +12,7 @@
 //     type: Sequelize.INTEGER,
 //   },
 // });
-
+//
 // UserPodcast.sync({ force: true });
 // User.sync({ force: true });
 // Podcast.sync({ force: true });
