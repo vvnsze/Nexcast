@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-
 // import makeSelectHeader from './selectors';
 
 export class Header extends React.Component {
@@ -8,7 +7,7 @@ export class Header extends React.Component {
   showLinks = () => {
     if (this.props.currentUser) {
       console.log('this is currentUser:', this.props.currentUser);
-      return <div>{this.props.currentUser.user.name}</div>;
+      return <div>{this.props.currentUser.name}</div>;
     }
     return <div>Not signed in</div>;
   }

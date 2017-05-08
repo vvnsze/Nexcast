@@ -7,6 +7,8 @@ const Axios = require('axios');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 const sendMail = require('./authentication/mailgun');
+const FeedMe = require('feedme');
+const http = require('http');
 
 module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,9 +35,17 @@ module.exports = function (app) {
     res.send({ cheese: 'cheese' });
   });
 
-  app.get('/podcastverification', (req, res) => {
-    console.log('this is in /podcastverification: ', req.query);
-    res.send({ apple: 'pie' });
+  app.get('/podcastverification', (req, response) => {
+    http.get(req.query.feedUrl, (res) => {
+      const parser = new FeedMe(true);
+      res.pipe(parser);
+      parser.on('end', () => {
+        const podcastJSON = parser.done();
+        console.log('this is podcastJSON: ', podcastJSON['itunes:owner']);
+        // response.send({ apple: podcastJSON });
+      });
+    });
+    response.send({ apple: 'pie' });
   });
 
   app.post('/signin', requireSignin, Authentication.signin);

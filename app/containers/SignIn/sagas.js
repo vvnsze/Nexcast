@@ -16,8 +16,9 @@ function* signInUserAsync(action) {
   try {
     const user = yield call(signInAccount(action.payload));
     yield setUserToken(user);
-    yield put({ type: SET_CURRENT_USER, user: user.data });
-    yield put({ type: USER_SIGNED_IN, user: user.data });
+    console.log('user data: ', user.data);
+    yield put({ type: SET_CURRENT_USER, user: user.data.user });
+    yield put({ type: USER_SIGNED_IN, user: user.data.user });
   } catch (e) {
     console.error(e);
   }
