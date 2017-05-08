@@ -23,7 +23,7 @@ export default class App extends React.PureComponent { // eslint-disable-line re
     return (
       <div>
         <Header />
-        <div>
+        <div className="container">
           {React.Children.toArray(this.props.children)}
         </div>
       </div>
