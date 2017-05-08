@@ -1,10 +1,9 @@
-const config = require('../config/config.js');
 const jwt = require('jwt-simple');
 const User = require('../user/user.model');
 
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET);
 };
 
 exports.signin = (req, res) => {
@@ -34,4 +33,15 @@ exports.signup = (req, res) => {
     })
     .catch((err) => res.status(401).send(err));
   });
+};
+
+exports.verifyUserAccount = (req, res) => {
+  const token = req.params.t;
+  User.findOne({ confirmationToken: token })
+    .then((user) => {
+      user.update({ isVerified: true })
+        .then(() => {
+          res.send({ user, token: tokenForUser(user) });
+        });
+    });
 };
