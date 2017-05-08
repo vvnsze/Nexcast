@@ -39,9 +39,10 @@ exports.verifyUserAccount = (req, res) => {
   const token = req.params.t;
   User.findOne({ confirmationToken: token })
     .then((user) => {
+      const suser = user;
       user.update({ isVerified: true })
         .then(() => {
-          res.send({ user, token: tokenForUser(user) });
+          res.redirect(`/searchpodcast?t=${suser.id}`);
         });
     });
 };

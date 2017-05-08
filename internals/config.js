@@ -41,6 +41,7 @@ const ReactBoilerplate = {
         'mailcomposer',
         'ftp',
         'nodemailer',
+        'dotenv',
       ],
       /**
        * Specify any additional dependencies here. We include core-js and lodash
