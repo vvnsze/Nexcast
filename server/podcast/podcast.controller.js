@@ -1,5 +1,8 @@
-const Podcast = require('./podcast.model')
-const UserPodcast =  require('./UserPodcast.model')
+const FeedMe = require('feedme');
+const http = require('http')
+
+const Podcast = require('./podcast.model');
+const UserPodcast =  require('./UserPodcast.model');
 
 exports.searchItunes = (req, res) => {
   console.log('podcast controller searchItunes: ', req.query);
@@ -19,15 +22,23 @@ exports.findOrCreateByFeedUrl = (req, res) => {
   return Podcast.findOrCreate(query);
 }
 
-exports.verifyPodcast = (Podcast, User, res) => {
-  UserPodcast.findOrCreate({ 
-    where: { userId: User.id, podcastId: Podcast.id } 
-  })
-    .then((userPodcast) => {   
-      if(Podcast.email === User.email) {
+exports.verifyPodcast = (req, res) => {
+  http.get(req.body.podcast.feedUrl, (resp) => {
+    const parser = new FeedMe(true);
+    resp.pipe(parser);
+    parser.on('end', () => {
+      const podcastJSON = parser.done();
+
+      if(podcastJSON['itunes:owner']['itunes:email'] === req.user.email) {
         userPodcast.verified = true;
-        return userPodcast.save();
+        userPodcast.save().then((result) => {
+          res.send({ result, verified: true })
+        })
+        .catch((error) => {res.status(403).send(error)})
       }
-    })
-    .catch((err) => ( res.send(error) ));
+      else {
+        res.send({verified: false})
+      }
+    });
+  });
 }

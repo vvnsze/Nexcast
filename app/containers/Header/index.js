@@ -16,7 +16,7 @@ export class Header extends React.Component {
 
   render() {
     return (
-      <nav className="cyan darken-4" role="navigation">
+      <nav className="blue-grey  darken-3" role="navigation">
         <div className="nav-wrapper container"><a id="logo-container" href="/signin" className="brand-logo">Logo</a>
           <ul className="right hide-on-med-and-down">
             <li>{this.showLinks()}</li>

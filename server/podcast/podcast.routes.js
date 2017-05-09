@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./podcast.controller');
-const FeedMe = require('feedme');
-const http = require('http');
 const Axios = require('axios')
 
 router.post('/api/podcast', (req, res) => {
@@ -40,17 +38,6 @@ router.get('/api/itunes', (req, res) => {
   });
 });
 
-router.get('/api/podcastverification', (req, response) => {
-  http.get(req.query.feedUrl, (res) => {
-    const parser = new FeedMe(true);
-    res.pipe(parser);
-    parser.on('end', () => {
-      const podcastJSON = parser.done();
-      console.log('this is podcastJSON: ', podcastJSON['itunes:owner']);
-      // response.send({ apple: podcastJSON });
-    });
-  });
-  response.send({ apple: 'pie' });
-});
+router.post('/api/podcast/verify', controller.verifyPodcast);
 
 module.exports = router;
