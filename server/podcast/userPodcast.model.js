@@ -13,5 +13,7 @@ const UserPodcast = sequelize.define('userPodcast', {
   verified: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  }
+  },
 });
+
+module.exports = UserPodcast;

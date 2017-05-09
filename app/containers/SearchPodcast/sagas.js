@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import HttpClient from '../../httpClient';
 import {
-  SEARCH_PODCAST_TERM, 
+  SEARCH_PODCAST_TERM,
   PODCAST_SEARCH_RESULTS,
   SELECTED_PODCAST,
   CREATING_PODCAST_RECORD,
@@ -33,7 +33,7 @@ export function* initiatePodcastConfirmation() {
 
 function* confirmPodcastAsync(action) {
   try {
-    yield put ({ type: CREATING_PODCAST_RECORD });
+    yield put({ type: CREATING_PODCAST_RECORD });
 
     const result = yield call(createUserPodcast(action.payload));
 
@@ -53,7 +53,7 @@ function verifyPodcast(body) {
 }
 
 function createUserPodcast(body) {
-  return () => HttpClient.post('/api/podcast', body)
+  return () => HttpClient.post('/api/podcast', body);
 }
 
 // All sagas to be loaded

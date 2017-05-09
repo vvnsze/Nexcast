@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./podcast.controller');
-const Axios = require('axios')
+const Axios = require('axios');
 
 router.post('/api/podcast', (req, res) => {
-  console.log(req.body.podcast)
+  console.log(req.body.podcast);
   controller.findOrCreateByFeedUrl(req, res)
     .then((podcast) => {
-      res.send(podcast)
+      res.send(podcast);
     })
-    .catch((error) => { res.send(error) })
+    .catch((error) => { res.send(error); });
 });
 
 router.get('/api/list', (req, res) => {
