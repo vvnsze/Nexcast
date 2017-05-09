@@ -1,13 +1,23 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 export class Header extends React.Component {
   showLinks = () => {
     const token = localStorage.getItem('token');
     const name = localStorage.getItem('userName');
     if (token) {
-      return <div>{name}</div>;
+      return (
+        <div>
+          <DropDownMenu anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
+            <MenuItem primaryText="Me!" />
+            <MenuItem primaryText="You!" />
+            <MenuItem primaryText="everyone!" />
+          </DropDownMenu>
+        </div>
+      );
     }
     if (!token || !name) {
       return (
@@ -16,6 +26,7 @@ export class Header extends React.Component {
         </ul>
       );
     }
+    return <div></div>;
   }
 
   render() {
