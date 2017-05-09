@@ -5,9 +5,8 @@ import {
   USER_SIGNED_IN,
 } from './constants';
 import { SET_CURRENT_USER } from '../Authorization/constants';
-import { setUserToken } from '../Authorization/helpers';
+import { setUserToken, setUserName } from '../Authorization/helpers';
 
-// Individual exports for testing
 export function* signInUser() {
   yield takeEvery(SIGNIN, signInUserAsync);
 }
@@ -16,6 +15,7 @@ function* signInUserAsync(action) {
   try {
     const user = yield call(signInAccount(action.payload));
     yield setUserToken(user);
+    yield setUserName(user);
     console.log('user data: ', user.data);
     yield put({ type: SET_CURRENT_USER, user: user.data.user });
     yield put({ type: USER_SIGNED_IN, user: user.data.user });

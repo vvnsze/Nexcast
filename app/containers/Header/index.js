@@ -4,14 +4,18 @@ import { Link } from 'react-router';
 
 export class Header extends React.Component {
   showLinks = () => {
-    if (this.props.currentUser) {
-      return <div>{this.props.currentUser.name}</div>;
+    const token = localStorage.getItem('token');
+    const name = localStorage.getItem('userName');
+    if (token) {
+      return <div>{name}</div>;
     }
-    return (
-      <ul>
-        <li><Link to="/signup">Sign Up</Link></li> <li><Link to="/signin">Sign In</Link></li>
-      </ul>
-    );
+    if (!token || !name) {
+      return (
+        <ul>
+          <li><Link to="/signup">Sign Up</Link></li> <li><Link to="/signin">Sign In</Link></li>
+        </ul>
+      );
+    }
   }
 
   render() {

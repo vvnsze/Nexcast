@@ -33,7 +33,7 @@ export class SignIn extends React.Component {
         </fieldset>
         <fieldset>
           <label htmlFor="password">Password:</label>
-          <input type="text" name="password" value={this.props.password} />
+          <input type="password" name="password" value={this.props.password} />
         </fieldset>
 
         <button action="submit">Sign In!</button>
