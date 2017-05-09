@@ -6,7 +6,12 @@ const http = require('http');
 const Axios = require('axios')
 
 router.post('/api/podcast', (req, res) => {
-  // controller.login(req, res);
+  console.log(req.body.podcast)
+  controller.findOrCreateByFeedUrl(req, res)
+    .then((podcast) => {
+      res.send(podcast)
+    })
+    .catch((error) => { res.send(error) })
 });
 
 router.get('/api/list', (req, res) => {

@@ -26,7 +26,6 @@ export class SearchPodcast extends React.Component {
 
   selectPodcast(selectedPodcast) {
     this.props.dispatch(actions.confirmPodcast(selectedPodcast));
-    console.log('this is selectedPodcast: ', selectedPodcast);
   }
 
   showPodcastList() {
