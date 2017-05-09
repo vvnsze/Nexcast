@@ -35,6 +35,7 @@ export class SignUp extends React.Component {
     if (this.state.passwordError) {
       return <div>Password Does Not Match, Please Try Again!</div>;
     }
+    return <div></div>;
   }
 
   render() {
@@ -58,6 +59,10 @@ export class SignUp extends React.Component {
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input type="password" name="confirmPassword" value={this.props.confirmPassword} />
           </fieldset>
+          <fieldset>
+            <input type="checkbox" id="confirmTerms" value={this.props.confirmTerms} />
+            <label htmlFor="confirmTerms"> By clicking Create Account you are agreeing our Terms of Service and Privacy Policy </label>
+          </fieldset>
           <div>{this.displayPasswordError()}</div>
           <button action="submit">Create Account</button>
         </form>
@@ -74,6 +79,7 @@ SignUp.propTypes = {
   password: PropTypes.string,
   confirmPassword: PropTypes.string,
   currentUser: PropTypes.object,
+  confirmTerms: PropTypes.bool,
 };
 
 function mapStateToProps(state) {

@@ -1,7 +1,6 @@
 const bodyParser = require('body-parser');
 const Authentication = require('./authentication/controller');
 const passport = require('passport');
-const Axios = require('axios');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
