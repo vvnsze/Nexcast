@@ -5,11 +5,7 @@
     const podcastItems = podcastList.map((podcast) => (
       <PodcastListItem
         key={podcast.trackId}
-        thumbnail={podcast.artworkUrl60}
-        trackName={podcast.trackName}
-        artistName={podcast.artistName}
-        feedUrl={podcast.feedUrl}
-        trackId={podcast.trackId}
+        podcast={podcast}
         onSelectPodcast={onSelectPodcast}
       />
     ));

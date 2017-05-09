@@ -30,11 +30,11 @@ export function* initiatePodcastConfirmation() {
 }
 
 function* confirmPodcastAsync(action) {
-  const selectedPodcast = { trackId: action.payload.trackId, feedUrl: action.payload.feedUrl };
   try {
-    const emailPodcastVerification = yield call(confirmPodcastEmail({ params: selectedPodcast }));
-    console.log('server return results:', emailPodcastVerification.data);
-    yield put({ type: PODCAST_EMAIL_VERIFICATION, verification: emailPodcastVerification.data });
+    const results = yield call(createUserPodcast(action.payload));
+    yield console.log(results);
+    //const emailPodcastVerification = yield call(confirmPodcastEmail({ params: selectedPodcast }));
+    //yield put({ type: PODCAST_EMAIL_VERIFICATION, verification: emailPodcastVerification.data });
   } catch (e) {
     console.error(e);
   }
@@ -42,6 +42,10 @@ function* confirmPodcastAsync(action) {
 
 function confirmPodcastEmail(params) {
   return () => HttpClient.get('/api/podcastverification', params);
+}
+
+function createUserPodcast(body) {
+  return () => HttpClient.post('/api/podcast', body)
 }
 
 // All sagas to be loaded

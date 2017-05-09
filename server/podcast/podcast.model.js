@@ -13,7 +13,7 @@ const Podcast = sequelize.define('podcasts', {
     type: Sequelize.STRING(100),
   },
   feed_url: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   description: {
     type: Sequelize.STRING(2000),

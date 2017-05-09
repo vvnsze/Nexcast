@@ -1,20 +1,18 @@
 import React, { PropTypes } from 'react';
 
-const PodcastListItem = ({ onSelectPodcast, trackId, thumbnail, trackName, artistName, feedUrl }) => {
-  const imageUrl = thumbnail;
+const PodcastListItem = ({ onSelectPodcast, podcast }) => {
+  const imageUrl = podcast.artworkUrl60;
   return (
-    <li>
-      <div onClick={() => { onSelectPodcast({ trackId, feedUrl }); }}> <img role="presentation" src={imageUrl} />{trackName} by {artistName}</div>
+    <li id={podcast.trackId}>
+      <div onClick={() => { onSelectPodcast({ podcast }); }}> 
+        <img role="presentation" src={imageUrl} />
+        { podcast.trackName} by {podcast.artistName }
+      </div>
     </li>
   );
 };
 
 PodcastListItem.propTypes = {
-  trackId: PropTypes.number,
-  thumbnail: PropTypes.string,
-  trackName: PropTypes.string,
-  artistName: PropTypes.string,
-  feedUrl: PropTypes.string,
   onSelectPodcast: PropTypes.func,
 };
 
