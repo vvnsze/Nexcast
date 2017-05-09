@@ -12,7 +12,6 @@ module.exports = function baseRoutes(app) {
   app.use(bodyParser.json());
 
   app.use('/api', requireAuth);
-  
   app.use(podcast);
 
   app.post('/signin', requireSignin, Authentication.signin);

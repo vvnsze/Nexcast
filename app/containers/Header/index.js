@@ -1,18 +1,23 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 export class Header extends React.Component {
   showLinks = () => {
     if (this.props.currentUser) {
       return <div>{this.props.currentUser.name}</div>;
     }
-    return <div>Not signed in</div>;
+    return (
+      <ul>
+        <li><Link to="/signup">Sign Up</Link></li> <li><Link to="/signin">Sign In</Link></li>
+      </ul>
+    );
   }
 
   render() {
     return (
       <nav className="cyan darken-4" role="navigation">
-        <div className="nav-wrapper container"><a id="logo-container" href="#" className="brand-logo">Logo</a>
+        <div className="nav-wrapper container"><a id="logo-container" href="/signin" className="brand-logo">Logo</a>
           <ul className="right hide-on-med-and-down">
             <li>{this.showLinks()}</li>
           </ul>
