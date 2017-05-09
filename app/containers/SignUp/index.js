@@ -3,11 +3,13 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 
-export class SignUp extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class SignUp extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.displayPasswordError = this.displayPasswordError.bind(this);
+    this.state = { passwordError: null };
   }
 
   componentDidUpdate() {
@@ -18,32 +20,48 @@ export class SignUp extends React.Component { // eslint-disable-line react/prefe
 
   handleFormSubmit(event) {
     event.preventDefault();
+    if (event.target.password.value === event.target.confirmPassword.value) {
+      this.props.dispatch(actions.signUp({
+        name: event.target.name.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+      }));
+    } else {
+      this.setState({ passwordError: 'true' });
+    }
+  }
 
-    this.props.dispatch(actions.signUp({
-      name: event.target.name.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-    }));
+  displayPasswordError() {
+    if (this.state.passwordError) {
+      return <div>Password Does Not Match, Please Try Again!</div>;
+    }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit}>
-        <fieldset>
-          <label htmlFor="Name">Name:</label>
-          <input type="text" name="name" value={this.props.name} />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="email">Email:</label>
-          <input type="text" name="email" value={this.props.email} />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="password">Password:</label>
-          <input type="text" name="password" value={this.props.password} />
-        </fieldset>
-
-        <button action="submit">Sign up!</button>
-      </form>
+      <div>
+        <form onSubmit={this.handleFormSubmit}>
+          <div>CREATE AN ACCOUNT</div>
+          <fieldset>
+            <label htmlFor="Name">Full Name:</label>
+            <input type="text" name="name" value={this.props.name} />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="email">Email (Associated with your podcast or company)</label>
+            <input type="text" name="email" value={this.props.email} />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="password">Password:</label>
+            <input type="password" name="password" value={this.props.password} />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <input type="password" name="confirmPassword" value={this.props.confirmPassword} />
+          </fieldset>
+          <div>{this.displayPasswordError()}</div>
+          <button action="submit">Create Account</button>
+        </form>
+      </div>
     );
   }
 }
@@ -54,6 +72,7 @@ SignUp.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
   password: PropTypes.string,
+  confirmPassword: PropTypes.string,
   currentUser: PropTypes.object,
 };
 
