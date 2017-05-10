@@ -2,7 +2,7 @@
 // const sequelize = require('../config/database');
 // const User = require('../user/user.model');
 // const Podcast = require('../podcast/podcast.model');
-// const Whitelist = require('../whitelist/whitelist.model');
+const Whitelist = require('../whitelist/whitelist.model');
 //
 
 //
@@ -13,3 +13,9 @@
 
 // // User.belongsToMany(Podcast, { through: UserPodcast, foreignKey: 'userId' });
 // Podcast.belongsToMany(User, { through: UserPodcast, foreignKey: 'podcastId' });
+// Whitelist.create({
+//   feedUrl: "http://feed.cnet.com/feed/podcast/next-big-thing/hd.xml",
+//   email: "nooysters@gmail.com"
+// }).then((success) => {
+//   console.log(success)
+// })

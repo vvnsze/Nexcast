@@ -4,7 +4,6 @@ const controller = require('./podcast.controller');
 const Axios = require('axios');
 
 router.post('/api/podcast', (req, res) => {
-  console.log(req.body.podcast);
   controller.findOrCreateByFeedUrl(req, res)
     .then((podcast) => {
       res.send(podcast);
@@ -38,6 +37,9 @@ router.get('/api/itunes', (req, res) => {
   });
 });
 
-router.post('/api/podcast/verify', controller.verifyPodcast);
+router.post('/api/podcast/verify', [
+  controller.verifyPodcast, 
+  controller.setVerifyUserPodcast
+]);
 
 module.exports = router;
