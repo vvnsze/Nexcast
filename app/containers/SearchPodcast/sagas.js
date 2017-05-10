@@ -4,7 +4,9 @@ import {
   SEARCH_PODCAST_TERM,
   PODCAST_SEARCH_RESULTS,
   SELECTED_PODCAST,
-  PODCAST_EMAIL_VERIFICATION,
+  CREATING_PODCAST_RECORD,
+  PODCAST_VERIFICATION_START,
+  PODCAST_VERIFICATION_COMPLETE,
 } from './constants';
 
 export function* initiatePodcastSearch() {
@@ -31,21 +33,27 @@ export function* initiatePodcastConfirmation() {
 
 function* confirmPodcastAsync(action) {
   try {
-    const results = yield call(createUserPodcast(action.payload));
-    yield console.log(results);
-    //const emailPodcastVerification = yield call(confirmPodcastEmail({ params: selectedPodcast }));
-    //yield put({ type: PODCAST_EMAIL_VERIFICATION, verification: emailPodcastVerification.data });
+    yield put({ type: CREATING_PODCAST_RECORD });
+
+    const result = yield call(createUserPodcast(action.payload));
+
+    yield put({ type: PODCAST_VERIFICATION_START });
+
+    const verifiedResult = yield call(verifyPodcast(action.payload));
+
+    yield put({ type: PODCAST_VERIFICATION_START, payload: verifiedResult });
+ 
   } catch (e) {
     console.error(e);
   }
 }
 
-function confirmPodcastEmail(params) {
-  return () => HttpClient.get('/api/podcastverification', params);
+function verifyPodcast(body) {
+  return () => HttpClient.post('/api/podcast/verify', body);
 }
 
 function createUserPodcast(body) {
-  return () => HttpClient.post('/api/podcast', body)
+  return () => HttpClient.post('/api/podcast', body);
 }
 
 // All sagas to be loaded

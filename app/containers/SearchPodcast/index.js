@@ -30,11 +30,12 @@ export class SearchPodcast extends React.Component {
 
   showPodcastList() {
     if (this.props.podcasts) {
-      if (this.props.podcasts.podcasts.results.length === 0) {
+      if (this.props.podcasts.length === 0) {
         return (<div>No results, please try again</div>);
       }
+
       return (<div>
-        <PodcastList onSelectPodcast={this.selectPodcast} podcastList={this.props.podcasts.podcasts.results} />
+        <PodcastList onSelectPodcast={this.selectPodcast} podcastList={this.props.podcasts} />
       </div>);
     }
     return (<div>Search for your podcast and claim it to start tagging</div>);
@@ -58,12 +59,12 @@ export class SearchPodcast extends React.Component {
 
 SearchPodcast.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  podcasts: PropTypes.object,
+  podcasts: PropTypes.array,
 };
 
 function mapStateToProps(state) {
   return {
-    podcasts: state.podcasts.podcast,
+    podcasts: state.podcasts.podcasts,
   };
 }
 
