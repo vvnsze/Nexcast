@@ -1,17 +1,32 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 export class Header extends React.Component {
   showLinks = () => {
-    if (this.props.currentUser) {
-      return <div>{this.props.currentUser.name}</div>;
+    const token = localStorage.getItem('token');
+    const name = localStorage.getItem('userName');
+    if (token) {
+      return (
+        <div>
+          <DropDownMenu anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
+            <MenuItem primaryText="Sign Out" />
+            <MenuItem primaryText="Account" />
+            <MenuItem primaryText="Preferences" />
+          </DropDownMenu>
+        </div>
+      );
     }
-    return (
-      <ul>
-        <li><Link to="/signup">Sign Up</Link></li> <li><Link to="/signin">Sign In</Link></li>
-      </ul>
-    );
+    if (!token || !name) {
+      return (
+        <ul>
+          <li><Link to="/signup">Sign Up</Link></li> <li><Link to="/signin">Sign In</Link></li>
+        </ul>
+      );
+    }
+    return <div></div>;
   }
 
   render() {
