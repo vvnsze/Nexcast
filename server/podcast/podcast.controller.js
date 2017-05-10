@@ -33,10 +33,11 @@ exports.verifyPodcast = (req, res, next) => {
 
     parser.on('end', () => {
       const podcastJSON = parser.done();
-
-      if (podcastJSON['itunes:owner']['itunes:email'] === req.user.email) {
+      const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
+      if (itunesEmail === req.user.email) {
         // The users email matches the feeds itunes email
         // go to next step and mark verified.
+        res.locals.verified = true;
         return next();
       } else {
 
@@ -45,11 +46,13 @@ exports.verifyPodcast = (req, res, next) => {
           .then((data) => {
             if (data) {
               // record exists, go to next step and mark verified.
+              res.locals.verified = true;
               return next();
             }
             // user email not associated with this podcast
             // send unverified.
-            return res.send({ verified: false })
+            res.locals.verified = false;
+            return next();
           })
           .catch((err) => {
             return res.status(422).send(err);
@@ -66,11 +69,10 @@ exports.setVerifyUserPodcast = (req, res, next) => {
   userPodcast.findOrCreate({ where: { userId: userId, podcastId: podcastId } })
     .then((result) => {
       const userPodcastObj = result[0];
-      userPodcastObj.verified = true;
+      userPodcastObj.verified = res.locals.verified;
       userPodcastObj.save()
         .then((result) => {
-
-          return res.send({ result, verified: true });
+          return res.send({ result, verified: res.locals.verified });
         })
         .catch((error) => { res.status(422).send({ error, message: 'failed to save' }) });
     })
