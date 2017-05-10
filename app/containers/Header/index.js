@@ -12,9 +12,9 @@ export class Header extends React.Component {
       return (
         <div>
           <DropDownMenu anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
-            <MenuItem primaryText="Me!" />
-            <MenuItem primaryText="You!" />
-            <MenuItem primaryText="everyone!" />
+            <MenuItem primaryText="Sign Out" />
+            <MenuItem primaryText="Account" />
+            <MenuItem primaryText="Preferences" />
           </DropDownMenu>
         </div>
       );
