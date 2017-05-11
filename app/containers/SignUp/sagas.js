@@ -3,6 +3,7 @@ import Axios from 'axios';
 import {
   SIGNUP,
   USER_CREATED,
+
 } from './constants';
 import { SET_CURRENT_USER } from '../Authorization/constants';
 import { setUserToken, setUserName } from '../Authorization/helpers';
@@ -20,7 +21,7 @@ function* signUpUserAsync(action) {
     yield put({ type: SET_CURRENT_USER, user: response.data.user });
     yield put({ type: USER_CREATED, user: response.data.user });
   } catch (e) {
-    console.error(e);
+    console.error('+++line 24 signup saga: this is sign up error: ', e);
   }
 }
 
