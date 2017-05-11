@@ -13,6 +13,7 @@ const initialState = {
   podcasts: [],
   selectedPodcast: null,
   message: '',
+  verified: false,
 };
 
 function searchPodcastReducer(state = initialState, action) {
@@ -33,7 +34,13 @@ function searchPodcastReducer(state = initialState, action) {
       return { ...state, loading: true, message: 'Verifying podcast.' };
 
     case PODCAST_VERIFICATION_COMPLETE:
-      return { ...state, loading: false, result: action.payload, message: '' };
+      const verified = action.payload.verified;
+      let message = 'Pending verification that you are the owner of this podcast.';
+
+      if (verified) {
+        message = "Podcast ownership verified!";
+      }
+      return { ...state, loading: false, result: action.payload, message, verified };
 
     default:
       return state;

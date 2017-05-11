@@ -51,6 +51,7 @@ export class SearchPodcast extends React.Component {
           onChange={(event) => this.onInputChange(event.target.value)}
           value={this.state.term}
         />
+        <div>{this.props.message}</div>
         {this.showPodcastList()}
       </div>
     );
@@ -65,6 +66,7 @@ SearchPodcast.propTypes = {
 function mapStateToProps(state) {
   return {
     podcasts: state.podcasts.podcasts,
+    message: state.podcasts.message,
   };
 }
 
