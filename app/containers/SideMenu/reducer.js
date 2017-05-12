@@ -1,15 +1,9 @@
-/*
- *
- * SideMenu reducer
- *
- */
-
-import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
 } from './constants';
+import * as mockData from './mockdata';
 
-const initialState = fromJS({});
+const initialState = mockData;
 
 function sideMenuReducer(state = initialState, action) {
   switch (action.type) {
