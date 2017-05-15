@@ -10,7 +10,7 @@ function signInReducer(state = initialState, action) {
     case SIGNIN:
       return state;
     case USER_SIGNED_IN:
-      return state;
+      return { ...state, user: action.user, message: action.message } 
     default:
       return state;
   }

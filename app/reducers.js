@@ -6,6 +6,7 @@ import { combineReducers } from 'redux';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import currentUserReducer from './containers/Authorization/currentUserReducer';
 import searchPodcastReducer from './containers/SearchPodcast/reducer';
+import signInReducer from './containers/SignIn/reducer';
 
 /*
  * routeReducer
@@ -40,6 +41,7 @@ export default function createReducer(asyncReducers) {
     route: routeReducer,
     currentUser: currentUserReducer,
     podcasts: searchPodcastReducer,
+    signIn: signInReducer,
     ...asyncReducers,
   });
 }

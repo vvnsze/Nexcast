@@ -13,19 +13,34 @@ export function* signInUser() {
 
 function* signInUserAsync(action) {
   try {
-    const user = yield call(signInAccount(action.payload));
-    yield setUserToken(user);
-    yield setUserName(user);
-    console.log('user data: ', user.data);
-    yield put({ type: SET_CURRENT_USER, user: user.data.user });
-    yield put({ type: USER_SIGNED_IN, user: user.data.user });
+    const response = yield call(signInAccount(action.payload));
+
+    yield setUserToken(response);
+    yield setUserName(response);   
+
+    yield put({ type: SET_CURRENT_USER, user: response });
+    yield put({ type: USER_SIGNED_IN, user: response.user, message: response.message });
   } catch (e) {
     console.error(e);
   }
 }
 
 function signInAccount(params) {
-  return () => (Axios.post('/signin', params));
+  return () => { 
+    return new Promise((resolve, reject) => {
+      Axios.post('/signin', params)
+        .then((result) => {
+          return resolve(result)
+        })
+        .catch((error) => {
+          return resolve({
+            user: null, 
+            message: 'There was a problem logging in.',
+            error,
+          });
+        });
+    });
+  };
 }
 
 export default [
