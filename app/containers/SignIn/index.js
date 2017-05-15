@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
+import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -90,6 +91,7 @@ export class SignIn extends React.Component {
           <RaisedButton label='Sign In' onTouchTap={this.handleFormSubmit} />
           <div>{this.props.message}</div>
         </form>
+
       </Paper>
     );
   }

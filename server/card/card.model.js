@@ -2,9 +2,21 @@ const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 const chalk = require('chalk');
 
-const Card = sequelize.define('episodes', {
+const Card = sequelize.define('card', {
   tagged_timestamp: {
     type: Sequelize.TIME,
+  },
+  podcast_id: {
+    type: Sequelize.INTEGER,
+  },
+  episode_id: {
+    type: Sequelize.INTEGER,
+  },
+  media_link: {
+    type: Sequelize.TEXT,
+  },
+  media_type: {
+    type: Sequelize.TEXT,
   },
   description: {
     type: Sequelize.TEXT,
@@ -18,7 +30,6 @@ const Card = sequelize.define('episodes', {
   underscored: true,
 });
 
-Card.sync();
-console.log(chalk.cyan('+++line 19 this is users table in card model: ', Card));
+Card.sync(force: true);
 
 module.exports = Card;

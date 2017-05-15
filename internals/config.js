@@ -42,6 +42,7 @@ const ReactBoilerplate = {
         'ftp',
         'nodemailer',
         'dotenv',
+        'rss-parser',
       ],
       /**
        * Specify any additional dependencies here. We include core-js and lodash

@@ -1,0 +1,16 @@
+const express = require('express');
+const router = express.Router();
+const controller = require('./card.controller');
+
+router.post('/api/card', [controller.createCard]);
+
+router.put('/api/card/:id', (req, res) => {});
+
+router.get('/api/card/:id', (req, res) => {});
+
+router.get('/api/cards');
+
+router.delete('/api/card/:id', (req, res) => {});
+
+
+module.exports = router;
