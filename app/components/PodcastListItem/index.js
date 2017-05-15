@@ -4,7 +4,7 @@ const PodcastListItem = ({ onSelectPodcast, podcast }) => {
   const imageUrl = podcast.artworkUrl60;
   return (
     <li id={podcast.trackId}>
-      <div onClick={() => { onSelectPodcast({ podcast }); }}> 
+      <div onClick={() => { onSelectPodcast({ podcast }); }}>
         <img role="presentation" src={imageUrl} />
         { podcast.trackName} by {podcast.artistName }
       </div>
@@ -14,6 +14,7 @@ const PodcastListItem = ({ onSelectPodcast, podcast }) => {
 
 PodcastListItem.propTypes = {
   onSelectPodcast: PropTypes.func,
+  podcast: PropTypes.object,
 };
 
 export default PodcastListItem;

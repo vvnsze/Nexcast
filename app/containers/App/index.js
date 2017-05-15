@@ -10,9 +10,9 @@
  * reloading is not a necessity for you then you can refactor it and remove
  * the linting exception.
  */
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
 import Header from '../Header';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 

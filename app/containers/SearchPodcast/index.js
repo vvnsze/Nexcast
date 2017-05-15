@@ -61,6 +61,7 @@ export class SearchPodcast extends React.Component {
 SearchPodcast.propTypes = {
   dispatch: PropTypes.func.isRequired,
   podcasts: PropTypes.array,
+  message: PropTypes.string,
 };
 
 function mapStateToProps(state) {

@@ -1,13 +1,68 @@
 const FeedMe = require('feedme');
 const http = require('http');
-
+const parser = require('rss-parser');
+const Axios = require('axios');
 const Podcast = require('./podcast.model');
 const userPodcast = require('./userPodcast.model');
 const Whitelist = require('../whitelist/whitelist.model');
+const chalk = require('chalk');
+
+// Declare associations
+// TODO refactor this into config file.
+Podcast.hasMany(userPodcast, { foreignKey: 'podcastId' });
+userPodcast.belongsTo(Podcast, { foreignKey: 'podcastId' });
 
 exports.searchItunes = (req, res) => {
-  //console.log('podcast controller searchItunes: ', req.query);
-  res.send({ cheese: 'cheese' });
+  const searchTerm = req.query.term;
+  const url = `https://itunes.apple.com/search?entity=podcast&term=${searchTerm}`;
+  Axios({
+    method: 'get',
+    url,
+  }).then((response) => {
+    res.send({ podcasts: response.data });
+  }).catch((e) => {
+    res.send(e);
+  });
+};
+
+
+exports.getPodcasts = (req, res, next) => {
+  const userId = req.query.userId;
+  const query = {
+    where: {
+      userId,
+      verified: true,
+    },
+    include: [Podcast],
+  };
+  userPodcast.findAll(query)
+    .then((result) => {
+      res.locals.podcastResult = result.map((item) => item.podcast);
+      next();
+    }).catch((error) => {
+      console.error(chalk.red('+++line 34 there is an error: '), error);
+      res.send(error);
+    });
+};
+
+exports.parsePodcasts = (req, res) => {
+  const promiseArray = res.locals.podcastResult.map((podcast) => (
+    new Promise((resolve, reject) => {
+      parser.parseURL(podcast.feed_url, (err, parsed) => {
+        if (err) reject(err);
+        resolve({
+          title: parsed.feed.title,
+          description: parsed.feed.description,
+          itunes: parsed.feed.itunes,
+          entries: parsed.feed.entries,
+        });
+      });
+    })
+  ));
+
+  Promise.all(promiseArray).then((result) => {
+    res.send({ result });
+  });
 };
 
 exports.findOrCreateByFeedUrl = (req, res) => {
@@ -28,11 +83,12 @@ exports.verifyPodcast = (req, res, next) => {
 
   // Get the feed and parse
   http.get(feedUrl, (resp) => {
-    const parser = new FeedMe(true);
-    resp.pipe(parser);
+    const parsed = new FeedMe(true);
+    resp.pipe(parsed);
 
-    parser.on('end', () => {
-      const podcastJSON = parser.done();
+    parsed.on('end', () => {
+      const podcastJSON = parsed.done();
+      console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']['itunes:email']);
       const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
       if (itunesEmail === req.user.email) {
         // The users email matches the feeds itunes email
@@ -40,7 +96,6 @@ exports.verifyPodcast = (req, res, next) => {
         res.locals.verified = true;
         return next();
       } else {
-
         // If the emails don't match check the whitelist.
         Whitelist.findOne({ where: { feedUrl, email: req.user.email } })
           .then((data) => {
@@ -54,9 +109,7 @@ exports.verifyPodcast = (req, res, next) => {
             res.locals.verified = false;
             return next();
           })
-          .catch((err) => {
-            return res.status(422).send(err);
-          }); 
+          .catch((err) => res.status(422).send(err));
       }
     });
   });
@@ -65,16 +118,14 @@ exports.verifyPodcast = (req, res, next) => {
 exports.setVerifyUserPodcast = (req, res, next) => {
   const userId = req.user.id;
   const podcastId = req.body.podcastObj[0].id;
-
-  userPodcast.findOrCreate({ where: { userId: userId, podcastId: podcastId } })
+  // There is a podcast shorthand on line 67
+  userPodcast.findOrCreate({ where: { userId, podcastId } })
     .then((result) => {
       const userPodcastObj = result[0];
       userPodcastObj.verified = res.locals.verified;
       userPodcastObj.save()
-        .then((result) => {
-          return res.send({ result, verified: res.locals.verified });
-        })
-        .catch((error) => { res.status(422).send({ error, message: 'failed to save' }) });
+        .then((result) => res.send({ result, verified: res.locals.verified }))
+        .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
     })
-    .catch((error) => { res.status(422).send({ error, message: 'failed to load' }) });
+    .catch((error) => { res.status(422).send({ error, message: 'failed to load' }); });
 };
