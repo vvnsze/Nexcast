@@ -35,6 +35,27 @@ export default function createRoutes(store) {
       },
     },
     {
+      path: '/main',
+      name: 'SplitView',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/SideMenu/reducer'),
+          import('containers/SideMenu/sagas'),
+          import('components/SplitView'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('sideMenu', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    },
+    {
       path: '/signup',
       name: 'signUp',
       getComponent(nextState, cb) {

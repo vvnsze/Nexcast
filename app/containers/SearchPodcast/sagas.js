@@ -42,7 +42,6 @@ function* confirmPodcastAsync(action) {
     const verifiedResult = yield call(verifyPodcast({ ...action.payload, podcastObj: result.data }));
 
     yield put({ type: PODCAST_VERIFICATION_COMPLETE, payload: verifiedResult.data });
- 
   } catch (e) {
     console.error(e);
   }

@@ -4,21 +4,23 @@
 *
 */
 
-import React from 'react';
-// import styled from 'styled-components';
+import React, { PropTypes } from 'react';
 
-
-class PodcastEpisodeItem extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
-    return (
+const PodcastEpisodeItem = ({ episodeTitle, episodeFile, episodeFullContent, episodeContentSnippet }) => {
+  return (
+    <div id={episodeTitle}>
       <div>
+        {episodeTitle}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 PodcastEpisodeItem.propTypes = {
-
+  episodeTitle: PropTypes.string,
+  episodeFile: PropTypes.string,
+  episodeFullContent: PropTypes.string,
+  episodeContentSnippet: PropTypes.string,
 };
 
 export default PodcastEpisodeItem;

@@ -4,6 +4,7 @@
 *
 */
 import React from 'react';
+import SideMenu from '../../containers/SideMenu';
 // import styled from 'styled-components';
 
 
@@ -11,6 +12,8 @@ class SplitView extends React.Component { // eslint-disable-line react/prefer-st
   render() {
     return (
       <div>
+        Hello World
+        <SideMenu />
       </div>
     );
   }
