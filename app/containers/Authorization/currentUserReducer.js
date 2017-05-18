@@ -13,4 +13,4 @@ function currentUserReducer(state = initialState, action) {
   }
 }
 
-export default currentUserReducer; 
+export default currentUserReducer;

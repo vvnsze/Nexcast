@@ -6,9 +6,9 @@
 
 import React, { PropTypes } from 'react';
 
-const PodcastEpisodeItem = ({ episodeTitle, episodeFile, episodeFullContent, episodeContentSnippet }) => {
+const PodcastEpisodeItem = ({ episodeTitle, episodeFile, episodeFullContent, episodeContentSnippet, onSelectEpisode }) => {
   return (
-    <div id={episodeTitle}>
+    <div onClick={() => { onSelectEpisode({ episodeTitle, episodeFile }); }} id={episodeTitle}>
       <div>
         {episodeTitle}
       </div>
@@ -21,6 +21,7 @@ PodcastEpisodeItem.propTypes = {
   episodeFile: PropTypes.string,
   episodeFullContent: PropTypes.string,
   episodeContentSnippet: PropTypes.string,
+  onSelectEpisode: PropTypes.func,
 };
 
 export default PodcastEpisodeItem;

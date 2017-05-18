@@ -9,7 +9,7 @@ import PodcastEpisodeItem from '../PodcastEpisodeItem';
 // import styled from 'styled-components';
 
 
-function PodcastItem({ showTitle, showDescription, episodes }) {
+function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode }) {
   const EpisodeItem = episodes.map((episode) => (
     <PodcastEpisodeItem
       key={episode.guid}
@@ -17,6 +17,7 @@ function PodcastItem({ showTitle, showDescription, episodes }) {
       episodeFile={episode.enclosure.url}
       episodeFullContent={episode.content}
       episodeContentSnippet={episode.contentSnippet}
+      onSelectEpisode={onSelectEpisode}
     />
   ));
   return (
@@ -31,6 +32,7 @@ PodcastItem.propTypes = {
   showTitle: PropTypes.string,
   showDescription: PropTypes.string,
   episodes: PropTypes.array,
+  onSelectEpisode: PropTypes.func,
 };
 
 export default PodcastItem;

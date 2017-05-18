@@ -19,8 +19,8 @@ export class SideMenu extends React.Component {
     this.props.dispatch(actions.loadPodcast());
   }
 
-  selectPodcastEpisode(episodeTrack) {
-    // take track and query the episode
+  selectPodcastEpisode(episode) {
+    this.props.dispatch(actions.fetchPodcast(episode));
   }
 
   showPodcastEpisode() {
@@ -29,7 +29,10 @@ export class SideMenu extends React.Component {
       return (
         <div>
           <div>Fetching Episodes Successful!</div>
-          <PodcastEpisodeList episodeList={this.props.podcastEpisodes} />
+          <PodcastEpisodeList
+            episodeList={this.props.podcastEpisodes}
+            onSelectEpisode={this.selectPodcastEpisode}
+          />
         </div>
       );
     }

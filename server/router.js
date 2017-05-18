@@ -4,7 +4,7 @@ const passport = require('passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 const podcast = require('./podcast/podcast.routes');
-const s3uploads = require('./services/aws.s3uploader')
+const s3uploads = require('./services/aws.s3uploader');
 
 module.exports = function baseRoutes(app) {
   app.use(bodyParser.urlencoded({ extended: false }));

@@ -11,12 +11,12 @@ export class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       email: '',
-      password: '', 
-      emailError: '', 
-      passwordError: '' 
-    }
+      password: '',
+      emailError: '',
+      passwordError: '',
+    };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
@@ -37,32 +37,32 @@ export class SignIn extends React.Component {
   handleChangePassword = (event) => {
     this.setState({
       password: event.target.value,
-      passwordError: ''
+      passwordError: '',
     });
   }
 
-  handleFormSubmit(event) {
+  handleFormSubmit() {
     const email = this.state.email;
     const password = this.state.password;
     let errors = false;
 
-    if(!email) {
+    if (!email) {
       errors = true;
 
       this.setState({
-        emailError: "Email is required",
-      })
+        emailError: 'Email is required',
+      });
     }
 
-    if(!password) {
+    if (!password) {
       errors = true;
 
       this.setState({
-        passwordError: "Password is required",
-      })
+        passwordError: 'Password is required',
+      });
     }
 
-    if(!errors) {
+    if (!errors) {
       this.props.dispatch(actions.signIn({ email, password }));
     }
   }
@@ -73,22 +73,24 @@ export class SignIn extends React.Component {
         <form onSubmit={this.handleFormSubmit}>
           <TextField
             hintText="Email Address"
-            value={this.state.email} 
+            value={this.state.email}
             errorText={this.state.emailError}
-            onChange={this.handleChangeEmail} />
+            onChange={this.handleChangeEmail}
+          />
 
           <br />
 
           <TextField
             hintText="Password"
-            value={this.state.password} 
-            type='password'
+            value={this.state.password}
+            type="password"
             errorText={this.state.passwordError}
-            onChange={this.handleChangePassword} />
+            onChange={this.handleChangePassword}
+          />
 
           <br />
 
-          <RaisedButton label='Sign In' onTouchTap={this.handleFormSubmit} />
+          <RaisedButton label="Sign In" onTouchTap={this.handleFormSubmit} />
           <div>{this.props.message}</div>
         </form>
 

@@ -45,7 +45,7 @@ exports.verifyUserAccount = (req, res) => {
       aUser.isVerified = true;
       aUser.save()
         .then(() => {
-          res.redirect(`/searchpodcast`);
+          res.redirect('/searchpodcast');
         })
         .catch((error) => (res.send(error)));
     })

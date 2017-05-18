@@ -3,13 +3,14 @@ import PodcastItem from '../PodcastItem';
 // import styled from 'styled-components';
 
 
-const PodcastEpisodeList = ({ episodeList }) => {
+const PodcastEpisodeList = ({ episodeList, onSelectEpisode }) => {
   const podcastEpisodeItems = episodeList.map((podcast) => (
     <PodcastItem
       key={podcast.title}
       showTitle={podcast.title}
       showDescription={podcast.description}
       episodes={podcast.entries}
+      onSelectEpisode={onSelectEpisode}
     />
   ));
 
@@ -22,6 +23,7 @@ const PodcastEpisodeList = ({ episodeList }) => {
 
 PodcastEpisodeList.propTypes = {
   episodeList: PropTypes.array,
+  onSelectEpisode: PropTypes.func,
 };
 
 export default PodcastEpisodeList;

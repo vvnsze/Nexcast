@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
-const chalk = require('chalk');
 
 const Card = sequelize.define('card', {
   tagged_timestamp: {
@@ -30,6 +29,6 @@ const Card = sequelize.define('card', {
   underscored: true,
 });
 
-Card.sync(force: true);
+Card.sync({ force: true });
 
 module.exports = Card;
