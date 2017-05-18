@@ -1,11 +1,23 @@
 import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
+import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from './actions';
 
 export class SignIn extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { 
+      email: '',
+      password: '', 
+      emailError: '', 
+      passwordError: '' 
+    }
+
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
@@ -15,44 +27,87 @@ export class SignIn extends React.Component {
     }
   }
 
-  handleFormSubmit(event) {
-    event.preventDefault();
+  handleChangeEmail = (event) => {
+    this.setState({
+      email: event.target.value,
+      emailError: '',
+    });
+  }
 
-    this.props.dispatch(actions.signIn({
-      email: event.target.email.value,
-      password: event.target.password.value,
-    }));
+  handleChangePassword = (event) => {
+    this.setState({
+      password: event.target.value,
+      passwordError: ''
+    });
+  }
+
+  handleFormSubmit(event) {
+    const email = this.state.email;
+    const password = this.state.password;
+    let errors = false;
+
+    if(!email) {
+      errors = true;
+
+      this.setState({
+        emailError: "Email is required",
+      })
+    }
+
+    if(!password) {
+      errors = true;
+
+      this.setState({
+        passwordError: "Password is required",
+      })
+    }
+
+    if(!errors) {
+      this.props.dispatch(actions.signIn({ email, password }));
+    }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit}>
-        <fieldset>
-          <label htmlFor="email">Email:</label>
-          <input type="text" name="email" value={this.props.email} />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="password">Password:</label>
-          <input type="password" name="password" value={this.props.password} />
-        </fieldset>
+      <Paper zDepth={2} >
+        <form onSubmit={this.handleFormSubmit}>
+          <TextField
+            hintText="Email Address"
+            value={this.state.email} 
+            errorText={this.state.emailError}
+            onChange={this.handleChangeEmail} />
 
-        <button action="submit">Sign In!</button>
-      </form>
+          <br />
+
+          <TextField
+            hintText="Password"
+            value={this.state.password} 
+            type='password'
+            errorText={this.state.passwordError}
+            onChange={this.handleChangePassword} />
+
+          <br />
+
+          <RaisedButton label='Sign In' onTouchTap={this.handleFormSubmit} />
+          <div>{this.props.message}</div>
+        </form>
+
+      </Paper>
     );
   }
 }
 
 SignIn.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  email: PropTypes.string,
-  password: PropTypes.string,
   currentUser: PropTypes.object,
+  message: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser.user,
     currentUserAuth: state.currentUser.authenticated,
+    message: state.signIn.message,
   };
 }
 

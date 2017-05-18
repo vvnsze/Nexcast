@@ -3,11 +3,14 @@ const sequelize = require('../config/database');
 const chalk = require('chalk');
 
 const Episode = sequelize.define('episodes', {
+  podcast_id: {
+    type: Sequelize.INTEGER,
+  },
   name: {
     type: Sequelize.STRING(100),
   },
   guid: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   description: {
     type: Sequelize.STRING(2000),
@@ -16,6 +19,5 @@ const Episode = sequelize.define('episodes', {
 });
 
 Episode.sync();
-console.log(chalk.cyan('+++line 19 this is users table in episode model: ', Episode));
 
 module.exports = Episode;

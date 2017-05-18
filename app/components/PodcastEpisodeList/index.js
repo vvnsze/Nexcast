@@ -4,7 +4,6 @@ import PodcastItem from '../PodcastItem';
 
 
 const PodcastEpisodeList = ({ episodeList }) => {
-
   const podcastEpisodeItems = episodeList.map((podcast) => (
     <PodcastItem
       key={podcast.title}

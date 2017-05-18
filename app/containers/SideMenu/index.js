@@ -19,7 +19,7 @@ export class SideMenu extends React.Component {
     this.props.dispatch(actions.loadPodcast());
   }
 
-  selectPodcastEpisode(episodeTrack){
+  selectPodcastEpisode(episodeTrack) {
     // take track and query the episode
   }
 
