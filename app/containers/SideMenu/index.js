@@ -25,7 +25,6 @@ export class SideMenu extends React.Component {
 
   showPodcastEpisode() {
     if (this.props.podcastEpisodes) {
-      console.log('+++line 23: this is the episodes passed down through props', this.props.podcastEpisodes);
       return (
         <div>
           <div>Fetching Episodes Successful!</div>
@@ -42,7 +41,6 @@ export class SideMenu extends React.Component {
   render() {
     return (
       <div>
-        Hello Side Menu!
         {this.showPodcastEpisode()}
       </div>
     );
