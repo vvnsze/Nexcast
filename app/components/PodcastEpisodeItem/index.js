@@ -10,7 +10,7 @@ const PodcastEpisodeItem = ({ episodeTitle, episodeFile, episodeFullContent, epi
   return (
     <div onClick={() => { onSelectEpisode({ episodeTitle, episodeFile }); }} id={episodeTitle}>
       <div>
-        {episodeTitle}
+        Episode: {episodeTitle}
       </div>
     </div>
   );
