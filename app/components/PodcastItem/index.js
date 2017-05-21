@@ -1,16 +1,16 @@
 /**
-*
-* PodcastItem
-*
-*/
-
+ *
+ * PodcastItem
+ *
+ */
 import React, { PropTypes } from 'react';
 import PodcastEpisodeItem from '../PodcastEpisodeItem';
 // import styled from 'styled-components';
 
 
 function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode }) {
-  const EpisodeItem = episodes.map((episode) => (
+
+  const createEpisodeItem = (episode) => (
     <PodcastEpisodeItem
       key={episode.guid}
       episodeTitle={episode.title}
@@ -19,11 +19,26 @@ function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode }) 
       episodeContentSnippet={episode.contentSnippet}
       onSelectEpisode={onSelectEpisode}
     />
-  ));
+  );
+
+  const Episodes = episodes.reduce((memo, episode) => {
+    if(episode.hasOwnProperty('enclosure')) {
+      memo.push(createEpisodeItem(episode));
+      return memo;
+    }
+
+    const episodes = episode;
+    return memo.concat(() => (
+      episodes.map((ep) => (
+        createEpisodeItem(ep)
+      ))
+    ));
+  }, []);
+
   return (
     <li>
       { showTitle }
-      { EpisodeItem }
+      { Episodes }
     </li>
   );
 }

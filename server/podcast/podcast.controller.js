@@ -56,6 +56,7 @@ exports.parsePodcasts = (req, res) => {
           description: parsed.feed.description,
           itunes: parsed.feed.itunes,
           entries: parsed.feed.entries,
+          nexcastObjId: podcast.id,
         });
       });
     })
