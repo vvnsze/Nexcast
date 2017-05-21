@@ -1,4 +1,4 @@
-import { takeLatest, take, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put } from 'redux-saga/effects';
 import HttpClient from '../../httpClient';
 
 import {
@@ -12,7 +12,7 @@ import {
 } from '../EpisodePlayer/constants';
 
 export function* initiateFetchPodcast() {
-  yield take(FETCH_PODCAST_EPISODES, fetchPodcastAsync);
+  yield takeLatest(FETCH_PODCAST_EPISODES, fetchPodcastAsync);
 }
 
 function* fetchPodcastAsync() {
@@ -32,7 +32,7 @@ export function* initiateFetchEpisode() {
   yield takeLatest(FETCH_EPISODE, fetchEpisodeAsync);
 }
 
-function* fetchEpisodeAsync() {
+function* fetchEpisodeAsync(action) {
   try {
     const episodeFile = yield call(retrievePodcastEpisode());
     yield put({ type: PLAY_EPISODE, payload: episodeFile });
@@ -45,7 +45,6 @@ function retrievePodcastEpisode(param) {
   return () => HttpClient.get('/api/episode', param);
 }
 
-// All sagas to be loaded
 export default [
   initiateFetchPodcast,
   initiateFetchEpisode,

@@ -20,7 +20,7 @@ export class SideMenu extends React.Component {
   }
 
   selectPodcastEpisode(episode) {
-    this.props.dispatch(actions.fetchPodcast(episode));
+    this.props.dispatch(actions.fetchEpisode(episode));
   }
 
   showPodcastEpisode() {
