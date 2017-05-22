@@ -4,9 +4,9 @@
  *
  */
 import React, { PropTypes } from 'react';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 import PodcastEpisodeItem from '../PodcastEpisodeItem';
-// import styled from 'styled-components';
-
 
 function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId }) {
   const createEpisodeItem = (episode) => (
@@ -25,22 +25,16 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
   const Episodes = episodes.reduce((memo, episode) => {
     if (episode.hasOwnProperty('enclosure')) {
       memo.push(createEpisodeItem(episode));
-      return memo;
     }
-
-    const episodes = episode;
-    return memo.concat(() => (
-      episodes.map((ep) => (
-        createEpisodeItem(ep)
-      ))
-    ));
+    return memo;
   }, []);
 
   return (
-    <li>
-      { showTitle }
-      { Episodes }
-    </li>
+    <ListItem
+      primaryText={showTitle}
+      nestedItems={Episodes}
+      primaryTogglesNestedList
+    />
   );
 }
 
