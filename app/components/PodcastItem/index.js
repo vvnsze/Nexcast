@@ -8,16 +8,18 @@ import PodcastEpisodeItem from '../PodcastEpisodeItem';
 // import styled from 'styled-components';
 
 
-function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode }) {
+function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode, nexcastPodcastId }) {
 
   const createEpisodeItem = (episode) => (
     <PodcastEpisodeItem
       key={episode.guid}
+      guid={episode.guid}
       episodeTitle={episode.title}
       episodeFile={episode.enclosure.url}
       episodeFullContent={episode.content}
       episodeContentSnippet={episode.contentSnippet}
       onSelectEpisode={onSelectEpisode}
+      nexcastPodcastId={nexcastPodcastId}
     />
   );
 
@@ -48,6 +50,7 @@ PodcastItem.propTypes = {
   showDescription: PropTypes.string,
   episodes: PropTypes.array,
   onSelectEpisode: PropTypes.func,
+  nexcastPodcastId: PropTypes.number,
 };
 
 export default PodcastItem;

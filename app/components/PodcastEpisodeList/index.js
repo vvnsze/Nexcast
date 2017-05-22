@@ -11,6 +11,7 @@ const PodcastEpisodeList = ({ episodeList, onSelectEpisode }) => {
       showDescription={podcast.description}
       episodes={podcast.entries}
       onSelectEpisode={onSelectEpisode}
+      nexcastPodcastId={podcast.nexcastObjId}
     />
   ));
 
