@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import PodcastEpisodeList from '../../components/PodcastEpisodeList';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 export class SideMenu extends React.Component {
   constructor(props) {
@@ -24,18 +26,16 @@ export class SideMenu extends React.Component {
   }
 
   showPodcastEpisode() {
-    if (this.props.podcastEpisodes) {
-      return (
-        <div>
-          <div>Fetching Episodes Successful!</div>
+    return (
+      <div>
+        <List>
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
             onSelectEpisode={this.selectPodcastEpisode}
           />
-        </div>
-      );
-    }
-    return <div> Fetching Episodes did not work </div>;
+        </List>
+      </div>
+    );
   }
 
   render() {

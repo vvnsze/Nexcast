@@ -12,10 +12,14 @@ import MainContent from '../MainContent';
 class SplitView extends React.Component {
   render() {
     return (
-      <div>
-        Hello World
-        <SideMenu />
-        <MainContent />
+      <div className="row">
+        <div className="col s3">
+          <SideMenu />
+        </div>
+
+        <div className="col s9">
+          <MainContent />
+        </div>
       </div>
     );
   }

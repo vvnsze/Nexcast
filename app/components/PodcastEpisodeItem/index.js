@@ -3,17 +3,18 @@
 * PodcastEpisodeItem
 *
 */
-
 import React, { PropTypes } from 'react';
+import { ListItem } from 'material-ui/List';
 
-const PodcastEpisodeItem = ({ episodeTitle, episodeFile, episodeFullContent, episodeContentSnippet, onSelectEpisode }) => {
+const PodcastEpisodeItem = ({ key, episodeTitle, episodeFile, episodeFullContent, episodeContentSnippet, onSelectEpisode }) => {
   return (
-    <div onClick={() => { onSelectEpisode({ episodeTitle, episodeFile }); }} id={episodeTitle}>
-      <div>
-        {episodeTitle}
-      </div>
-    </div>
-  );
+    <ListItem
+      key={key}
+      primaryText={episodeTitle}
+      onClick={() => { onSelectEpisode({ episodeTitle, episodeFile }); }}
+      id={episodeTitle}
+    />
+  )
 };
 
 PodcastEpisodeItem.propTypes = {
