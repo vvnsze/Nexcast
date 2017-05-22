@@ -29,12 +29,14 @@ function loadPodcastEpisodes() {
 }
 
 export function* initiateFetchEpisode() {
+  console.log('+++ line 32 initiating fetch podcast!');
   yield takeLatest(FETCH_EPISODE, fetchEpisodeAsync);
 }
 
 function* fetchEpisodeAsync(action) {
+  console.log('+++line 37 running fetchEpisodeAsync: action.payload: ', action.payload);
   try {
-    const episodeFile = yield call(retrievePodcastEpisode());
+    const episodeFile = yield call(retrievePodcastEpisode({ params: { episodeTitle: action.payload.episodeTitle, episodeFile: action.payload.episodeFile } }));
     yield put({ type: PLAY_EPISODE, payload: episodeFile });
   } catch (error) {
     console.error('+++line 36: there is an error in fetching episodes', error);
@@ -42,6 +44,7 @@ function* fetchEpisodeAsync(action) {
 }
 
 function retrievePodcastEpisode(param) {
+  console.log('+++line 47 axios call for episodes: ', param);
   return () => HttpClient.get('/api/episode', param);
 }
 
