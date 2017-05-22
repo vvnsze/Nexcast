@@ -8,8 +8,7 @@ import PodcastEpisodeItem from '../PodcastEpisodeItem';
 // import styled from 'styled-components';
 
 
-function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode, nexcastPodcastId }) {
-
+function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId }) {
   const createEpisodeItem = (episode) => (
     <PodcastEpisodeItem
       key={episode.guid}
@@ -24,7 +23,7 @@ function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode, ne
   );
 
   const Episodes = episodes.reduce((memo, episode) => {
-    if(episode.hasOwnProperty('enclosure')) {
+    if (episode.hasOwnProperty('enclosure')) {
       memo.push(createEpisodeItem(episode));
       return memo;
     }
@@ -47,7 +46,6 @@ function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode, ne
 
 PodcastItem.propTypes = {
   showTitle: PropTypes.string,
-  showDescription: PropTypes.string,
   episodes: PropTypes.array,
   onSelectEpisode: PropTypes.func,
   nexcastPodcastId: PropTypes.number,
