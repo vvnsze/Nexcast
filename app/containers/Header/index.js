@@ -5,9 +5,11 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 export class Header extends React.Component {
+
   showLinks = () => {
     const token = localStorage.getItem('token');
     const name = localStorage.getItem('userName');
+    
     if (token) {
       return (
         <div>
@@ -22,7 +24,8 @@ export class Header extends React.Component {
     if (!token || !name) {
       return (
         <ul>
-          <li><Link to="/signup">Sign Up</Link></li> <li><Link to="/signin">Sign In</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li> 
+          <li><Link to="/signin">Sign In</Link></li>
         </ul>
       );
     }
@@ -32,7 +35,9 @@ export class Header extends React.Component {
   render() {
     return (
       <nav className="blue-grey  darken-3" role="navigation">
-        <div className="nav-wrapper container"><a id="logo-container" href="/signin" className="brand-logo">Logo</a>
+        <div className="nav-wrapper container"><a id="logo-container" href="/" className="brand-logo">
+          <img src={ require('../../assets/nexcast_logo_white.png') } width={ 150 } />
+        </a>
           <ul className="right hide-on-med-and-down">
             <li>{this.showLinks()}</li>
           </ul>

@@ -43,6 +43,7 @@ const ReactBoilerplate = {
         'nodemailer',
         'dotenv',
         'rss-parser',
+        'svgo',
       ],
       /**
        * Specify any additional dependencies here. We include core-js and lodash

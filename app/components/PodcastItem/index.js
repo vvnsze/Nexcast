@@ -25,7 +25,7 @@ function PodcastItem({ showTitle, showDescription, episodes, onSelectEpisode }) 
   );
 
   const Episodes = episodes.reduce((memo, episode) => {
-    if(episode.hasOwnProperty('enclosure')) {
+    if(episode.enclosure) {
       memo.push(createEpisodeItem(episode));
     }
     return memo;
