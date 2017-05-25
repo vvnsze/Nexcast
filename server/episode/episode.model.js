@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 
 const Episode = sequelize.define('episodes', {
-  podcast_id: {
+  podcastId: {
     type: Sequelize.INTEGER,
   },
   name: {
@@ -12,11 +12,10 @@ const Episode = sequelize.define('episodes', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.STRING(2000),
+    type: Sequelize.STRING(4000),
   },
-  underscored: true,
 });
 
-Episode.sync();
+// Episode.sync({ force: true });
 
 module.exports = Episode;
