@@ -8,6 +8,10 @@ import {
 } from './constants';
 
 import {
+  DISPLAY_CARDS,
+} from '../Cards/constants';
+
+import {
   PLAY_EPISODE,
 } from '../EpisodePlayer/constants';
 
@@ -29,22 +33,21 @@ function loadPodcastEpisodes() {
 }
 
 export function* initiateFetchEpisode() {
-  console.log('+++ line 32 initiating fetch podcast!');
   yield takeLatest(FETCH_EPISODE, fetchEpisodeAsync);
 }
 
 function* fetchEpisodeAsync(action) {
-  console.log('+++line 37 running fetchEpisodeAsync: action.payload: ', action.payload);
   try {
-    const episodeFile = yield call(retrievePodcastEpisode({ params: { episodeTitle: action.payload.episodeTitle, guid: action.payload.guid, description: action.payload.episodeFullContent, nexcastPodcastId: action.payload.nexcastPodcastId } }));
-    yield put({ type: PLAY_EPISODE, payload: episodeFile });
+    const results = yield call(retrievePodcastEpisode({ params: { episodeTitle: action.payload.episodeTitle, guid: action.payload.guid, description: action.payload.episodeFullContent, nexcastPodcastId: action.payload.nexcastPodcastId } }));
+    console.log('+++line 40 successfully retrieved results: ', results.data);
+    yield put({ type: PLAY_EPISODE, payload: action.payload.episodeFile });
+    yield put({ type: DISPLAY_CARDS, payload: results.data });
   } catch (error) {
     console.error('+++line 36: there is an error in fetching episodes', error);
   }
 }
 
 function retrievePodcastEpisode(param) {
-  console.log('+++line 47 axios call for episodes: ', param);
   return () => HttpClient.get('/api/episode', param);
 }
 

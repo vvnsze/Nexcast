@@ -20,7 +20,6 @@ exports.fetchCards = (req, res) => {
     },
   };
   Card.findAll(query).then((cards) => {
-    console.log(chalk.blue('+++line 23 success on fetching cards: '), cards);
     const allCards = cards.map((card) => {
       return card;
     });

@@ -3,5 +3,10 @@
  * Cards constants
  *
  */
+export const DISPLAY_CARDS = 'app/Cards/DISPLAY_CARDS';
 
-export const DEFAULT_ACTION = 'app/Cards/DEFAULT_ACTION';
+export const CREATE_CARD = 'app/Cards/CREATE_CARD';
+
+export const DELETE_CARD = 'app/Cards/CREATE_CARD';
+
+export const EDIT_CARD = 'app/Cards/EDIT_CARD';

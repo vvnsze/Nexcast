@@ -4,15 +4,15 @@
  *
  */
 import {
-  DEFAULT_ACTION,
+  DISPLAY_CARDS,
 } from './constants';
 
-const initialState = [];
+const initialState = {};
 
 function cardsReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case DISPLAY_CARDS:
+      return { allCards: action.payload.results };
     default:
       return state;
   }

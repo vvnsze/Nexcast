@@ -6,11 +6,11 @@
 import React, { PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 
-const PodcastEpisodeItem = ({ episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode }) => (
+const PodcastEpisodeItem = ({ episodeFile, episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode }) => (
   <ListItem
     key={guid}
     primaryText={episodeTitle}
-    onClick={() => { onSelectEpisode({ episodeFullContent, nexcastPodcastId, episodeTitle, guid }); }}
+    onClick={() => { onSelectEpisode({ episodeFullContent, nexcastPodcastId, episodeTitle, guid, episodeFile }); }}
     id={episodeTitle}
   />
 );
@@ -21,6 +21,7 @@ PodcastEpisodeItem.propTypes = {
   onSelectEpisode: PropTypes.func,
   nexcastPodcastId: PropTypes.number,
   guid: PropTypes.string,
+  episodeFile: PropTypes.string,
 };
 
 export default PodcastEpisodeItem;

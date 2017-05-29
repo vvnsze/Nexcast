@@ -7,6 +7,8 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import currentUserReducer from './containers/Authorization/currentUserReducer';
 import searchPodcastReducer from './containers/SearchPodcast/reducer';
 import signInReducer from './containers/SignIn/reducer';
+import cardsReducer from './containers/Cards/reducer';
+import episodePlayerReducer from './containers/EpisodePlayer/reducer';
 
 /*
  * routeReducer
@@ -42,6 +44,8 @@ export default function createReducer(asyncReducers) {
     currentUser: currentUserReducer,
     podcasts: searchPodcastReducer,
     signIn: signInReducer,
+    cards: cardsReducer,
+    episodePlayer: episodePlayerReducer,
     ...asyncReducers,
   });
 }
