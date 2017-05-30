@@ -13,8 +13,8 @@ class MainContent extends React.Component {
     return (
       <div>
         Hello Main Content World!
-        <Cards />
         <EpisodePlayer />
+        <Cards />
       </div>
     );
   }

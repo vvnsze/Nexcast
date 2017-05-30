@@ -6,29 +6,37 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import CardItem from '../../components/CardItem';
+import CardCreator from '../CardCreator';
 
 export class Cards extends React.Component {
   constructor(props) {
     super(props);
     this.loadCards = this.loadCards.bind(this);
-  }
-
-  componentDidUpdate() {
-    this.loadCards();
+    this.createCardButton = this.createCardButton.bind(this);
   }
 
   loadCards() {
     console.log('+++line 21 this.props: ', this.props);
     if (this.props.displayCards) {
       console.log('+++line 22 cards success on retrieving cards!: ', this.props.displayCards);
+      return this.props.displayCards.map((cardItem) => {
+        return (
+          <li key={cardItem.id}><CardItem card={cardItem} /></li>
+        );
+      });
     } else {
-      console.log('++++line 24: cannot see cards!');
-    }
+    return <li>You have no cards</li>
+  }
+
+  createCardButton() {
+
   }
 
   render() {
     return (
       <div>
+        <ul>{this.loadCards()}</ul>
       </div>
     );
   }

@@ -36,10 +36,9 @@ EpisodePlayer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log('+++line 39 episodeplayer state: ' ,state);
   return {
     chosenEpisode: state.episodePlayer.chosenEpisode,
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
