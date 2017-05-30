@@ -4817,7 +4817,11 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
+<<<<<<< HEAD
+js-yaml@3.6.1:
+=======
 js-yaml@3.6.1, js-yaml@^3.5.1, js-yaml@~3.6.0:
+>>>>>>> 8134f8a75024d754b5b7b8af07e0a533b1151835
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.6.1.tgz#6e5fe67d8b205ce4d22fad05b7781e8dadcc4b30"
   dependencies:

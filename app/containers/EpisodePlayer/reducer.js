@@ -12,7 +12,7 @@ const initialState = {};
 function episodePlayerReducer(state = initialState, action) {
   switch (action.type) {
     case PLAY_EPISODE:
-      return state;
+      return { chosenEpisode: action.payload };
     default:
       return state;
   }

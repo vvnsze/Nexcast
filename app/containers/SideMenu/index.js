@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import PodcastEpisodeList from '../../components/PodcastEpisodeList';
-import { List, ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 
 export class SideMenu extends React.Component {
   constructor(props) {
