@@ -3,7 +3,6 @@ const chalk = require('chalk');
 const responseFormatter = require('../helpers/util').responseFormatter;
 
 exports.findOrCreatePodcastEpisode = (req, res, next) => {
-  console.log(chalk.cyan('this is the req: '), req.query);
   const query = {
     where: {
       podcastId: req.query.nexcastPodcastId,

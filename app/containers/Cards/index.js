@@ -12,8 +12,10 @@ import CardCreator from '../CardCreator';
 export class Cards extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { revealCardCreatorForm: false };
     this.loadCards = this.loadCards.bind(this);
-    this.createCardButton = this.createCardButton.bind(this);
+    this.showCardButton = this.showCardButton.bind(this);
+    this.toggleRevealForm = this.toggleRevealForm.bind(this);
   }
 
   loadCards() {
@@ -25,18 +27,38 @@ export class Cards extends React.Component {
           <li key={cardItem.id}><CardItem card={cardItem} /></li>
         );
       });
-    } else {
-    return <li>You have no cards</li>
+    }
+    return (
+      <li>You have no cards</li>
+    );
   }
 
-  createCardButton() {
+  toggleRevealForm() {
+    this.setState({ revealCardCreatorForm: true });
+  }
 
+  showCardButton() {
+    if (this.state.revealCardCreatorForm) {
+      return (
+        <li>
+          <CardCreator />;
+        </li>
+      );
+    }
+    if (this.props.selectedEpisode && !this.state.revealCardCreatorForm) {
+      return (
+        <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.toggleRevealForm}><i className="material-icons">add</i></a>
+      );
+    }
   }
 
   render() {
     return (
       <div>
-        <ul>{this.loadCards()}</ul>
+        <ul>
+          {this.loadCards()}
+          {this.showCardButton()}
+        </ul>
       </div>
     );
   }
@@ -45,11 +67,13 @@ export class Cards extends React.Component {
 Cards.propTypes = {
   dispatch: PropTypes.func.isRequired,
   displayCards: PropTypes.array,
+  selectedEpisode: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     displayCards: state.cards.allCards,
+    selectedEpisode: state.cards.selectedEpisode,
   };
 }
 

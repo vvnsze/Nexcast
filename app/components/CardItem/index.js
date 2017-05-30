@@ -11,8 +11,13 @@ import React, { PropTypes } from 'react';
 const CardItem = ({ card }) => {
   const checkMedia = function (item) {
     if (item.media_type === 'picture') {
-      return (<img role="display" height="45" width="45" src={item.media_link}></img>)
+      return (
+        <img role="presentation" height="45" width="45" src={item.media_link}></img>
+      );
     }
+    return (
+      <div>No media</div>
+    );
   };
 
   return (
@@ -22,8 +27,8 @@ const CardItem = ({ card }) => {
       <div>Description: {card.description}</div>
       <div>Button</div>
     </div>
-  )
-}
+  );
+};
 
 CardItem.propTypes = {
   card: PropTypes.object,
