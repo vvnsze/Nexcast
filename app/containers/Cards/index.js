@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import CardItem from '../../components/CardItem';
 import CardCreator from '../CardCreator';
 
+
 export class Cards extends React.Component {
   constructor(props) {
     super(props);
@@ -21,10 +22,9 @@ export class Cards extends React.Component {
   loadCards() {
     console.log('+++line 21 this.props: ', this.props);
     if (this.props.displayCards) {
-      console.log('+++line 22 cards success on retrieving cards!: ', this.props.displayCards);
       return this.props.displayCards.map((cardItem) => {
         return (
-          <li key={cardItem.id}><CardItem card={cardItem} /></li>
+          <div key={cardItem.id}><CardItem card={cardItem} /></div>
         );
       });
     }
@@ -55,10 +55,10 @@ export class Cards extends React.Component {
   render() {
     return (
       <div>
-        <ul>
+        <div>
           {this.loadCards()}
+        </div>
           {this.showCardButton()}
-        </ul>
       </div>
     );
   }

@@ -12,3 +12,5 @@ export const DELETE_CARD = 'app/Cards/CREATE_CARD';
 export const EDIT_CARD = 'app/Cards/EDIT_CARD';
 
 export const SELECTED_EPISODE = 'app/Cards/SELECTED_EPISODE';
+
+export const CANCEL_CARD_CREATION = 'app/Cards/CANCEL_CARD_CREATION';
