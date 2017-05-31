@@ -23,7 +23,7 @@ export class SignIn extends React.Component {
 
   componentDidUpdate() {
     if (this.props.currentUser !== undefined) {
-      browserHistory.push('/searchPodcast');
+      browserHistory.push('/main');
     }
   }
 
