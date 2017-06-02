@@ -4,7 +4,7 @@ import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import * as actions from './actions';
 
 export class SignIn extends React.Component {
@@ -72,17 +72,17 @@ export class SignIn extends React.Component {
       <Paper zDepth={2} >
         <form onSubmit={this.handleFormSubmit}>
           <TextField
-            hintText="Email Address"
             value={this.state.email}
             errorText={this.state.emailError}
+            floatingLabelText="Email Address"
             onChange={this.handleChangeEmail}
           />
 
           <br />
 
           <TextField
-            hintText="Password"
             value={this.state.password}
+            floatingLabelText="Password"
             type="password"
             errorText={this.state.passwordError}
             onChange={this.handleChangePassword}
@@ -90,7 +90,7 @@ export class SignIn extends React.Component {
 
           <br />
 
-          <RaisedButton label="Sign In" onTouchTap={this.handleFormSubmit} />
+          <FlatButton label="Sign In" onTouchTap={this.handleFormSubmit} />
           <div>{this.props.message}</div>
         </form>
 

@@ -2,9 +2,8 @@ import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import { Card } from 'material-ui/Card';
 
 
 export class CardCreator extends React.Component {
@@ -20,7 +19,7 @@ export class CardCreator extends React.Component {
 
   render() {
     return (
-      <div>
+      <Card>
         <form onSubmit={this.handleFormSubmit}>
           <fieldset>
             <label htmlFor="timeStamp">TimeStamp</label>
@@ -38,7 +37,7 @@ export class CardCreator extends React.Component {
             <label htmlFor="buttonLink">Button Link</label>
             <input type="buttonLink" name="buttonLink" value={this.props.buttonLink} />
           </fieldset>
-          <button action="submit">Save</button>
+          <FlatButton action="submit">Save</FlatButton>
         </form>
         {/* <Paper>
           <ReactUpload
@@ -53,7 +52,7 @@ export class CardCreator extends React.Component {
             contentDisposition="auto"
           />
         </Paper> */}
-      </div>
+      </Card>
     );
   }
 
