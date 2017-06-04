@@ -13,7 +13,7 @@ class SplitView extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="col s3">
+        <div style={{ padding: 0 }} className="col s3 blue-grey  darken-3">
           <SideMenu />
         </div>
 

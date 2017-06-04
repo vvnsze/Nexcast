@@ -44,6 +44,8 @@ const ReactBoilerplate = {
         'dotenv',
         'rss-parser',
         'svgo',
+        'react-audio-player-tags',
+        'react-svg-loader',
       ],
       /**
        * Specify any additional dependencies here. We include core-js and lodash

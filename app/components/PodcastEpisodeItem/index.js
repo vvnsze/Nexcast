@@ -14,7 +14,7 @@ const style = {
 
 const PodcastEpisodeItem = ({ episodeFile, episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode }) => (
   <ListItem
-    leftIcon={<ToggleRadioButtonUnchecked style={style}/>}
+    leftIcon={<ToggleRadioButtonUnchecked style={style} />}
     key={guid}
     primaryText={episodeTitle}
     onClick={() => { onSelectEpisode({ episodeFullContent, nexcastPodcastId, episodeTitle, guid, episodeFile }); }}
