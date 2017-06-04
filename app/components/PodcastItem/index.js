@@ -23,7 +23,7 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
   );
 
   const Episodes = episodes.reduce((memo, episode) => {
-    if(episode.enclosure) {
+    if (episode.enclosure) {
       memo.push(createEpisodeItem(episode));
     }
     return memo;
