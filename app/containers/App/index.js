@@ -25,7 +25,7 @@ export default class App extends React.PureComponent { // eslint-disable-line re
       <MuiThemeProvider>
         <div>
           <Header />
-          <div className="container">
+          <div>
             {React.Children.toArray(this.props.children)}
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
@@ -38,19 +37,22 @@ export class CardCreator extends React.Component {
             <input type="buttonLink" name="buttonLink" value={this.props.buttonLink} />
           </fieldset>
           <FlatButton action="submit">Save</FlatButton>
+          <div>
+            <ReactUpload
+              className="uploader"
+              signingUrl="/s3/sign"
+              signingUrlMethod="GET"
+              accept="image/*"
+              uploadRequestHeaders={{
+                'x-amz-acl': 'public-read',
+              }}
+              signingUrlWithCredentials
+              contentDisposition="auto"
+            />
+          </div>
         </form>
         {/* <Paper>
-          <ReactUpload
-            className="uploader"
-            signingUrl="/s3/sign"
-            signingUrlMethod="GET"
-            accept="image/*"
-            uploadRequestHeaders={{
-              'x-amz-acl': 'public-read',
-            }}
-            signingUrlWithCredentials
-            contentDisposition="auto"
-          />
+
         </Paper> */}
       </Card>
     );

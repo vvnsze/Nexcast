@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import { browserHistory } from 'react-router';
+import RaisedButton from 'material-ui/RaisedButton';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import { connect } from 'react-redux';
@@ -11,6 +13,7 @@ export class SideMenu extends React.Component {
     this.loadPodcastEpisode = this.loadPodcastEpisode.bind(this);
     this.showPodcastEpisode = this.showPodcastEpisode.bind(this);
     this.selectPodcastEpisode = this.selectPodcastEpisode.bind(this);
+    this.addShow = this.addShow.bind(this);
   }
 
   componentWillMount() {
@@ -23,6 +26,10 @@ export class SideMenu extends React.Component {
 
   selectPodcastEpisode(episode) {
     this.props.dispatch(actions.fetchEpisode(episode));
+  }
+
+  addShow() {
+    browserHistory.push('/searchpodcast');
   }
 
   showPodcastEpisode() {
@@ -41,6 +48,12 @@ export class SideMenu extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          MY SHOWS
+            <div>
+              <RaisedButton primary={true} onTouchTap={this.addShow}>ADD SHOW</RaisedButton>
+            </div>
+        </div>
         {this.showPodcastEpisode()}
       </div>
     );

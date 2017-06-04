@@ -1,15 +1,14 @@
-/**
-*
-* CardItem
-*
-*/
-
 import React, { PropTypes } from 'react';
 import { Card, CardActions, CardHeader, CardMedia, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import { GridTile } from 'material-ui/GridList';
 // import styled from 'styled-components';
 
+const styles = {
+  Card: {
+    height: 500,
+    width: 300,
+  },
+};
 
 const CardItem = ({ card }) => {
   const checkMedia = function check(item) {
@@ -24,10 +23,10 @@ const CardItem = ({ card }) => {
   };
 
   return (
-    <GridTile key={card.id}>
-      <Card>
+      <Card containerStyle={styles.Card}>
         <CardHeader
-          title={card.taggedtimestamp}
+          style={{ height: 100, background: '#60B2E5' }}
+          title={card.tagged_timestamp}
         />
         <CardMedia>
           {checkMedia(card)}
@@ -36,10 +35,9 @@ const CardItem = ({ card }) => {
           {card.description}
         </CardText>
         <CardActions>
-          <FlatButton label={card.button_text} />
+          <FlatButton href={card.button_link} label={card.button_text} />
         </CardActions>
       </Card>
-    </GridTile>
   );
 };
 

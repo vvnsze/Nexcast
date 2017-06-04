@@ -18,8 +18,8 @@
 // Podcast.belongsToMany(User, { through: UserPodcast, foreignKey: 'podcastId' });
 
 // Whitelist.create({
-//   feedUrl: 'http://feeds.feedburner.com/pod-save-america',
-//   email: 'vvnsze@gmail.com',
+//   feedUrl: 'http://feeds.feedburner.com/BuildingNexcast/rss',
+//   email: 'vvnsze+100@gmail.com',
 // }).then((success) => {
 //   console.log('SUCCESS!:' , success);
 // });

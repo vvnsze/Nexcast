@@ -82,6 +82,7 @@ exports.findOrCreateByFeedUrl = (req, res) => {
 
 exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
+  console.log('+++line 85: verifyPodcast', req.user.email)
 
   // Get the feed and parse
   http.get(feedUrl, (resp) => {

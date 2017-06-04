@@ -21,12 +21,11 @@ const styles = {
     display: 'flex',
     flexWrap: 'nowrap',
     overflowX: 'auto',
-    width: 500,
-    height: 400,
-
   },
   titleStyle: {
     color: 'rgb(0, 188, 212)',
+  },
+  gridTile: {
   },
 };
 
@@ -44,7 +43,9 @@ export class Cards extends React.Component {
     if (this.props.displayCards) {
       return this.props.displayCards.map((cardItem) => {
         return (
-          <CardItem card={cardItem} />
+          <GridTile style={styles.GridTile} >
+            <CardItem card={cardItem} />
+          </GridTile>
         );
       });
     }
@@ -60,7 +61,7 @@ export class Cards extends React.Component {
   showCardButton() {
     if (this.state.revealCardCreatorForm) {
       return (
-        <GridTile>
+        <GridTile style={styles.gridTile}>
           <CardCreator />
         </GridTile>
       );
@@ -76,9 +77,9 @@ export class Cards extends React.Component {
     return (
       <div>
         <div style={styles.root}>
-          <GridList style={styles.gridList} cols={2.2}>
-            {this.loadCards()}
-          </GridList>
+          <GridList style={styles.gridList} cols={2.2} cellHeight={500}
+            children={this.loadCards()}
+          />
           {this.showCardButton()}
         </div>
 
