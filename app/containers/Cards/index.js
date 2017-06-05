@@ -89,7 +89,7 @@ export class Cards extends React.Component {
 Cards.propTypes = {
   dispatch: PropTypes.func.isRequired,
   displayCards: PropTypes.array,
-  selectedEpisode: PropTypes.string,
+  selectedEpisode: PropTypes.object,
 };
 
 function mapStateToProps(state) {

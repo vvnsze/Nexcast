@@ -18,10 +18,10 @@ class CreateCard extends React.Component {
     this.onUploadFinish = this.onUploadFinish.bind(this);
 
     this.state = {
-      timeStamp: '123',
+      time_stamp: '123',
       text: 'Enter a title',
-      buttonText: 'CTA button Text',
-      buttonLink: 'CTA button destination',
+      button_text: 'CTA button Text',
+      button_link: 'CTA button destination',
     }
   }
 
@@ -32,12 +32,17 @@ class CreateCard extends React.Component {
   }
 
   handleFormSubmit(event) {
-    this.props.dispatch({type: CREATE_CARD, payload: this.state})
+    const cardData = { ...this.state, 
+      podcast_id: this.props.selectedEpisode.nexcastPodcastId,
+      episode_id: this.props.selectedEpisode.guid }
+
+    this.props.dispatch({ type: CREATE_CARD, payload: cardData })
   }
 
   onUploadFinish(args) {
     this.setState({
-      media_link: args.signingUrl 
+      media_link: args.signingUrl,
+      media_type: 'image'
     })
   }
 
@@ -47,19 +52,19 @@ class CreateCard extends React.Component {
         <form onSubmit={this.handleFormSubmit}>
           <fieldset>
             <label htmlFor="timeStamp">TimeStamp</label>
-            <input type="text" onChange={this.handleChange} name="timeStamp" value={this.state.timeStamp} />
+            <input type="text" onChange={this.handleChange} name="timeStamp" value={this.state.time_stamp} />
           </fieldset>
           <fieldset>
             <label htmlFor="desctiption">Text</label>
-            <input type="text" name="desctiption" onChange={this.handleChange} value={this.state.text} />
+            <input type="text" name="desctiption" onChange={this.handleChange} value={this.state.description} />
           </fieldset>
           <fieldset>
             <label htmlFor="button_text">Button Text</label>
-            <input type="buttonText" name="button_text" onChange={this.handleChange} value={this.state.buttonText} />
+            <input type="buttonText" name="button_text" onChange={this.handleChange} value={this.state.button_text} />
           </fieldset>
           <fieldset>
             <label htmlFor="button_link">Button Link</label>
-            <input type="buttonLink" name="button_link" onChange={this.handleChange} value={this.props.buttonLink} />
+            <input type="buttonLink" name="button_link" onChange={this.handleChange} value={this.props.button_link} />
           </fieldset>
           <div>
             <ReactUpload
@@ -92,7 +97,7 @@ CreateCard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    cardsCards: state.cards,
+    selectedEpisode: state.cards.selectedEpisode,
   };
 }
 
