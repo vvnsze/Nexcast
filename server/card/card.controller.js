@@ -43,6 +43,7 @@ exports.createCard = (req, res) => {
 
 // helpers
 function paramsForCard(req) {
+
   const params = [
     'podcast_id',
     'episode_id',

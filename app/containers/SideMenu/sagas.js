@@ -44,7 +44,7 @@ function* fetchEpisodeAsync(action) {
     yield put({ type: SELECTED_EPISODE, payload: action.payload.episodeTitle });
     yield put({ type: DISPLAY_CARDS, payload: results.data });
   } catch (error) {
-    console.error('+++line 36: there is an error in fetching episodes', error);
+    console.error('there is an error in fetching episodes', error);
   }
 }
 
