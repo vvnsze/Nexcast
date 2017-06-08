@@ -116,6 +116,22 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/podcastverificationfailed',
+      name: 'emailVerificationFailed',
+      getComponent(location, cb) {
+        import('components/EmailVerificationFailed')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/podcastverificationsuccess',
+      name: 'emailVerificationSuccess',
+      getComponent(location, cb) {
+        import('components/EmailVerificationSuccess')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

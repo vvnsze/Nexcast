@@ -40,13 +40,13 @@ export class Cards extends React.Component {
   loadCards() {
     console.log('+++line 21 this.props: ', this.props);
     if (this.props.displayCards) {
-      return this.props.displayCards.map((cardItem) => {
-        return (
+      return this.props.displayCards.map((cardItem) => (
+        (
           <GridTile style={styles.GridTile} >
             <CardItem card={cardItem} />
           </GridTile>
-        );
-      });
+        )
+      ));
     }
     return (
       <li>You have no cards</li>
@@ -76,9 +76,9 @@ export class Cards extends React.Component {
     return (
       <div>
         <div style={styles.root}>
-          <GridList style={styles.gridList} cols={2.2} cellHeight={500}
-            children={this.loadCards()}
-          />
+          <GridList style={styles.gridList} cols={2.2} cellHeight={500}>
+          {this.loadCards()}
+        </GridList>
           {this.showCardButton()}
         </div>
 

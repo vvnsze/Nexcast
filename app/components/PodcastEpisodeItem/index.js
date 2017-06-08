@@ -14,6 +14,7 @@ const style = {
 
 const PodcastEpisodeItem = ({ episodeFile, episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode }) => (
   <ListItem
+    style={{ color: '#ABADAD' }}
     leftIcon={<ToggleRadioButtonUnchecked style={style} />}
     key={guid}
     primaryText={episodeTitle}

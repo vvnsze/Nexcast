@@ -1,6 +1,9 @@
 import debounce from 'lodash/throttle';
+import { browserHistory } from 'react-router';
+import ActionSearch from 'material-ui/svg-icons/action/search';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
 import * as actions from './actions';
 import PodcastList from '../../components/PodcastList';
 
@@ -11,11 +14,24 @@ export class SearchPodcast extends React.Component {
     this.searchPodcastTerm = this.searchPodcastTerm.bind(this);
     this.showPodcastList = this.showPodcastList.bind(this);
     this.selectPodcast = this.selectPodcast.bind(this);
+    this.showEmailVerificationResults = this.showEmailVerificationResults.bind(this);
   }
 
   onInputChange(term) {
     this.setState({ searchPodcast: term });
     debounce(() => { this.searchPodcastTerm(term); }, 6000)();
+  }
+
+  showEmailVerificationResults() {
+    if (this.props.verified === null) {
+      return;
+    }
+    if (this.props.verified === false) {
+      browserHistory.push('/podcastverificationfailed');
+    }
+    if (this.props.verified) {
+      browserHistory.push('/podcastverificationsuccess');
+    }
   }
 
   searchPodcastTerm(word) {
@@ -25,6 +41,8 @@ export class SearchPodcast extends React.Component {
   }
 
   selectPodcast(selectedPodcast) {
+    console.log('+++line 44 searchpodcast: ', selectedPodcast);
+    
     this.props.dispatch(actions.confirmPodcast(selectedPodcast));
   }
 
@@ -43,16 +61,22 @@ export class SearchPodcast extends React.Component {
 
   render() {
     return (
-      <div>
-        <input
-          type="text"
-          placeholder="Search podcasts"
-          name="searchPodcast"
-          onChange={(event) => this.onInputChange(event.target.value)}
-          value={this.state.term}
-        />
-        <div>{this.props.message}</div>
-        {this.showPodcastList()}
+      <div className="container">
+        <Paper
+          style={{ textAlign: 'center' }}
+        >
+          <ActionSearch />
+          <input
+            type="text"
+            placeholder="Search podcasts"
+            name="searchPodcast"
+            onChange={(event) => this.onInputChange(event.target.value)}
+            value={this.state.term}
+          />
+          <div>{this.props.message}</div>
+          {this.showPodcastList()}
+        </Paper>
+        {this.showEmailVerificationResults()}
       </div>
     );
   }
@@ -62,12 +86,14 @@ SearchPodcast.propTypes = {
   dispatch: PropTypes.func.isRequired,
   podcasts: PropTypes.array,
   message: PropTypes.string,
+  verified: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     podcasts: state.podcasts.podcasts,
     message: state.podcasts.message,
+    verified: state.podcasts.verified,
   };
 }
 

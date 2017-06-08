@@ -50,23 +50,23 @@ module.exports = (options) => ({
       test: /\.svg$/,
       loader: 'babel!react-svg?' + JSON.stringify({
         svgo: {
-          // svgo options 
-          plugins: [{removeTitle: false}],
-          floatPrecision: 2
-        }
+          // svgo options
+          plugins: [{ removeTitle: false }],
+          floatPrecision: 2,
+        },
       }),
     }, {
       test: /\.json$/,
       loader: 'json-loader',
     }, {
       test: /\.html$/,
-      loader: "html-loader"
+      loader: 'html-loader',
     }, {
       test: /\.(mp4|webm)$/,
       loader: 'url-loader',
       query: {
         limit: 10000,
-      }, 
+      },
     }],
   },
   plugins: options.plugins.concat([

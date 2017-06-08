@@ -4,6 +4,7 @@ import {
   SEARCH_PODCAST_TERM,
   PODCAST_SEARCH_RESULTS,
   SELECTED_PODCAST,
+  PENDING_PODCAST,
   CREATING_PODCAST_RECORD,
   PODCAST_VERIFICATION_START,
   PODCAST_VERIFICATION_COMPLETE,
@@ -35,8 +36,9 @@ function* confirmPodcastAsync(action) {
   try {
     yield put({ type: CREATING_PODCAST_RECORD });
 
-    const result = yield call(createUserPodcast(action.payload));
+    yield put({ type: PENDING_PODCAST, selectedPodcast: action });
 
+    const result = yield call(createUserPodcast(action.payload));
     yield put({ type: PODCAST_VERIFICATION_START });
 
     const verifiedResult = yield call(verifyPodcast({ ...action.payload, podcastObj: result.data }));

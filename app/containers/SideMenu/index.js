@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
-import { List, ListItem } from 'material-ui/List';
+import { List } from 'material-ui/List';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import PodcastEpisodeList from '../../components/PodcastEpisodeList';
@@ -33,8 +33,8 @@ export class SideMenu extends React.Component {
 
   showPodcastEpisode() {
     return (
-      <div style={{color: '#FFF', padding: 20}}>
-        <List style={{color: '#FFF'}}>
+      <div style={{ color: '#FFF', padding: 20 }}>
+        <List>
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
             onSelectEpisode={this.selectPodcastEpisode}
@@ -49,13 +49,12 @@ export class SideMenu extends React.Component {
       <div>
 
         <div>
-          <div 
-            className='blue-grey  darken-4' 
-            style={{color: '#FFF', padding: '10px 20px'}}>MY SHOWS</div>
-
-            <div>
-              <RaisedButton primary={true} onTouchTap={this.addShow}>ADD SHOW</RaisedButton>
-            </div>
+          <div
+            className="blue-grey  darken-4"
+            style={{ color: '#FFF', padding: '10px 20px' }}
+          >MY SHOWS
+          <RaisedButton primary onTouchTap={this.addShow}>ADD SHOW</RaisedButton>
+          </div>
         </div>
         {this.showPodcastEpisode()}
       </div>

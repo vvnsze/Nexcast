@@ -65,7 +65,7 @@ export class Header extends React.Component {
   render() {
     return (
       <nav className="blue-grey  darken-3" role="navigation">
-        <div className="nav-wrapper container" style={{width: '90%'}}>
+        <div className="nav-wrapper container" style={{ width: '90%' }}>
           <a id="logo-container" href="/" className="brand-logo">
             <img src={require('../../assets/nexcast_logo_white.png')} width={150} />
           </a>
