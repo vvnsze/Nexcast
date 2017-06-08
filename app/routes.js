@@ -41,14 +41,16 @@ export default function createRoutes(store) {
         const importModules = Promise.all([
           import('containers/SideMenu/reducer'),
           import('containers/SideMenu/sagas'),
+          import('containers/Cards/sagas'),
           import('components/SplitView'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component]) => {
+        importModules.then(([reducer, sideMenuSaga, cardSaga, component]) => {
           injectReducer('sideMenu', reducer.default);
-          injectSagas(sagas.default);
+          injectSagas(sideMenuSaga.default);
+          injectSagas(cardSaga.default);
           renderRoute(component);
         });
 

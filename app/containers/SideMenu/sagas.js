@@ -41,10 +41,10 @@ function* fetchEpisodeAsync(action) {
   try {
     const results = yield call(retrievePodcastEpisode({ params: { episodeTitle: action.payload.episodeTitle, guid: action.payload.guid, description: action.payload.episodeFullContent, nexcastPodcastId: action.payload.nexcastPodcastId } }));
     yield put({ type: PLAY_EPISODE, payload: action.payload.episodeFile });
-    yield put({ type: SELECTED_EPISODE, payload: action.payload.episodeTitle });
+    yield put({ type: SELECTED_EPISODE, payload: action.payload });
     yield put({ type: DISPLAY_CARDS, payload: results.data });
   } catch (error) {
-    console.error('+++line 36: there is an error in fetching episodes', error);
+    console.error('there is an error in fetching episodes', error);
   }
 }
 

@@ -6,12 +6,13 @@ const requireSignin = passport.authenticate('local', { session: false });
 const podcast = require('./podcast/podcast.routes');
 const episode = require('./episode/episode.routes');
 const s3uploads = require('./services/aws.s3uploader');
-
+const cards = require('./card/card.routes');
 
 module.exports = function baseRoutes(app) {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(s3uploads);
+  app.use(cards);
   app.use('/api', requireAuth);
   app.use(podcast);
   app.use(episode);

@@ -7,7 +7,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import CardItem from '../../components/CardItem';
-import CardCreator from '../CardCreator';
+import CreateCard from './cardForms';
 
 // This is styles for the grid list
 const styles = {
@@ -38,7 +38,6 @@ export class Cards extends React.Component {
   }
 
   loadCards() {
-    console.log('+++line 21 this.props: ', this.props);
     if (this.props.displayCards) {
       return this.props.displayCards.map((cardItem) => (
         (
@@ -61,7 +60,7 @@ export class Cards extends React.Component {
     if (this.state.revealCardCreatorForm) {
       return (
         <GridTile style={styles.gridTile}>
-          <CardCreator />
+          <CreateCard />
         </GridTile>
       );
     }
@@ -90,7 +89,7 @@ export class Cards extends React.Component {
 Cards.propTypes = {
   dispatch: PropTypes.func.isRequired,
   displayCards: PropTypes.array,
-  selectedEpisode: PropTypes.string,
+  selectedEpisode: PropTypes.object,
 };
 
 function mapStateToProps(state) {
