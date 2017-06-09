@@ -26,15 +26,13 @@ class CreateCard extends React.Component {
   }
 
   onUploadFinish(args) {
-    console.log('+++line 29 this is args in uploadFinish', args)
     this.setState({
-      media_link: args.signedUrl,
+      media_link: args.publicUrl,
       media_type: 'image',
     });
   }
 
   handleFormSubmit(event) {
-    console.log('+++line 36 cardForms this is the selectedEpisode: ', this.props.selectedEpisode);
     const cardData = { ...this.state,
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };

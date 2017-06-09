@@ -84,8 +84,9 @@ Header.propTypes = {
 };
 
 function mapStateToProps(state) {
+  console.log('+++line 87 currentUser: ', state.currentUser);
   return {
-    currentUser: state.currentUser.user,
+    currentUser: state.currentUser,
     currentUserAuth: state.currentUser.authenticated,
   };
 }

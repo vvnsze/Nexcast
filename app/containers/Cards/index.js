@@ -24,8 +24,6 @@ const styles = {
   titleStyle: {
     color: 'rgb(0, 188, 212)',
   },
-  gridTile: {
-  },
 };
 
 export class Cards extends React.Component {
@@ -41,7 +39,7 @@ export class Cards extends React.Component {
     if (this.props.displayCards) {
       return this.props.displayCards.map((cardItem) => (
         (
-          <GridTile style={styles.GridTile} >
+          <GridTile className="tileContainer" >
             <CardItem card={cardItem} />
           </GridTile>
         )
@@ -59,7 +57,7 @@ export class Cards extends React.Component {
   showCardButton() {
     if (this.state.revealCardCreatorForm) {
       return (
-        <GridTile style={styles.gridTile}>
+        <GridTile className="tileContainer">
           <CreateCard />
         </GridTile>
       );
@@ -74,13 +72,10 @@ export class Cards extends React.Component {
   render() {
     return (
       <div>
-        <div style={styles.root}>
-          <GridList style={styles.gridList} cols={2.2} cellHeight={500}>
+        <GridList style={styles.gridList} cols={2.2} cellHeight={500}>
           {this.loadCards()}
         </GridList>
-          {this.showCardButton()}
-        </div>
-
+        <div>{this.showCardButton()}</div>
       </div>
     );
   }

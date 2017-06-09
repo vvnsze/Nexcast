@@ -12,6 +12,11 @@ const styles = {
 
 const CardItem = ({ card }) => {
   const checkMedia = function check(item) {
+    if (item.media_type === 'image') {
+      return (
+        <img role="presentation" src={item.media_link}></img>
+      );
+    }
     if (item.media_type === 'picture') {
       return (
         <img role="presentation" src={item.media_link}></img>
@@ -23,7 +28,7 @@ const CardItem = ({ card }) => {
   };
 
   return (
-      <Card containerStyle={styles.Card}>
+      <Card className="cardContainer" containerStyle={styles.Card}>
         <CardHeader
           style={{ height: 100, background: '#60B2E5' }}
           title={card.tagged_timestamp}

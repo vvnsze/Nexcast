@@ -35,7 +35,7 @@ exports.signup = (req, res) => {
   });
 };
 
-// Verifys the user when they come from the link in their email.
+// Verifies the user when they come from the link in their email.
 exports.verifyUserAccount = (req, res) => {
   const token = req.query.t;
 

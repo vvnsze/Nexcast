@@ -19,7 +19,7 @@
 
 // Whitelist.create({
 //   feedUrl: 'http://feeds.feedburner.com/BuildingNexcast/rss',
-//   email: 'vvnsze+100@gmail.com',
+//   email: 'bsanders808@gmail.com',
 // }).then((success) => {
 //   console.log('SUCCESS!:' , success);
 // });
@@ -28,7 +28,7 @@
 //   full_name: 'Nexcast',
 //   feed_url: 'http://feeds.feedburner.com/pod-save-america',
 //   description: 'sure wish I had some hipster lorem',
-//   email: 'vvnsze@gmail.com',
+//   email: 'bsanders808@gmail.com',
 // });
 
 // Card.create({
