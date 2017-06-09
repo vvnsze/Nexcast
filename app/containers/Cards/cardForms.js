@@ -9,7 +9,7 @@ import {
   DELETE_CARD,
   UPDATE_CARD,
 } from './constants';
- 
+
 class CreateCard extends React.Component {
   constructor(props) {
     super(props);
@@ -19,31 +19,33 @@ class CreateCard extends React.Component {
 
     this.state = {
       time_stamp: '123',
-      text: 'Enter a title',
-      button_text: 'CTA button Text',
-      button_link: 'CTA button destination',
-    }
-  }
-
-  handleChange(event) {
-    let obj = {};
-    obj[`${event.target.name}`] = event.target.value;
-    this.setState(obj);
-  }
-
-  handleFormSubmit(event) {
-    const cardData = { ...this.state, 
-      podcast_id: this.props.selectedEpisode.nexcastPodcastId,
-      episode_id: this.props.selectedEpisode.guid }
-
-    this.props.dispatch({ type: CREATE_CARD, payload: cardData })
+      description: 'Enter description',
+      button_text: 'Enter button text!',
+      button_link: 'Enter external link for button',
+    };
   }
 
   onUploadFinish(args) {
+    console.log('+++line 29 this is args in uploadFinish', args)
     this.setState({
-      media_link: args.signingUrl,
-      media_type: 'image'
-    })
+      media_link: args.signedUrl,
+      media_type: 'image',
+    });
+  }
+
+  handleFormSubmit(event) {
+    console.log('+++line 36 cardForms this is the selectedEpisode: ', this.props.selectedEpisode);
+    const cardData = { ...this.state,
+      podcast_id: this.props.selectedEpisode.nexcastPodcastId,
+      episode_guid: this.props.selectedEpisode.guid };
+
+    this.props.dispatch({ type: CREATE_CARD, payload: cardData });
+  }
+
+  handleChange(event) {
+    const obj = {};
+    obj[`${event.target.name}`] = event.target.value;
+    this.setState(obj);
   }
 
   render() {
@@ -55,16 +57,16 @@ class CreateCard extends React.Component {
             <input type="text" onChange={this.handleChange} name="timeStamp" value={this.state.time_stamp} />
           </fieldset>
           <fieldset>
-            <label htmlFor="desctiption">Text</label>
-            <input type="text" name="desctiption" onChange={this.handleChange} value={this.state.description} />
+            <label htmlFor="description">Description</label>
+            <input type="text" name="description" onChange={this.handleChange} value={this.state.description} />
           </fieldset>
           <fieldset>
             <label htmlFor="button_text">Button Text</label>
-            <input type="buttonText" name="button_text" onChange={this.handleChange} value={this.state.button_text} />
+            <input type="button_text" name="button_text" onChange={this.handleChange} value={this.state.button_text} />
           </fieldset>
           <fieldset>
             <label htmlFor="button_link">Button Link</label>
-            <input type="buttonLink" name="button_link" onChange={this.handleChange} value={this.props.button_link} />
+            <input type="button_link" name="button_link" onChange={this.handleChange} value={this.props.button_link} />
           </fieldset>
           <div>
             <ReactUpload
@@ -91,8 +93,9 @@ CreateCard.propTypes = {
   dispatch: PropTypes.func.isRequired,
   timeStamp: PropTypes.string,
   text: PropTypes.string,
-  buttonText: PropTypes.string,
-  buttonLink: PropTypes.string,
+  button_text: PropTypes.string,
+  button_link: PropTypes.string,
+  selectedEpisode: PropTypes.object,
 };
 
 function mapStateToProps(state) {

@@ -21,9 +21,10 @@ class EmailVerificationFailed extends React.Component {
           <div>Your email does not match our records for the podcast you have chosen. Please sign up with your email associated with this show.</div>
           <div>If you have done this, we will manually confirm you are the owner of this podcast and send you an email when you are confirmed</div>
           <div>Send us pertinent info or questions here: <a href="admin@nexcast.co">admin@nexcast.co</a></div>
-          <RaisedButton onTouchTap={() => { browserHistory.push('/searchpodcast'); }} label="GOT IT" primary />
+
+          <EmailVerificationPodcastItem />
         </Paper>
-        <EmailVerificationPodcastItem />
+        <RaisedButton onTouchTap={() => { browserHistory.push('/searchpodcast'); }} label="GOT IT" primary />
       </div>
     );
   }

@@ -5,6 +5,7 @@ import {
   CREATING_PODCAST_RECORD,
   PODCAST_VERIFICATION_START,
   PODCAST_VERIFICATION_COMPLETE,
+  SET_VERIFICATION_TO_NULL,
 } from './constants';
 
 const initialState = {
@@ -42,6 +43,9 @@ function searchPodcastReducer(state = initialState, action) {
         message = 'Podcast ownership verified!';
       }
       return { ...state, loading: false, result: action.payload, message, verified };
+
+    case SET_VERIFICATION_TO_NULL:
+      return { ...state, verified: null };
 
     default:
       return state;

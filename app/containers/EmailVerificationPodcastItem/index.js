@@ -6,20 +6,28 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Paper from 'material-ui/Paper';
 
 export class EmailVerificationPodcastItem extends React.Component {
 
   showPodcast = () => {
-    console.log('+++11 pendingpodcast', this.props.pendingPodcast);
     if (this.props.pendingPodcast) {
-      console.log('+++line 13 emailverificationpodcastitem', this.props.pendingPodcast);
+      const imageUrl = this.props.pendingPodcast.artworkUrl60;
+      return (
+        <Paper style={{ width: '300px', height: '200px', textalign: 'center' }}>
+          <img role="presentation" src={imageUrl} />
+          <div>{this.props.pendingPodcast.collectionName} by {this.props.pendingPodcast.artistName}</div>
+        </Paper>
+      );
     }
+    return (
+      <div>Select a Podcast</div>
+    );
   }
 
   render() {
     return (
-      <div>
-        ALOHA
+      <div style={{ width: '50%', margin: '0 auto' }}>
         {this.showPodcast()}
       </div>
     );
@@ -33,7 +41,7 @@ EmailVerificationPodcastItem.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    pendingPodcast: state.podcasts.selectedPodcast,
+    pendingPodcast: state.podcasts.selectedPodcast.podcast,
   };
 }
 

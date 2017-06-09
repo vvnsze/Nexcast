@@ -27,9 +27,11 @@ export class SearchPodcast extends React.Component {
       return;
     }
     if (this.props.verified === false) {
+      this.props.dispatch(actions.nullifyVerified());
       browserHistory.push('/podcastverificationfailed');
     }
     if (this.props.verified) {
+      this.props.dispatch(actions.nullifyVerified());
       browserHistory.push('/podcastverificationsuccess');
     }
   }
@@ -41,8 +43,6 @@ export class SearchPodcast extends React.Component {
   }
 
   selectPodcast(selectedPodcast) {
-    console.log('+++line 44 searchpodcast: ', selectedPodcast);
-    
     this.props.dispatch(actions.confirmPodcast(selectedPodcast));
   }
 

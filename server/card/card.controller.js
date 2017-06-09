@@ -30,12 +30,30 @@ exports.fetchCards = (req, res) => {
   });
 };
 
+exports.fetchEpisodeId = (req, res, next) => {
+  console.log(chalk.magenta('this is the req in fetchEpisodeId: '), req);
+  const query = {
+    where: {
+      guid: req.body.episode_guid,
+    }
+  }
+  Episode.findOne(query).then((episode) => {
+    console.log(chalk.cyan('+++line 40: episode found! '), episode.id);
+    res.locals.episode_id = episode.id;
+    next();
+  }).catch((error) => {
+    res.send(responseFormatter(false, 'failed to find episode id for card'));
+  });
+};
+
 // Post create
 exports.createCard = (req, res) => {
-  Card.create(paramsForCard(req))
-    .then((card) => (
-      res.send(responseFormatter(true, 'card saved', card))
-    ))
+  const params = paramsForCard(req);
+  params.episode_id = res.locals.episode_id
+  Card.create(params)
+    .then((card) => {
+      res.send(responseFormatter(true, 'card saved', card));
+    })
     .catch((err) => (
       res.send(responseFormatter(false, 'card failed to save'))
     ));
@@ -46,7 +64,6 @@ function paramsForCard(req) {
 
   const params = [
     'podcast_id',
-    'episode_id',
     'media_link',
     'media_type',
     'description',

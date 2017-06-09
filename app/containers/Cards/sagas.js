@@ -4,36 +4,36 @@ import {
   DISPLAY_CARDS,
   SELECTED_EPISODE,
   CREATE_CARD,
-  CARD_CREATED, 
+  CARD_CREATED,
   DELETE_CARD,
   CARD_DELETED,
   UPDATE_CARD,
-  CARD_UPDATED, 
+  CARD_UPDATED,
 } from './constants';
 
 import HttpClient from '../../httpClient';
 
-// API 
 const createCardAsync = (body) => (
   HttpClient.post('/api/card', body)
-)
+);
 
 const updateCardAsync = (params) => (
   HttpClient.put(`/api/card/${params.id}`, params)
-)
+);
 
 const deleteCardAsync = (params) => (
   HttpClient.delete(`/api/card/${params.id}`)
-)
+);
 
 function* createCard() {
-  yield takeLatest(CREATE_CARD, callCreateCard)
+  yield takeLatest(CREATE_CARD, callCreateCard);
 }
 
 // ASYNC Actions (Sagas)
 function* callCreateCard(action) {
+  console.log('+++line 34 CallCreateCard: ', action);
   try {
-    const result = yield call(createCardAsync(action.payload));
+    const result = yield call(createCardAsync, action.payload);
     yield put({ type: CARD_CREATED, payload: result });
   } catch (e) {
     console.error(e);
@@ -41,7 +41,7 @@ function* callCreateCard(action) {
 }
 
 function* updateCard() {
-  yield takeLatest(UPDATE_CARD, callUpdateCard)
+  yield takeLatest(UPDATE_CARD, callUpdateCard);
 }
 
 function* callUpdateCard(action) {
