@@ -1,9 +1,9 @@
 // const Sequelize = require('sequelize');
 // const sequelize = require('../config/database');
 // const User = require('../user/user.model');
-// const Podcast = require('../podcast/podcast.model');
-// const Whitelist = require('../whitelist/whitelist.model');
-// const UserPodcast = require('../podcast/userPodcast.model');
+const Podcast = require('../podcast/podcast.model');
+const Whitelist = require('../whitelist/whitelist.model');
+const UserPodcast = require('../podcast/userPodcast.model');
 // const Episode = require('../episode/episode.model');
 // const chalk = require('chalk');
 // const Card = require('../card/card.model');
@@ -18,8 +18,8 @@
 // Podcast.belongsToMany(User, { through: UserPodcast, foreignKey: 'podcastId' });
 
 // Whitelist.create({
-//   feedUrl: 'http://feeds.feedburner.com/BuildingNexcast/rss',
-//   email: 'bsanders808@gmail.com',
+//   feedUrl: 'https://www.sciencefriday.com/feed/podcast/podcast-episode',
+//   email: 'vvnsze@gmail.com',
 // }).then((success) => {
 //   console.log('SUCCESS!:' , success);
 // });

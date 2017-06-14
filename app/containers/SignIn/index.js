@@ -22,7 +22,8 @@ export class SignIn extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.currentUser !== undefined) {
+    if (this.props.currentUser !== undefined && this.props.currentUser.user !== null) {
+      console.log('+++line 26 signin index: ', this.props.currentUser);
       browserHistory.push('/main');
     }
   }
@@ -69,8 +70,9 @@ export class SignIn extends React.Component {
 
   render() {
     return (
+      <div className="container">
       <Paper zDepth={2} >
-        <form onSubmit={this.handleFormSubmit}>
+        <form style={{ textalign: 'center' }} onSubmit={this.handleFormSubmit}>
           <TextField
             value={this.state.email}
             errorText={this.state.emailError}
@@ -90,11 +92,12 @@ export class SignIn extends React.Component {
 
           <br />
 
-          <FlatButton label="Sign In" onTouchTap={this.handleFormSubmit} />
+          <FlatButton primary label="Sign In" onTouchTap={this.handleFormSubmit} />
           <div>{this.props.message}</div>
         </form>
 
       </Paper>
+      </div>
     );
   }
 }

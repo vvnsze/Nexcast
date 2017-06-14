@@ -7,6 +7,7 @@ const podcast = require('./podcast/podcast.routes');
 const episode = require('./episode/episode.routes');
 const s3uploads = require('./services/aws.s3uploader');
 const cards = require('./card/card.routes');
+const podcastController = require('./podcast/podcast.controller');
 
 module.exports = function baseRoutes(app) {
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,4 +20,5 @@ module.exports = function baseRoutes(app) {
   app.post('/signin', requireSignin, Authentication.signin);
   app.post('/signup', Authentication.signup);
   app.get('/verify-user-account', Authentication.verifyUserAccount);
+  app.get('/verify-user-to-podcast', podcastController.verifyUserPodcast);
 };
