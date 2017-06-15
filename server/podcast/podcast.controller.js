@@ -40,7 +40,6 @@ exports.getPodcasts = (req, res, next) => {
       res.locals.podcastResult = result.map((item) => item.podcast);
       next();
     }).catch((error) => {
-      console.error(chalk.red('+++line 34 there is an error: '), error);
       res.send(error);
     });
 };
@@ -83,13 +82,12 @@ exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
   const feedTitle = req.body.podcast.collectionName;
 
-  console.log(feedUrl)
   request.get(feedUrl).on('response', (resp) => {
 
     const parsed = new FeedMe(true);
     resp.pipe(parsed);
 
-    parsed.on('end', () => {
+    parsed.on('end', () => { 
       const podcastJSON = parsed.done();
       const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
 
@@ -101,6 +99,7 @@ exports.verifyPodcast = (req, res, next) => {
         
         return next();
       } else {
+
         // If the emails don't match check the whitelist.
         Whitelist.findOne({ where: { feedUrl, email: req.user.email } })
           .then((data) => {
@@ -110,6 +109,7 @@ exports.verifyPodcast = (req, res, next) => {
               confirmation.podcastEmailMatched(req.user.email, feedTitle)
               return next();
             }
+
             // user email not associated with this podcast
             // send unverified.
             res.locals.verified = false;
@@ -118,8 +118,10 @@ exports.verifyPodcast = (req, res, next) => {
           })
           .catch(error => { return res.status(422).send({ error, message: 'failed to load' }); });
       }
-    });
-  }).on('error', error => (console.log(error)))
+
+    });// end parsed block
+
+  }).on('error', error => (console.log(error)));
 }
 
 exports.setVerifyUserPodcast = (req, res) => {
