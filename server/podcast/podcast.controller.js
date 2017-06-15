@@ -81,8 +81,6 @@ exports.findOrCreateByFeedUrl = (req, res) => {
 };
 
 exports.verifyPodcast = (req, res, next) => {
-  console.log(chalk.green('+++line 85 podcast controller: '), req.body);
-  console.log(chalk.green('+++line 85 podcast controller req.user: '), req.user);
   const feedUrl = req.body.podcast.feedUrl;
   const feedTitle = req.body.podcast.collectionName;
 
@@ -95,7 +93,7 @@ exports.verifyPodcast = (req, res, next) => {
 
       parsed.on('end', () => {
         const podcastJSON = parsed.done();
-        console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']['itunes:email']);
+        console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']);
         const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
         if (itunesEmail === req.user.email) {
           // The users email matches the feeds itunes email
@@ -132,7 +130,7 @@ exports.verifyPodcast = (req, res, next) => {
 
       parsed.on('end', () => {
         const podcastJSON = parsed.done();
-        console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']['itunes:email']);
+        console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']);
         const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
         if (itunesEmail === req.user.email) {
           // The users email matches the feeds itunes email
@@ -163,7 +161,7 @@ exports.verifyPodcast = (req, res, next) => {
   }
 };
 
-exports.setVerifyUserPodcast = (req, res, next) => {
+exports.setVerifyUserPodcast = (req, res) => {
   const userId = req.user.id;
   const podcastId = req.body.podcastObj[0].id;
   // There is a podcast shorthand on line 67
@@ -172,7 +170,7 @@ exports.setVerifyUserPodcast = (req, res, next) => {
       const userPodcastObj = result[0];
       userPodcastObj.verified = res.locals.verified;
       userPodcastObj.save()
-        .then((result) => res.send({ result, verified: res.locals.verified }))
+        .then((results) => res.send({ results, verified: res.locals.verified }))
         .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
     })
     .catch((error) => { res.status(422).send({ error, message: 'failed to load' }); });

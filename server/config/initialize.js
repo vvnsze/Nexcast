@@ -1,9 +1,9 @@
 // const Sequelize = require('sequelize');
 // const sequelize = require('../config/database');
 // const User = require('../user/user.model');
-const Podcast = require('../podcast/podcast.model');
-const Whitelist = require('../whitelist/whitelist.model');
-const UserPodcast = require('../podcast/userPodcast.model');
+// const Podcast = require('../podcast/podcast.model');
+// const Whitelist = require('../whitelist/whitelist.model');
+// const UserPodcast = require('../podcast/userPodcast.model');
 // const Episode = require('../episode/episode.model');
 // const chalk = require('chalk');
 // const Card = require('../card/card.model');

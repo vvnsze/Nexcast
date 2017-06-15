@@ -9,7 +9,7 @@ module.exports = {
   sendConfirmationEmail: function confirmationEmail(user) {
     const toEmail = user.email;
     const generateLink = () => (
-      '<b>Welcome to Nexcast!</b><br/>Make sure this is the email associated with your podcast so we can verify you as the owner. <br/>Please confirm your account by clicking through this link: ' + `<a href=${hostName}/verify-user-account?t=${user.confirmationToken}>Verify email address</a>`
+      '<b>Welcome to Nexcast!</b><br/>Make sure this is the email associated with your podcast so we can verify you as the owner. <br/>Please confirm your account by clicking through this link: ' + `<a href=${hostName}/verify-user-account?t=${user.confirmationToken}>Verify email address</a><br/>Thanks for joining!<br/>The Nexcast Team`
       );
 
     const mail = new MailComposer({
