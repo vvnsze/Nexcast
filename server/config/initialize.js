@@ -19,7 +19,7 @@ const UserPodcast = require('../podcast/userPodcast.model');
 
 // Whitelist.create({
 //   feedUrl: 'https://www.sciencefriday.com/feed/podcast/podcast-episode',
-//   email: 'vvnsze@gmail.com',
+//   email: 'vvnsze+85@gmail.com',
 // }).then((success) => {
 //   console.log('SUCCESS!:' , success);
 // });
