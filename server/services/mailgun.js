@@ -33,12 +33,12 @@ module.exports = {
       });
     });
   },
-  podcastEmailPending: function emailPending(userEmail, podcast) {
+  podcastEmailPending: function emailPending(userId, userEmail, podcast) {
     console.log(chalk.cyan('+++line 37 inside podcast email pending, user: '), userEmail);
     console.log(chalk.cyan('+++line 38 inside podcast email pending, podcast: '), podcast);
     const toEmail = 'vvnsze@gmail.com';
     const generateMessage = () => {
-      return 'User: ' + userEmail + '<br/>Wants to claim: ' + podcast.title + '<br/>Email Associated: ' + podcast.email + '<br/>Would you like to approve? ' + `<a href=${hostName}/verify-user-to-podcast?confirm=true>Yes</a> <a href=${hostName}/verify-user-to-podcast?confirm=false>No</a>`;
+      return 'User: ' + userEmail + '<br/>Wants to claim: ' + podcast.title + '<br/>Email Associated: ' + podcast.email + '<br/>Would you like to approve? ' + `<a href=${hostName}/verify-user-to-podcast?feed=${podcast.feed}&userId=${userId}&confirm=true>Yes</a> <a href=${hostName}/verify-user-to-podcast?feed=${podcast.feed}&userId=${userId}&confirm=false>No</a>`;
     };
     const mail = new MailComposer({
       from: 'Nexcast.co <vvnsze@gmail.com>',

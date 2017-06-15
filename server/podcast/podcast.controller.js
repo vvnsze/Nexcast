@@ -137,8 +137,23 @@ exports.setVerifyUserPodcast = (req, res, next) => {
     .catch((error) => { return res.status(422).send({ error, message: 'failed to load' }); });
 };
 
+// Verify user to podcast through email
 exports.verifyUserPodcast = (req, res) => {
   console.log(chalk.green('+++line 135 verifyUserPodcast req: '), req.query);
   const confirmed = req.query.confirm;
-  res.send({ cheese: 'burger' });
-}
+  const usersId = req.query.userId;
+  Podcast.findOne({ where: { feed_url: req.query.feed } }).then((pod) => {
+    console.log(chalk.blue('+++line 187 found the pod!: '), pod);
+    userPodcast.findOrCreate({ where: { userId: usersId, podcastId: pod.id } })
+      .then((result) => {
+        const userPodcastObj = result[0];
+        userPodcastObj.verified = confirmed;
+        userPodcastObj.save()
+          .then((success) => res.send({ success, verified: confirmed }))
+          .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
+      })
+      .catch((error) => { res.status(422).send({ error, message: 'failed to load' }); });
+  }).catch((err) => {
+    res.send({ err });
+  });
+};
