@@ -35,6 +35,29 @@ export default function createRoutes(store) {
       },
     },
     {
+      path: '/main',
+      name: 'SplitView',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/SideMenu/reducer'),
+          import('containers/SideMenu/sagas'),
+          import('containers/Cards/sagas'),
+          import('components/SplitView'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sideMenuSaga, cardSaga, component]) => {
+          injectReducer('sideMenu', reducer.default);
+          injectSagas(sideMenuSaga.default);
+          injectSagas(cardSaga.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    },
+    {
       path: '/signup',
       name: 'signUp',
       getComponent(nextState, cb) {
@@ -93,6 +116,22 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/podcastverificationfailed',
+      name: 'emailVerificationFailed',
+      getComponent(location, cb) {
+        import('components/EmailVerificationFailed')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/podcastverificationsuccess',
+      name: 'emailVerificationSuccess',
+      getComponent(location, cb) {
+        import('components/EmailVerificationSuccess')
+          .then(loadModule(cb))
+          .catch(errorLoading);
       },
     }, {
       path: '*',

@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./card.controller');
 
-router.post('/api/card', [controller.createCard]);
+router.post('/api/card', [
+  controller.fetchEpisodeId,
+  controller.createCard,
+]);
 
 router.put('/api/card/:id', (req, res) => {});
 

@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import Paper from 'material-ui/Paper';
 
 export class SignUp extends React.Component {
 
@@ -40,7 +41,8 @@ export class SignUp extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
+        <Paper zDepth={2}>
         <form onSubmit={this.handleFormSubmit}>
           <div>CREATE AN ACCOUNT</div>
           <fieldset>
@@ -66,6 +68,7 @@ export class SignUp extends React.Component {
           <div>{this.displayPasswordError()}</div>
           <button action="submit">Create Account</button>
         </form>
+        </Paper>
       </div>
     );
   }

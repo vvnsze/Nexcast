@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 const bcrypt = require('bcrypt');
-const sendConfirmationEmail = require('../services/mailgun');
+const confirmation = require('../services/mailgun');
 
 const User = sequelize.define('users', {
   id: {
@@ -59,7 +59,7 @@ const User = sequelize.define('users', {
       });
     },
     afterCreate: function emailConfirm(_user) {
-      sendConfirmationEmail(_user);
+      confirmation.sendConfirmationEmail(_user);
     },
   },
 });

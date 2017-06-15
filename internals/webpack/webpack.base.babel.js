@@ -13,7 +13,7 @@ module.exports = (options) => ({
   }, options.output), // Merge with env dependent settings
   module: {
     loaders: [{
-      test: /\.js$/, // Transform all .js files required somewhere with Babel
+      test: /\.(js|jsx)$/, // Transform all .js files required somewhere with Babel
       loader: 'babel-loader',
       exclude: /node_modules/,
       query: options.babelQuery,
@@ -47,11 +47,20 @@ module.exports = (options) => ({
         },
       ],
     }, {
-      test: /\.html$/,
-      loader: 'html-loader',
+      test: /\.svg$/,
+      loader: 'babel!react-svg?' + JSON.stringify({
+        svgo: {
+          // svgo options
+          plugins: [{ removeTitle: false }],
+          floatPrecision: 2,
+        },
+      }),
     }, {
       test: /\.json$/,
       loader: 'json-loader',
+    }, {
+      test: /\.html$/,
+      loader: 'html-loader',
     }, {
       test: /\.(mp4|webm)$/,
       loader: 'url-loader',

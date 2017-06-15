@@ -1,10 +1,9 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
-const chalk = require('chalk');
 
 const Card = sequelize.define('card', {
   tagged_timestamp: {
-    type: Sequelize.TIME,
+    type: Sequelize.INTEGER,
   },
   podcast_id: {
     type: Sequelize.INTEGER,
@@ -27,9 +26,12 @@ const Card = sequelize.define('card', {
   button_link: {
     type: Sequelize.STRING(3000),
   },
-  underscored: true,
-});
+},
+  {
+    underscored: true,
+  }
+);
 
-Card.sync(force: true);
+// Card.sync({ force: true });
 
 module.exports = Card;

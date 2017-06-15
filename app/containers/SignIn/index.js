@@ -4,26 +4,27 @@ import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import * as actions from './actions';
 
 export class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       email: '',
-      password: '', 
-      emailError: '', 
-      passwordError: '' 
-    }
+      password: '',
+      emailError: '',
+      passwordError: '',
+    };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   componentDidUpdate() {
-    if (this.props.currentUser !== undefined) {
-      browserHistory.push('/searchPodcast');
+    if (this.props.currentUser !== undefined && this.props.currentUser.user !== null) {
+      console.log('+++line 26 signin index: ', this.props.currentUser);
+      browserHistory.push('/main');
     }
   }
 
@@ -37,62 +38,66 @@ export class SignIn extends React.Component {
   handleChangePassword = (event) => {
     this.setState({
       password: event.target.value,
-      passwordError: ''
+      passwordError: '',
     });
   }
 
-  handleFormSubmit(event) {
+  handleFormSubmit() {
     const email = this.state.email;
     const password = this.state.password;
     let errors = false;
 
-    if(!email) {
+    if (!email) {
       errors = true;
 
       this.setState({
-        emailError: "Email is required",
-      })
+        emailError: 'Email is required',
+      });
     }
 
-    if(!password) {
+    if (!password) {
       errors = true;
 
       this.setState({
-        passwordError: "Password is required",
-      })
+        passwordError: 'Password is required',
+      });
     }
 
-    if(!errors) {
+    if (!errors) {
       this.props.dispatch(actions.signIn({ email, password }));
     }
   }
 
   render() {
     return (
+      <div className="container">
       <Paper zDepth={2} >
-        <form onSubmit={this.handleFormSubmit}>
+        <form style={{ textalign: 'center' }} onSubmit={this.handleFormSubmit}>
           <TextField
-            hintText="Email Address"
-            value={this.state.email} 
+            value={this.state.email}
             errorText={this.state.emailError}
-            onChange={this.handleChangeEmail} />
+            floatingLabelText="Email Address"
+            onChange={this.handleChangeEmail}
+          />
 
           <br />
 
           <TextField
-            hintText="Password"
-            value={this.state.password} 
-            type='password'
+            value={this.state.password}
+            floatingLabelText="Password"
+            type="password"
             errorText={this.state.passwordError}
-            onChange={this.handleChangePassword} />
+            onChange={this.handleChangePassword}
+          />
 
           <br />
 
-          <RaisedButton label='Sign In' onTouchTap={this.handleFormSubmit} />
+          <FlatButton primary label="Sign In" onTouchTap={this.handleFormSubmit} />
           <div>{this.props.message}</div>
         </form>
 
       </Paper>
+      </div>
     );
   }
 }

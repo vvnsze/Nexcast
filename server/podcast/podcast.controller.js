@@ -1,13 +1,13 @@
 const FeedMe = require('feedme');
-const http = require('http');
+const request = require('request');
 const parser = require('rss-parser');
 const Axios = require('axios');
 const Podcast = require('./podcast.model');
 const userPodcast = require('./userPodcast.model');
 const Whitelist = require('../whitelist/whitelist.model');
 const chalk = require('chalk');
+const confirmation = require('../services/mailgun');
 
-// Declare associations
 // TODO refactor this into config file.
 Podcast.hasMany(userPodcast, { foreignKey: 'podcastId' });
 userPodcast.belongsTo(Podcast, { foreignKey: 'podcastId' });
@@ -25,9 +25,9 @@ exports.searchItunes = (req, res) => {
   });
 };
 
-
 exports.getPodcasts = (req, res, next) => {
-  const userId = req.query.userId;
+  const userId = req.user.id;
+  console.log(chalk.magenta(`this is the userId: ${userId}`));
   const query = {
     where: {
       userId,
@@ -40,7 +40,6 @@ exports.getPodcasts = (req, res, next) => {
       res.locals.podcastResult = result.map((item) => item.podcast);
       next();
     }).catch((error) => {
-      console.error(chalk.red('+++line 34 there is an error: '), error);
       res.send(error);
     });
 };
@@ -55,6 +54,7 @@ exports.parsePodcasts = (req, res) => {
           description: parsed.feed.description,
           itunes: parsed.feed.itunes,
           entries: parsed.feed.entries,
+          nexcastObjId: podcast.id,
         });
       });
     })
@@ -80,42 +80,51 @@ exports.findOrCreateByFeedUrl = (req, res) => {
 
 exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
+  const feedTitle = req.body.podcast.collectionName;
 
-  // Get the feed and parse
-  http.get(feedUrl, (resp) => {
+  request.get(feedUrl).on('response', (resp) => {
+
     const parsed = new FeedMe(true);
     resp.pipe(parsed);
 
-    parsed.on('end', () => {
+    parsed.on('end', () => { 
       const podcastJSON = parsed.done();
-      console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']['itunes:email']);
       const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
+
       if (itunesEmail === req.user.email) {
         // The users email matches the feeds itunes email
         // go to next step and mark verified.
         res.locals.verified = true;
+        confirmation.podcastEmailMatched(req.user.email, feedTitle)
+        
         return next();
       } else {
+
         // If the emails don't match check the whitelist.
         Whitelist.findOne({ where: { feedUrl, email: req.user.email } })
           .then((data) => {
             if (data) {
               // record exists, go to next step and mark verified.
               res.locals.verified = true;
+              confirmation.podcastEmailMatched(req.user.email, feedTitle)
               return next();
             }
+
             // user email not associated with this podcast
             // send unverified.
             res.locals.verified = false;
+            confirmation.podcastEmailPending(req.user.id, req.user.email, { title: feedTitle, email: itunesEmail });
             return next();
           })
-          .catch((err) => res.status(422).send(err));
+          .catch(error => { return res.status(422).send({ error, message: 'failed to load' }); });
       }
-    });
-  });
-};
 
-exports.setVerifyUserPodcast = (req, res, next) => {
+    });// end parsed block
+
+  }).on('error', error => (console.log(error)));
+}
+
+exports.setVerifyUserPodcast = (req, res) => {
   const userId = req.user.id;
   const podcastId = req.body.podcastObj[0].id;
   // There is a podcast shorthand on line 67
@@ -124,8 +133,29 @@ exports.setVerifyUserPodcast = (req, res, next) => {
       const userPodcastObj = result[0];
       userPodcastObj.verified = res.locals.verified;
       userPodcastObj.save()
-        .then((result) => res.send({ result, verified: res.locals.verified }))
+        .then((results) => res.send({ results, verified: res.locals.verified }))
         .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
     })
-    .catch((error) => { res.status(422).send({ error, message: 'failed to load' }); });
+    .catch((error) => { return res.status(422).send({ error, message: 'failed to load' }); });
+};
+
+// Verify user to podcast through email
+exports.verifyUserPodcast = (req, res) => {
+  console.log(chalk.green('+++line 135 verifyUserPodcast req: '), req.query);
+  const confirmed = req.query.confirm;
+  const usersId = req.query.userId;
+  Podcast.findOne({ where: { feed_url: req.query.feed } }).then((pod) => {
+    console.log(chalk.blue('+++line 187 found the pod!: '), pod);
+    userPodcast.findOrCreate({ where: { userId: usersId, podcastId: pod.id } })
+      .then((result) => {
+        const userPodcastObj = result[0];
+        userPodcastObj.verified = confirmed;
+        userPodcastObj.save()
+          .then((success) => res.send({ success, verified: confirmed }))
+          .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
+      })
+      .catch((error) => { res.status(422).send({ error, message: 'failed to load' }); });
+  }).catch((err) => {
+    res.send({ err });
+  });
 };

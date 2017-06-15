@@ -164,23 +164,7 @@
       }
     }
   },
-  "dllPlugin": {
-    "path": "node_modules/react-boilerplate-dlls",
-    "exclude": [
-      "chalk",
-      "compression",
-      "cross-env",
-      "express",
-      "ip",
-      "minimist",
-      "sanitize.css"
-    ],
-    "include": [
-      "core-js",
-      "lodash",
-      "eventsource-polyfill"
-    ]
-  },
+  "dllPlugin": false,
   "jest": {
     "collectCoverageFrom": [
       "app/**/*.{js,jsx}",
@@ -248,13 +232,16 @@
     "react-router-scroll": "0.4.1",
     "react-s3-upload": "^0.1.6",
     "react-s3-uploader": "^4.1.1",
+    "react-svg-loader": "^1.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "3.6.0",
     "redux-saga": "0.14.0",
+    "request": "^2.81.0",
     "rss-parser": "^2.7.0",
     "sanitize.css": "4.1.0",
     "sequelize": "^3.30.4",
     "styled-components": "1.1.2",
+    "svgo": "^0.7.2",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.1"
   },
@@ -264,7 +251,6 @@
     "babel-eslint": "7.1.1",
     "babel-loader": "6.2.10",
     "babel-plugin-dynamic-import-node": "1.0.0",
-    "babel-plugin-react-intl": "2.2.0",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-transform-es2015-modules-commonjs": "6.18.0",
     "babel-plugin-transform-react-constant-elements": "6.9.1",
@@ -290,7 +276,7 @@
     "eventsource-polyfill": "0.9.6",
     "exports-loader": "0.6.3",
     "file-loader": "0.9.0",
-    "html-loader": "0.4.4",
+    "html-loader": "^0.4.5",
     "html-webpack-plugin": "2.24.1",
     "image-webpack-loader": "2.0.0",
     "imports-loader": "0.6.5",
@@ -308,7 +294,7 @@
     "shelljs": "0.7.5",
     "sinon": "2.0.0-pre",
     "style-loader": "0.13.1",
-    "url-loader": "0.5.7",
+    "url-loader": "^0.5.8",
     "webpack": "2.2.0-rc.3",
     "webpack-dev-middleware": "1.9.0",
     "webpack-hot-middleware": "2.15.0"

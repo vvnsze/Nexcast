@@ -23,9 +23,9 @@ export default class App extends React.PureComponent { // eslint-disable-line re
   render() {
     return (
       <MuiThemeProvider>
-        <div>
+        <div className="container" style={{ width: '100%', maxWidth: 'none' }}>
           <Header />
-          <div className="container">
+          <div>
             {React.Children.toArray(this.props.children)}
           </div>
         </div>

@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./episode.controller');
+const episodeController = require('./episode.controller');
+const cardController = require('../card/card.controller');
 
-router.get('/episodes', (req, res) => {
-  res.send('get episode endpoint');
-});
+
+router.get('/api/episode', [
+  episodeController.findOrCreatePodcastEpisode,
+  cardController.fetchCards,
+]);
 
 module.exports = router;

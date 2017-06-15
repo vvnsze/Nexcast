@@ -16,7 +16,7 @@ function* signInUserAsync(action) {
     const response = yield call(signInAccount(action.payload));
 
     yield setUserToken(response);
-    yield setUserName(response);   
+    yield setUserName(response);
 
     yield put({ type: SET_CURRENT_USER, user: response });
     yield put({ type: USER_SIGNED_IN, user: response.user, message: response.message });
@@ -26,21 +26,21 @@ function* signInUserAsync(action) {
 }
 
 function signInAccount(params) {
-  return () => { 
-    return new Promise((resolve, reject) => {
+  return () => (
+    new Promise((resolve, reject) => {
       Axios.post('/signin', params)
-        .then((result) => {
-          return resolve(result)
-        })
-        .catch((error) => {
-          return resolve({
-            user: null, 
+        .then((result) => (
+          resolve(result)
+        ))
+        .catch((error) => (
+          resolve({
+            user: null,
             message: 'There was a problem logging in.',
             error,
-          });
-        });
-    });
-  };
+          })
+        ));
+    })
+  );
 }
 
 export default [
