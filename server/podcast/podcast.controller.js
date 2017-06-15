@@ -1,6 +1,5 @@
 const FeedMe = require('feedme');
-const http = require('http');
-const https = require('https');
+const request = require('request');
 const parser = require('rss-parser');
 const Axios = require('axios');
 const Podcast = require('./podcast.model');
@@ -84,82 +83,44 @@ exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
   const feedTitle = req.body.podcast.collectionName;
 
-  // Check feedUrl for http protocol
-  // TODO: Need to refactor! A lot of repeated code
-  if (feedUrl.search('http') !== -1) {
-    http.get(feedUrl, (resp) => {
-      const parsed = new FeedMe(true);
-      resp.pipe(parsed);
+  console.log(feedUrl)
+  request.get(feedUrl).on('response', (resp) => {
 
-      parsed.on('end', () => {
-        const podcastJSON = parsed.done();
-        console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']);
-        const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
-        if (itunesEmail === req.user.email) {
-          // The users email matches the feeds itunes email
-          // go to next step and mark verified.
-          res.locals.verified = true;
-          confirmation.podcastEmailMatched(req.user.id, req.user.email, feedTitle);
-          return next();
-        } else {
-          // If the emails don't match check the whitelist.
-          Whitelist.findOne({ where: { feedUrl, email: req.user.email } })
-            .then((data) => {
-              if (data) {
-                // record exists, go to next step and mark verified.
-                res.locals.verified = true;
-                confirmation.podcastEmailMatched(req.user.email, feedTitle);
-                return next();
-              }
-              // user email not associated with this podcast
-              // send unverified.
-              res.locals.verified = false;
-              confirmation.podcastEmailPending(req.user.id, req.user.email, { title: feedTitle, email: itunesEmail, feed: feedUrl });
-              return next();
-            })
-            .catch((err) => res.status(422).send(err));
-        }
-      });
-    });
-  }
-  // Check feedUrl for https protocol
-  if (feedUrl.search('https') !== -1) {
-    https.get(feedUrl, (resp) => {
-      const parsed = new FeedMe(true);
-      resp.pipe(parsed);
+    const parsed = new FeedMe(true);
+    resp.pipe(parsed);
 
-      parsed.on('end', () => {
-        const podcastJSON = parsed.done();
-        console.log(chalk.green('this is the podcastJSON email: '), podcastJSON['itunes:owner']);
-        const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
-        if (itunesEmail === req.user.email) {
-          // The users email matches the feeds itunes email
-          // go to next step and mark verified.
-          res.locals.verified = true;
-          confirmation.podcastEmailMatched(req.user.email, feedTitle);
-          return next();
-        } else {
-          // If the emails don't match check the whitelist.
-          Whitelist.findOne({ where: { feedUrl, email: req.user.email } })
-            .then((data) => {
-              if (data) {
-                // record exists, go to next step and mark verified.
-                res.locals.verified = true;
-                confirmation.podcastEmailMatched(req.user.email, req.body.podcast.collectionName);
-                return next();
-              }
-              // user email not associated with this podcast
-              // send unverified.
-              res.locals.verified = false;
-              confirmation.podcastEmailPending(req.user.id, req.user.email, { title: feedTitle, email: itunesEmail, feed: feedUrl });
+    parsed.on('end', () => {
+      const podcastJSON = parsed.done();
+      const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
+
+      if (itunesEmail === req.user.email) {
+        // The users email matches the feeds itunes email
+        // go to next step and mark verified.
+        res.locals.verified = true;
+        confirmation.podcastEmailMatched(req.user.email, feedTitle)
+        
+        return next();
+      } else {
+        // If the emails don't match check the whitelist.
+        Whitelist.findOne({ where: { feedUrl, email: req.user.email } })
+          .then((data) => {
+            if (data) {
+              // record exists, go to next step and mark verified.
+              res.locals.verified = true;
+              confirmation.podcastEmailMatched(req.user.email, feedTitle)
               return next();
-            })
-            .catch((err) => res.status(422).send(err));
-        }
-      });
+            }
+            // user email not associated with this podcast
+            // send unverified.
+            res.locals.verified = false;
+            confirmation.podcastEmailPending(req.user.id, req.user.email, { title: feedTitle, email: itunesEmail });
+            return next();
+          })
+          .catch(error => { return res.status(422).send({ error, message: 'failed to load' }); });
+      }
     });
-  }
-};
+  }).on('error', error => (console.log(error)))
+}
 
 exports.setVerifyUserPodcast = (req, res) => {
   const userId = req.user.id;
@@ -173,7 +134,7 @@ exports.setVerifyUserPodcast = (req, res) => {
         .then((results) => res.send({ results, verified: res.locals.verified }))
         .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
     })
-    .catch((error) => { res.status(422).send({ error, message: 'failed to load' }); });
+    .catch((error) => { return res.status(422).send({ error, message: 'failed to load' }); });
 };
 
 // Verify user to podcast through email
