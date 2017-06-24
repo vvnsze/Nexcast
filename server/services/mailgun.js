@@ -38,7 +38,7 @@ module.exports = {
     console.log(chalk.cyan('+++line 38 inside podcast email pending, podcast: '), podcast);
     const toEmail = 'vvnsze@gmail.com';
     const generateMessage = () => {
-      return 'User: ' + userEmail + '<br/>Wants to claim: ' + podcast.title + '<br/>Email Associated: ' + podcast.email + '<br/>Would you like to approve? ' + `<a href=${hostName}/verify-user-to-podcast?feed=${podcast.feed}&userId=${userId}&confirm=true>Yes</a> <a href=${hostName}/verify-user-to-podcast?feed=${podcast.feed}&userId=${userId}&confirm=false>No</a>`;
+      return 'User: ' + userEmail + '<br/>Wants to claim: ' + podcast.title + '<br/>Email Associated: ' + podcast.email + '<br/>Would you like to approve? ' + `<a href=${hostName}/verify-user-to-podcast?userEmail=${userEmail}&podcastTitle=${podcast.title}&feed=${podcast.feed}&userId=${userId}&confirm=true>Yes</a> <a href=${hostName}/verify-user-to-podcast?feed=${podcast.feed}&userId=${userId}&confirm=false>No</a>`;
     };
     const mail = new MailComposer({
       from: 'Nexcast.co <vvnsze@gmail.com>',
@@ -66,7 +66,7 @@ module.exports = {
     console.log(chalk.magenta('+++line 66 inside podcast email pending, podcast: '), podcastTitle);
     const toEmail = userEmail;
     const generateMessage = () => {
-      return 'Success! We have verified you as the owner of ' + podcastTitle + '<br/> You can now start tagging content here: ' + `<a href=${hostName}/searchpodcast</a><br/>Thanks,<br/>The Nexcast Team`;
+      return 'Success! We have verified you as the owner of ' + podcastTitle + '<br/> You can now start tagging content here: ' + `<a href=${hostName}/searchpodcast</a>` + '<br/>Thanks,<br/>The Nexcast Team';
     };
     const mail = new MailComposer({
       from: 'Nexcast.co <vvnsze@gmail.com>',

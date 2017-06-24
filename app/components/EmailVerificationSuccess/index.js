@@ -20,7 +20,7 @@ class EmailVerificationSuccess extends React.Component { // eslint-disable-line 
           <div>SUCCESS!</div>
           <div>Your email matches our records for the podcast you have chosen</div>
           <EmailVerificationPodcastItem />
-          <RaisedButton onTouchTap={() => { browserHistory.push('/main'); }} label="START TAGGING" primary />
+          <RaisedButton backgroundColor="#02dd78" onTouchTap={() => { browserHistory.push('/main'); }} label="START TAGGING" />
         </Paper>
       </div>
     );

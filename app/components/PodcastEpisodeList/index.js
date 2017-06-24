@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import PodcastItem from '../PodcastItem';
+
 // import styled from 'styled-components';
 
 
 const PodcastEpisodeList = ({ episodeList, onSelectEpisode }) => {
   const podcastEpisodeItems = episodeList.map((podcast) => (
+    <ul>
     <PodcastItem
       key={podcast.title}
       showTitle={podcast.title}
@@ -13,12 +15,13 @@ const PodcastEpisodeList = ({ episodeList, onSelectEpisode }) => {
       onSelectEpisode={onSelectEpisode}
       nexcastPodcastId={podcast.nexcastObjId}
     />
+    </ul>
   ));
 
   return (
-    <ul>
+    <div>
       {podcastEpisodeItems}
-    </ul>
+    </div>
   );
 };
 

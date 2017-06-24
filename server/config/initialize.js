@@ -2,7 +2,7 @@
 // const sequelize = require('../config/database');
 // const User = require('../user/user.model');
 // const Podcast = require('../podcast/podcast.model');
-// const Whitelist = require('../whitelist/whitelist.model');
+const Whitelist = require('../whitelist/whitelist.model');
 // const UserPodcast = require('../podcast/userPodcast.model');
 // const Episode = require('../episode/episode.model');
 // const chalk = require('chalk');
@@ -19,7 +19,7 @@
 
 // Whitelist.create({
 //   feedUrl: 'https://www.sciencefriday.com/feed/podcast/podcast-episode',
-//   email: 'vvnsze+85@gmail.com',
+//   email: 'vvnsze+83@gmail.com',
 // }).then((success) => {
 //   console.log('SUCCESS!:' , success);
 // });

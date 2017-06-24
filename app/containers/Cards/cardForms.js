@@ -80,7 +80,7 @@ class CreateCard extends React.Component {
               onFinish={this.onUploadFinish}
             />
           </div>
-          <FlatButton onTouchTap={this.handleFormSubmit}>Save</FlatButton>
+          <FlatButton style={{ background: '#02dd78' }} onTouchTap={this.handleFormSubmit}>Save</FlatButton>
         </form>
       </Card>
     );

@@ -24,7 +24,7 @@ class EmailVerificationFailed extends React.Component {
 
           <EmailVerificationPodcastItem />
         </Paper>
-        <RaisedButton onTouchTap={() => { browserHistory.push('/searchpodcast'); }} label="GOT IT" primary />
+        <RaisedButton backgroundColor="#02dd78" onTouchTap={() => { browserHistory.push('/searchpodcast'); }} label="GOT IT" />
       </div>
     );
   }

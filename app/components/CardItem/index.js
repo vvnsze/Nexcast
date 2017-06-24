@@ -40,7 +40,7 @@ const CardItem = ({ card }) => {
           {card.description}
         </CardText>
         <CardActions>
-          <FlatButton href={card.button_link} label={card.button_text} />
+          <FlatButton backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
         </CardActions>
       </Card>
   );

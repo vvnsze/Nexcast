@@ -92,7 +92,7 @@ export class SignIn extends React.Component {
 
           <br />
 
-          <FlatButton primary label="Sign In" onTouchTap={this.handleFormSubmit} />
+          <FlatButton style={{ background: '#02dd78' }} label="Sign In" onTouchTap={this.handleFormSubmit} />
           <div>{this.props.message}</div>
         </form>
 
