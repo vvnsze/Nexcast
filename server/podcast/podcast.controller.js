@@ -140,8 +140,8 @@ exports.verifyUserPodcast = (req, res) => {
   console.log(chalk.green('+++line 135 verifyUserPodcast req: '), req.query);
   const confirmed = req.query.confirm;
   const usersId = req.query.userId;
-  const podcastTitle = req.query.podcastTitle;
-  const userEmail = req.query.userEmail;
+  const podcastsTitle = req.query.title;
+  const usersEmail = req.query.email;
   Podcast.findOne({ where: { feed_url: req.query.feed } }).then((pod) => {
     console.log(chalk.blue('+++line 187 found the pod!: '), pod);
     userPodcast.findOrCreate({ where: { userId: usersId, podcastId: pod.id } })
@@ -150,7 +150,7 @@ exports.verifyUserPodcast = (req, res) => {
         userPodcastObj.verified = confirmed;
         userPodcastObj.save()
           .then((success) => {
-            confirmation.podcastEmailMatched(userEmail, podcastTitle);
+            confirmation.podcastEmailMatched(usersEmail, podcastsTitle);
             res.send({ success, verified: confirmed });
           }).catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
       })

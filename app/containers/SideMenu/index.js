@@ -46,12 +46,23 @@ export class SideMenu extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%', overflow: 'scroll' }}>
+      <div className="row" style={{ height: '100%', overflow: 'scroll' }}>
           <div
-            className="blue-grey  darken-4"
+            className="col s9 blue-grey darken-4"
             style={{ color: '#FFF', padding: '10px 20px' }}
           >MY SHOWS
-          <RaisedButton backgroundColor="#02dd78" onTouchTap={this.addShow}>ADD SHOW</RaisedButton>
+          </div>
+          <div
+            className="col s3 blue-grey darken-4"
+            style={{ color: '#FFF', padding: '10px 10px' }}
+          >
+            <RaisedButton
+              backgroundColor="#0371d8"
+              onTouchTap={this.addShow}
+              style={{ height: '22px', width: 'auto' }}
+              labelColor="#ffffff"
+            >ADD SHOW
+            </RaisedButton>
           </div>
         {this.showPodcastEpisode()}
       </div>

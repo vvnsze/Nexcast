@@ -7,14 +7,14 @@ import PodcastItem from '../PodcastItem';
 const PodcastEpisodeList = ({ episodeList, onSelectEpisode }) => {
   const podcastEpisodeItems = episodeList.map((podcast) => (
     <ul>
-    <PodcastItem
-      key={podcast.title}
-      showTitle={podcast.title}
-      showDescription={podcast.description}
-      episodes={podcast.entries}
-      onSelectEpisode={onSelectEpisode}
-      nexcastPodcastId={podcast.nexcastObjId}
-    />
+      <PodcastItem
+        key={podcast.title}
+        showTitle={podcast.title}
+        showDescription={podcast.description}
+        episodes={podcast.entries}
+        onSelectEpisode={onSelectEpisode}
+        nexcastPodcastId={podcast.nexcastObjId}
+      />
     </ul>
   ));
 

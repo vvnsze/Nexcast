@@ -15,16 +15,16 @@ const iconStyle = {
 
 const PodcastEpisodeItem = ({ episodeFile, episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode }) => (
   <div style={{ overflow: 'scroll' }}>
-  <ListItem
-    initiallyOpen="true"
-    style={{ color: '#ffffff', 'font-family': 'Lato,sans-serif', 'font-size': '16px' }}
-    leftIcon={<ToggleRadioButtonUnchecked color="#ffffff" style={iconStyle} />}
-    key={guid}
-    primaryText={episodeTitle}
-    // onClick should trigger a filled radioButton
-    onClick={() => { onSelectEpisode({ episodeFullContent, nexcastPodcastId, episodeTitle, guid, episodeFile }); }}
-    id={episodeTitle}
-  />
+    <ListItem
+      initiallyOpen="true"
+      style={{ color: '#ffffff', 'font-family': 'Lato,sans-serif', 'font-size': '16px' }}
+      leftIcon={<ToggleRadioButtonUnchecked color="#ffffff" style={iconStyle} />}
+      key={guid}
+      primaryText={episodeTitle}
+      // onClick should trigger a filled radioButton
+      onClick={() => { onSelectEpisode({ episodeFullContent, nexcastPodcastId, episodeTitle, guid, episodeFile }); }}
+      id={episodeTitle}
+    />
   </div>
 );
 

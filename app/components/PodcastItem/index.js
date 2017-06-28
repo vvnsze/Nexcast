@@ -29,14 +29,16 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
   }, []);
 
   return (
-    <ListItem
-      style={{ color: '#ffffff', 'font-family': 'Lato,sans-serif' }}
-      primaryText={showTitle}
-      nestedItems={Episodes}
-      primaryTogglesNestedList
-      initiallyOpen
-      nestedListStyle={{ height: '350px', overflow: 'scroll' }}
-    />
+    <div className="PodcastSearchResultItemWrapper">
+      <ListItem
+        style={{ color: '#ffffff', 'font-family': 'Lato,sans-serif' }}
+        primaryText={showTitle}
+        nestedItems={Episodes}
+        primaryTogglesNestedList
+        initiallyOpen
+        nestedListStyle={{ height: '350px', overflow: 'scroll' }}
+      />
+    </div>
   );
 }
 

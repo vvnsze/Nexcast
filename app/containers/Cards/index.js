@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import { GridList, GridTile } from 'material-ui/GridList';
 import CardItem from '../../components/CardItem';
 import CreateCard from './cardForms';
-
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 // This is styles for the grid list
 const styles = {
   root: {
@@ -59,12 +60,18 @@ export class Cards extends React.Component {
       return (
         <GridTile className="tileContainer">
           <CreateCard />
+          {/* Put cancel button */}
         </GridTile>
       );
     }
     if (this.props.selectedEpisode && !this.state.revealCardCreatorForm) {
       return (
-        <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.toggleRevealForm}><i className="material-icons">add</i></a>
+        <FloatingActionButton
+          onTouchTap={this.toggleRevealForm}
+          backgroundColor="#02dd78"
+        >
+          <ContentAdd />
+        </FloatingActionButton>
       );
     }
   }

@@ -28,21 +28,21 @@ const CardItem = ({ card }) => {
   };
 
   return (
-      <Card className="cardContainer" containerStyle={styles.Card}>
-        <CardHeader
-          style={{ height: 100, background: '#60B2E5' }}
-          title={card.tagged_timestamp}
-        />
-        <CardMedia>
-          {checkMedia(card)}
-        </CardMedia>
-        <CardText>
-          {card.description}
-        </CardText>
-        <CardActions>
-          <FlatButton backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
-        </CardActions>
-      </Card>
+    <Card className="cardContainer" containerStyle={styles.Card}>
+      <CardHeader
+        style={{ height: 100, background: '#60B2E5' }}
+        title={card.tagged_timestamp}
+      />
+      <CardMedia>
+        {checkMedia(card)}
+      </CardMedia>
+      <CardText>
+        {card.description}
+      </CardText>
+      <CardActions>
+        <FlatButton backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
+      </CardActions>
+    </Card>
   );
 };
 

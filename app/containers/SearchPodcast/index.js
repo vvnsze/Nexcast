@@ -61,22 +61,36 @@ export class SearchPodcast extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <Paper
-          style={{ textAlign: 'center' }}
-        >
-          <ActionSearch />
-          <input
-            type="text"
-            placeholder="Search podcasts"
-            name="searchPodcast"
-            onChange={(event) => this.onInputChange(event.target.value)}
-            value={this.state.term}
-          />
-          <div>{this.props.message}</div>
-          {this.showPodcastList()}
-        </Paper>
-        {this.showEmailVerificationResults()}
+      // <div className="outerWrapper" style={{ position: 'relative' }}>
+      <div className="searchPodcastWrapper">
+        <div className="row">
+          <div className="col s3"></div>
+          <div
+            className="col s6"
+            style={{ 'margin-top': '100px' }}
+          >
+            <Paper
+              style={{ background: '#fafafa', height: '500px', overflow: 'scroll', textAlign: 'center', margin: '10px', padding: '20px' }}
+            >
+              <ActionSearch />
+              <input
+                type="text"
+                placeholder="Search podcasts"
+                name="searchPodcast"
+                onChange={(event) => this.onInputChange(event.target.value)}
+                value={this.state.term}
+              />
+              <div>{this.props.message}</div>
+              {this.showEmailVerificationResults()}
+              <div
+                style={{ textAlign: 'left' }}
+              >
+                {this.showPodcastList()}
+              </div>
+            </Paper>
+          </div>
+          <div className="col s3"></div>
+        </div>
       </div>
     );
   }
