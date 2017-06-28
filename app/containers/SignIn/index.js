@@ -7,6 +7,23 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import * as actions from './actions';
 
+const styles = {
+  fieldset: {
+    paddingRight: '60px',
+    paddingLeft: '60px',
+    borderStyle: 'hidden',
+  },
+  input: {
+    backgroundColor: 'white',
+    border: '1px solid #ccc',
+    height: '2rem',
+    'border-radius': '4px',
+  },
+  label: {
+    'font-size': '13px',
+  },
+};
+
 export class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -71,7 +88,10 @@ export class SignIn extends React.Component {
   render() {
     return (
       <div className="container">
-      <Paper zDepth={2} >
+        <Paper
+          zDepth={2}
+          style={{ background: '#fafafa', fontWeight: 'bold' }}
+        >
         <form style={{ textalign: 'center' }} onSubmit={this.handleFormSubmit}>
           <TextField
             value={this.state.email}

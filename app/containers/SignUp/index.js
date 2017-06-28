@@ -68,7 +68,7 @@ export class SignUp extends React.Component {
             style={{ padding: '15px' }}
           >
             <legend
-              style={{ textAlign: 'center' }}
+              style={{ display: 'inline-block' }}
             >CREATE AN ACCOUNT</legend>
             <fieldset
               style={styles.fieldset}
