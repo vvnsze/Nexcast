@@ -12,7 +12,6 @@ class MainContent extends React.Component {
   render() {
     return (
       <div>
-        Hello Main Content World!
         <EpisodePlayer />
         <Cards />
       </div>

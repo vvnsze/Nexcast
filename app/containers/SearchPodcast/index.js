@@ -49,7 +49,7 @@ export class SearchPodcast extends React.Component {
   showPodcastList() {
     if (this.props.podcasts) {
       if (this.props.podcasts.length === 0) {
-        return (<div>No results, please try again</div>);
+        return (<div>Search for your podcast and claim it to start tagging</div>);
       }
 
       return (<div>
@@ -70,7 +70,8 @@ export class SearchPodcast extends React.Component {
             style={{ 'margin-top': '100px' }}
           >
             <Paper
-              style={{ background: '#fafafa', height: '500px', overflow: 'scroll', textAlign: 'center', margin: '10px', padding: '20px' }}
+              style={{ background: '#fafafa', height: '500px', overflow: 'scroll', textAlign: 'center', margin: '10px', padding: '20px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#C6D8D3' }}
+              zDepth={0}
             >
               <ActionSearch />
               <input

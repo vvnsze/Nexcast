@@ -17,7 +17,7 @@ const PodcastEpisodeItem = ({ episodeFile, episodeTitle, episodeFullContent, gui
   <div style={{ overflow: 'scroll' }}>
     <ListItem
       initiallyOpen="true"
-      style={{ color: '#ffffff', 'font-family': 'Lato,sans-serif', 'font-size': '16px' }}
+      style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif', fontSize: '16px' }}
       leftIcon={<ToggleRadioButtonUnchecked color="#ffffff" style={iconStyle} />}
       key={guid}
       primaryText={episodeTitle}
