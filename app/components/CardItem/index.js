@@ -31,27 +31,27 @@ const CardItem = ({ card, updateCard, deleteCard }) => {
 
   return (
     <div className="cardOuterWrapper" style={{ border: '2px solid #ccc', borderRadius: '6px', marginLeft: '5px', marginRight: '5px', marginBottom: '5px' }}>
-    <Card className="cardContainer" containerStyle={styles.Card}>
-      <CardHeader
-        style={{ height: 100, background: '#0371d8', color: 'white' }}
-        title={card.tagged_timestamp}
-      />
-      <CardMedia>
-        {checkMedia(card)}
-      </CardMedia>
-      <CardText>
-        {card.id}
-      </CardText>
-      <CardActions>
-        <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
-      </CardActions>
-      <CardActions>
-        <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { updateCard(card); }} label="edit" />
-      </CardActions>
-      <CardActions>
-        <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { deleteCard(card.id); }} label="delete" />
-      </CardActions>
-    </Card>
+      <Card className="cardContainer" containerStyle={styles.Card}>
+        <CardHeader
+          style={{ height: 100, background: '#0371d8', color: 'white' }}
+          title={card.time_stamp}
+        />
+        <CardMedia>
+          {checkMedia(card)}
+        </CardMedia>
+        <CardText>
+          {card.id}
+        </CardText>
+        <CardActions>
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
+        </CardActions>
+        <CardActions>
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { updateCard(card); }} label="edit" />
+        </CardActions>
+        <CardActions>
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
+        </CardActions>
+      </Card>
     </div>
   );
 };
