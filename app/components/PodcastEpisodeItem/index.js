@@ -16,7 +16,7 @@ const iconStyle = {
 const PodcastEpisodeItem = ({ episodeFile, episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode }) => (
   <div style={{ overflow: 'scroll' }}>
     <ListItem
-      initiallyOpen="true"
+      initiallyOpen
       style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif', fontSize: '16px' }}
       leftIcon={<ToggleRadioButtonUnchecked color="#ffffff" style={iconStyle} />}
       key={guid}

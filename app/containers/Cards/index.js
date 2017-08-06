@@ -5,6 +5,7 @@
  */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import * as actions from './actions';
 import { GridList, GridTile } from 'material-ui/GridList';
 import CardItem from '../../components/CardItem';
 import CreateCard from './cardForms';
@@ -34,6 +35,8 @@ export class Cards extends React.Component {
     this.loadCards = this.loadCards.bind(this);
     this.showCardButton = this.showCardButton.bind(this);
     this.toggleRevealForm = this.toggleRevealForm.bind(this);
+    this.updateCard = this.updateCard.bind(this);
+    this.deleteCard = this.deleteCard.bind(this);
   }
 
   loadCards() {
@@ -41,7 +44,7 @@ export class Cards extends React.Component {
       return this.props.displayCards.map((cardItem) => (
         (
           <GridTile className="tileContainer" >
-            <CardItem card={cardItem} />
+            <CardItem card={cardItem} updateCard={this.updateCard} deleteCard={this.deleteCard} />
           </GridTile>
         )
       ));
@@ -49,6 +52,14 @@ export class Cards extends React.Component {
     return (
       <li>You have no cards</li>
     );
+  }
+
+  updateCard(cardValues) {
+    this.props.dispatch(actions.editCard(cardValues));
+  }
+
+  deleteCard(cardId) {
+    this.props.dispatch(actions.deleteCard(cardId));
   }
 
   toggleRevealForm() {

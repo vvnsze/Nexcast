@@ -20,6 +20,7 @@ exports.fetchCards = (req, res) => {
     },
   };
   Card.findAll(query).then((cards) => {
+    console.log(chalk.magenta('this is the cards!: '), cards);
     const allCards = cards.map((card) => {
       return card;
     });
@@ -31,7 +32,6 @@ exports.fetchCards = (req, res) => {
 };
 
 exports.fetchEpisodeId = (req, res, next) => {
-  console.log(chalk.magenta('this is the req in fetchEpisodeId: '), req);
   const query = {
     where: {
       guid: req.body.episode_guid,
@@ -58,6 +58,11 @@ exports.createCard = (req, res) => {
       res.send(responseFormatter(false, 'card failed to save'))
     ));
 };
+
+exports.deleteCard = (req, res) => {
+  console.log(chalk.cyan('+++line 66 card controller delete req'), res.params);
+  res.send({ cheeseburger: 'burger' })
+}
 
 // helpers
 function paramsForCard(req) {

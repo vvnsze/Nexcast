@@ -12,7 +12,7 @@ const styles = {
   },
 };
 
-const CardItem = ({ card }) => {
+const CardItem = ({ card, updateCard, deleteCard }) => {
   const checkMedia = function check(item) {
     if (item.media_type === 'image') {
       return (
@@ -40,10 +40,16 @@ const CardItem = ({ card }) => {
         {checkMedia(card)}
       </CardMedia>
       <CardText>
-        {card.description}
+        {card.id}
       </CardText>
       <CardActions>
         <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
+      </CardActions>
+      <CardActions>
+        <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { updateCard(card); }} label="edit" />
+      </CardActions>
+      <CardActions>
+        <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { deleteCard(card.id); }} label="delete" />
       </CardActions>
     </Card>
     </div>
@@ -52,6 +58,8 @@ const CardItem = ({ card }) => {
 
 CardItem.propTypes = {
   card: PropTypes.object,
+  updateCard: PropTypes.func,
+  deleteCard: PropTypes.func,
 };
 
 export default CardItem;

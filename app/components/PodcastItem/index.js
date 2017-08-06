@@ -31,7 +31,7 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
   return (
     <div className="PodcastSearchResultItemWrapper">
       <ListItem
-        style={{ color: '#ffffff', 'font-family': 'Lato,sans-serif' }}
+        style={{ color: '#ffffff', 'fontFamily': 'Lato,sans-serif' }}
         primaryText={showTitle}
         nestedItems={Episodes}
         primaryTogglesNestedList

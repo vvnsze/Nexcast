@@ -78,22 +78,22 @@ export class SignUp extends React.Component {
 
   render() {
     return (
-        <div className="row">
-        <div className="col s4 offset-s4">
+      <div className="row">
+      <div className="col s4 offset-s4">
         <Paper
           zDepth={1}
           style={styles.paper}
         >
-            <form
-              onSubmit={this.handleFormSubmit}
-              style={styles.form}
+          <form
+            onSubmit={this.handleFormSubmit}
+            style={styles.form}
+          >
+            <legend
+              style={{ margin: '0 auto' }}
+            >CREATE AN ACCOUNT</legend>
+            <fieldset
+              style={styles.fieldset}
             >
-              <legend
-                style={{ margin: '0 auto' }}
-              >CREATE AN ACCOUNT</legend>
-              <fieldset
-                style={styles.fieldset}
-              >
                 <label
                   htmlFor="Name"
                   style={styles.label}
@@ -160,7 +160,7 @@ export class SignUp extends React.Component {
             </form>
         </Paper>
         </div>
-      </div>
+        </div>
     );
   }
 }

@@ -7,11 +7,11 @@ import {
   DISPLAY_CARDS,
   SELECTED_EPISODE,
   CREATE_CARD,
-  CARD_CREATED, 
+  CARD_CREATED,
   DELETE_CARD,
   CARD_DELETED,
   UPDATE_CARD,
-  CARD_UPDATED, 
+  CARD_UPDATED,
 } from './constants';
 
 const initialState = {};
@@ -28,8 +28,8 @@ function cardsReducer(state = initialState, action) {
       return { ...state };
 
     case CARD_CREATED:
-      return { ...state, 
-        cards: action.payload.response, 
+      return { ...state,
+        cards: action.payload.response,
         message: action.payload.message,
         success: action.payload.success,
       };
@@ -45,7 +45,6 @@ function cardsReducer(state = initialState, action) {
 
     case CARD_UPDATED:
       return { ...state };
-      
     default:
       return state;
   }

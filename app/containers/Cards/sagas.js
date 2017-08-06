@@ -46,7 +46,7 @@ function* updateCard() {
 
 function* callUpdateCard(action) {
   try {
-    const result = yield call(updateCardAsync(action.payload));
+    const result = yield call(updateCardAsync({ params: action.payload }));
     yield put({ type: CARD_UPDATED, payload: result });
   } catch (e) {
     console.error(e);
@@ -58,6 +58,7 @@ function* deleteCard() {
 }
 
 function* callDeleteCard(action) {
+  console.log('+++line 61 action.payload in callDeleteCard: ', action.payload);
   try {
     const result = yield call(deleteCardAsync(action.payload));
     yield put({ type: CARD_DELETED, payload: result });

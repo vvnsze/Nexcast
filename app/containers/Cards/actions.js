@@ -8,7 +8,7 @@ import {
   // DISPLAY_CARDS,
   CREATE_CARD,
   DELETE_CARD,
-  EDIT_CARD,
+  UPDATE_CARD,
 } from './constants';
 
 // export function displayCards(payload) {
@@ -27,7 +27,7 @@ export function createCard(payload) {
 
 export function editCard(payload) {
   return {
-    type: EDIT_CARD,
+    type: UPDATE_CARD,
     payload,
   };
 }

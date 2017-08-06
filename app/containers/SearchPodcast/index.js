@@ -7,6 +7,16 @@ import Paper from 'material-ui/Paper';
 import * as actions from './actions';
 import PodcastList from '../../components/PodcastList';
 
+const styles = {
+  input: {
+    backgroundColor: ''
+  },
+  wrapper: {
+    height: '100%',
+    // backgroundColor:
+  },
+};
+
 export class SearchPodcast extends React.Component {
   constructor(props) {
     super(props);
@@ -62,16 +72,11 @@ export class SearchPodcast extends React.Component {
   render() {
     return (
       // <div className="outerWrapper" style={{ position: 'relative' }}>
-      <div className="searchPodcastWrapper">
-        <div className="row">
-          <div className="col s3"></div>
-          <div
-            className="col s6"
-            style={{ 'margin-top': '100px' }}
-          >
-            <Paper
+      <div className="searchPodcastWrapper" style={{ width: '500px', margin: '0 auto' }}>
+        <div>
+          <div style={{ marginTop: '100px' }}>
+            <div
               style={{ background: '#fafafa', height: '500px', overflow: 'scroll', textAlign: 'center', margin: '10px', padding: '20px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#C6D8D3' }}
-              zDepth={0}
             >
               <ActionSearch />
               <input
@@ -88,9 +93,8 @@ export class SearchPodcast extends React.Component {
               >
                 {this.showPodcastList()}
               </div>
-            </Paper>
+            </div>
           </div>
-          <div className="col s3"></div>
         </div>
       </div>
     );
