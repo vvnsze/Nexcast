@@ -5,10 +5,12 @@
  */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import * as actions from './actions';
 import { GridList, GridTile } from 'material-ui/GridList';
 import CardItem from '../../components/CardItem';
 import CreateCard from './cardForms';
-
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 // This is styles for the grid list
 const styles = {
   root: {
@@ -33,6 +35,8 @@ export class Cards extends React.Component {
     this.loadCards = this.loadCards.bind(this);
     this.showCardButton = this.showCardButton.bind(this);
     this.toggleRevealForm = this.toggleRevealForm.bind(this);
+    this.updateCard = this.updateCard.bind(this);
+    this.deleteCard = this.deleteCard.bind(this);
   }
 
   loadCards() {
@@ -40,7 +44,7 @@ export class Cards extends React.Component {
       return this.props.displayCards.map((cardItem) => (
         (
           <GridTile className="tileContainer" >
-            <CardItem card={cardItem} />
+            <CardItem card={cardItem} updateCard={this.updateCard} deleteCard={this.deleteCard} />
           </GridTile>
         )
       ));
@@ -48,6 +52,14 @@ export class Cards extends React.Component {
     return (
       <li>You have no cards</li>
     );
+  }
+
+  updateCard(cardValues) {
+    this.props.dispatch(actions.editCard(cardValues));
+  }
+
+  deleteCard(cardId) {
+    this.props.dispatch(actions.deleteCard(cardId));
   }
 
   toggleRevealForm() {
@@ -59,12 +71,18 @@ export class Cards extends React.Component {
       return (
         <GridTile className="tileContainer">
           <CreateCard />
+          {/* Put cancel button */}
         </GridTile>
       );
     }
     if (this.props.selectedEpisode && !this.state.revealCardCreatorForm) {
       return (
-        <a className="btn-floating btn-large waves-effect waves-light red" onClick={this.toggleRevealForm}><i className="material-icons">add</i></a>
+        <FloatingActionButton
+          onTouchTap={this.toggleRevealForm}
+          backgroundColor="#02dd78"
+        >
+          <ContentAdd />
+        </FloatingActionButton>
       );
     }
   }

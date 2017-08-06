@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
+import * as actions from './actions';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -9,49 +10,46 @@ export class Header extends React.Component {
     super(props);
     this.logUserOut = this.logUserOut.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = { userName: 'Nexcast' };
+    this.state = { userName: 'Nexcast', value: 2 };
     this.showNameOnMenu = this.showNameOnMenu.bind(this);
   }
 
-  componentWillMount() {
-    this.showNameOnMenu();
-  }
-
   showNameOnMenu() {
-    const userName = localStorage.getItem('userName');
-    console.log('+++line 23 username on navbar:', userName);
-    if (userName) {
-      this.setState({ userName });
+    if (this.props.currentUser.authenticated) {
+      return this.props.currentUser.user.data.user.name;
     }
+    return this.state.userName;
   }
 
   logUserOut() {
     localStorage.clear();
+    this.props.dispatch(actions.logOutUser());
     browserHistory.push('/signin');
   }
 
   handleChange(event, index, value) {
+    this.setState({ value });
     if (value === 1) {
       this.logUserOut();
     }
   }
 
   showLinks = () => {
+    const name = this.showNameOnMenu();
     const token = localStorage.getItem('token');
-    const name = localStorage.getItem('userName');
 
     if (token) {
       return (
         <div>
-          <DropDownMenu onChange={this.handleChange} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} value={this.state.userName}>
+          <DropDownMenu onChange={this.handleChange} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} value={this.state.value}>
             <MenuItem value={1} key={1} primaryText="Sign Out" />
-            <MenuItem value={2} key={2} primaryText="Account" />
+            <MenuItem value={2} key={2} label={name} primaryText="Account" />
             <MenuItem value={3} key={3} primaryText="About" />
           </DropDownMenu>
         </div>
       );
     }
-    if (!token || !name) {
+    if (!token || name === 'Nexcast') {
       return (
         <ul>
           <li><Link to="/signup">Sign Up</Link></li>
@@ -84,7 +82,6 @@ Header.propTypes = {
 };
 
 function mapStateToProps(state) {
-  // console.log('+++line 87 currentUser: ', state.currentUser);
   return {
     currentUser: state.currentUser,
     currentUserAuth: state.currentUser.authenticated,

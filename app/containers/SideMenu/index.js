@@ -34,7 +34,7 @@ export class SideMenu extends React.Component {
   showPodcastEpisode() {
     return (
       <div style={{ color: '#FFF', padding: 20 }}>
-        <List>
+        <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
             onSelectEpisode={this.selectPodcastEpisode}
@@ -46,16 +46,24 @@ export class SideMenu extends React.Component {
 
   render() {
     return (
-      <div>
-
-        <div>
+      <div className="row" style={{ height: '100%', overflow: 'scroll' }}>
           <div
-            className="blue-grey  darken-4"
+            className="col s9 blue-grey darken-4"
             style={{ color: '#FFF', padding: '10px 20px' }}
           >MY SHOWS
-          <RaisedButton primary onTouchTap={this.addShow}>ADD SHOW</RaisedButton>
           </div>
-        </div>
+          <div
+            className="col s3 blue-grey darken-4"
+            style={{ color: '#FFF', padding: '10px 10px' }}
+          >
+            <RaisedButton
+              backgroundColor="#0371d8"
+              onTouchTap={this.addShow}
+              style={{ height: '22px', width: 'auto' }}
+              labelColor="#ffffff"
+            >ADD SHOW
+            </RaisedButton>
+          </div>
         {this.showPodcastEpisode()}
       </div>
     );

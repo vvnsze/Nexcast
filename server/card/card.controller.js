@@ -20,6 +20,7 @@ exports.fetchCards = (req, res) => {
     },
   };
   Card.findAll(query).then((cards) => {
+    // console.log(chalk.magenta('this is the cards!: '), cards);
     const allCards = cards.map((card) => {
       return card;
     });
@@ -31,12 +32,11 @@ exports.fetchCards = (req, res) => {
 };
 
 exports.fetchEpisodeId = (req, res, next) => {
-  console.log(chalk.magenta('this is the req in fetchEpisodeId: '), req);
   const query = {
     where: {
       guid: req.body.episode_guid,
-    }
-  }
+    },
+  };
   Episode.findOne(query).then((episode) => {
     console.log(chalk.cyan('+++line 40: episode found! '), episode.id);
     res.locals.episode_id = episode.id;
@@ -49,19 +49,48 @@ exports.fetchEpisodeId = (req, res, next) => {
 // Post create
 exports.createCard = (req, res) => {
   const params = paramsForCard(req);
-  params.episode_id = res.locals.episode_id
+  params.episode_id = res.locals.episode_id;
   Card.create(params)
     .then((card) => {
       res.send(responseFormatter(true, 'card saved', card));
     })
-    .catch((err) => (
+    .catch(() => (
       res.send(responseFormatter(false, 'card failed to save'))
     ));
 };
 
+exports.deleteCard = (req, res) => {
+  const cardId = req.url.slice(10);
+  const query = {
+    where: {
+      id: cardId,
+    },
+  };
+
+  Card.destroy(query)
+    .then((result) => {
+      console.log(chalk.cyan('+++line 73 card destruction success!: '), result);
+      res.send({ result });
+    })
+    .catch(() => (
+      res.send(responseFormatter(false, 'card failed to delete'))
+    ));
+};
+
+exports.updateCard = (req, res) => {
+  console.log(chalk.cyan('+++line 82 card.controller: '), req);
+  res.send({ update: 'card' });
+  // Card.update()
+  // .then(()=>{
+  //
+  // })
+  // .catch(() => (
+  //   res.send(responseFormatter(false, 'card failed to save'))
+  // ));
+};
+
 // helpers
 function paramsForCard(req) {
-
   const params = [
     'podcast_id',
     'media_link',
@@ -70,6 +99,5 @@ function paramsForCard(req) {
     'button_text',
     'button_link',
   ];
-
   return filterParams(req, params);
 }

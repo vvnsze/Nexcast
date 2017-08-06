@@ -7,6 +7,16 @@ import Paper from 'material-ui/Paper';
 import * as actions from './actions';
 import PodcastList from '../../components/PodcastList';
 
+const styles = {
+  input: {
+    backgroundColor: ''
+  },
+  wrapper: {
+    height: '100%',
+    // backgroundColor:
+  },
+};
+
 export class SearchPodcast extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +59,7 @@ export class SearchPodcast extends React.Component {
   showPodcastList() {
     if (this.props.podcasts) {
       if (this.props.podcasts.length === 0) {
-        return (<div>No results, please try again</div>);
+        return (<div>Search for your podcast and claim it to start tagging</div>);
       }
 
       return (<div>
@@ -61,22 +71,31 @@ export class SearchPodcast extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <Paper
-          style={{ textAlign: 'center' }}
-        >
-          <ActionSearch />
-          <input
-            type="text"
-            placeholder="Search podcasts"
-            name="searchPodcast"
-            onChange={(event) => this.onInputChange(event.target.value)}
-            value={this.state.term}
-          />
-          <div>{this.props.message}</div>
-          {this.showPodcastList()}
-        </Paper>
-        {this.showEmailVerificationResults()}
+      // <div className="outerWrapper" style={{ position: 'relative' }}>
+      <div className="searchPodcastWrapper" style={{ width: '500px', margin: '0 auto' }}>
+        <div>
+          <div style={{ marginTop: '100px' }}>
+            <div
+              style={{ background: '#fafafa', height: '500px', overflow: 'scroll', textAlign: 'center', margin: '10px', padding: '20px', borderStyle: 'solid', borderWidth: '1px', borderColor: '#C6D8D3' }}
+            >
+              <ActionSearch />
+              <input
+                type="text"
+                placeholder="Search podcasts"
+                name="searchPodcast"
+                onChange={(event) => this.onInputChange(event.target.value)}
+                value={this.state.term}
+              />
+              <div>{this.props.message}</div>
+              {this.showEmailVerificationResults()}
+              <div
+                style={{ textAlign: 'left' }}
+              >
+                {this.showPodcastList()}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

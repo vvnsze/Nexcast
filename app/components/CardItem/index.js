@@ -5,12 +5,14 @@ import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
   Card: {
-    height: 500,
-    width: 300,
+    height: '500px',
+    width: '300px',
+    overflow: 'scroll',
+    margin: '10px',
   },
 };
 
-const CardItem = ({ card }) => {
+const CardItem = ({ card, updateCard, deleteCard }) => {
   const checkMedia = function check(item) {
     if (item.media_type === 'image') {
       return (
@@ -28,26 +30,36 @@ const CardItem = ({ card }) => {
   };
 
   return (
+    <div className="cardOuterWrapper" style={{ border: '2px solid #ccc', borderRadius: '6px', marginLeft: '5px', marginRight: '5px', marginBottom: '5px' }}>
       <Card className="cardContainer" containerStyle={styles.Card}>
         <CardHeader
-          style={{ height: 100, background: '#60B2E5' }}
-          title={card.tagged_timestamp}
+          style={{ height: 100, background: '#0371d8', color: 'white' }}
+          title={card.time_stamp}
         />
         <CardMedia>
           {checkMedia(card)}
         </CardMedia>
         <CardText>
-          {card.description}
+          {card.id}
         </CardText>
         <CardActions>
-          <FlatButton href={card.button_link} label={card.button_text} />
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
+        </CardActions>
+        <CardActions>
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { updateCard(card); }} label="edit" />
+        </CardActions>
+        <CardActions>
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
         </CardActions>
       </Card>
+    </div>
   );
 };
 
 CardItem.propTypes = {
   card: PropTypes.object,
+  updateCard: PropTypes.func,
+  deleteCard: PropTypes.func,
 };
 
 export default CardItem;

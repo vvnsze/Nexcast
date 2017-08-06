@@ -13,7 +13,8 @@ router.get('/api/card/:id', (req, res) => {});
 
 router.get('/api/cards');
 
-router.delete('/api/card/:id', (req, res) => {});
-
+router.delete('/api/card/:id', [
+  controller.deleteCard,
+]);
 
 module.exports = router;

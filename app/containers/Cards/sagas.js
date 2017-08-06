@@ -22,7 +22,7 @@ const updateCardAsync = (params) => (
 );
 
 const deleteCardAsync = (params) => (
-  HttpClient.delete(`/api/card/${params.id}`)
+  HttpClient.delete(`/api/card/${params}`)
 );
 
 function* createCard() {
@@ -58,8 +58,9 @@ function* deleteCard() {
 }
 
 function* callDeleteCard(action) {
+  console.log('+++line 61 action.payload in callDeleteCard: ', action.payload);
   try {
-    const result = yield call(deleteCardAsync(action.payload));
+    const result = yield call(deleteCardAsync, action.payload);
     yield put({ type: CARD_DELETED, payload: result });
   } catch (e) {
     console.error(e);

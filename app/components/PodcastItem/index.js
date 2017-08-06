@@ -4,8 +4,7 @@
  *
  */
 import React, { PropTypes } from 'react';
-import { List, ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import { ListItem } from 'material-ui/List';
 import PodcastEpisodeItem from '../PodcastEpisodeItem';
 
 function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId }) {
@@ -30,12 +29,16 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
   }, []);
 
   return (
-    <ListItem
-      style={{ color: '#ABADAD' }}
-      primaryText={showTitle}
-      nestedItems={Episodes}
-      primaryTogglesNestedList
-    />
+    <div className="PodcastSearchResultItemWrapper">
+      <ListItem
+        style={{ color: '#ffffff', 'fontFamily': 'Lato,sans-serif' }}
+        primaryText={showTitle}
+        nestedItems={Episodes}
+        primaryTogglesNestedList
+        initiallyOpen
+        nestedListStyle={{ height: '350px', overflow: 'scroll' }}
+      />
+    </div>
   );
 }
 
