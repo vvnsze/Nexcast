@@ -4,8 +4,14 @@ import Slider from 'rc-slider';
 import { Howler } from 'howler';
 import 'rc-slider/assets/index.css';
 
-import Play from '../../assets/icon_play.png';
-import Pause from '../../assets/icon_pause.png';
+// import Play from '../../assets/icon_play.png';
+// import Pause from '../../assets/icon_pause.png';
+// import SkipBack from '../../assets/icon_skip_back.png';
+// import SkipForward from '../../assets/icon_skip_forward.png';
+
+const Play = '';
+const SkipBack = '';
+const SkipForward = '';
 
 let playerInfo = {};
 var sound = {};
@@ -59,7 +65,7 @@ class EpisodePlayer extends Component {
   }
 
   componentWillMount() {
-    const { mediaUrl, styleConfig: {progressColor, seekColor, playerColor, controlColor} } = this.props;
+    // const { mediaUrl, styleConfig: { progressColor, seekColor, playerColor, controlColor } } = this.props;
     this.start(this.props);
   }
 
@@ -85,7 +91,7 @@ class EpisodePlayer extends Component {
   }
 
   play() {
-    const {mediaUrl} = this.props.player;
+    const { mediaUrl } = this.props.player;
 
     sound.play();
     playerInfo.intervalId = this.state.intervalId = setInterval(() => {
@@ -167,14 +173,14 @@ class EpisodePlayer extends Component {
 
   }
   render() {
-    const {tags} = this.props.tags;
-    const { styleConfig: {progressColor, seekColor, playerColor, controlColor} } = this.props;
-
+    // const {tags} = this.props.tags;
+    // const { styleConfig: {progressColor, seekColor, playerColor, controlColor} } = this.props;
+    //
     const tagBar = (
-        (this.props.tags || []).map((sec) => {
+        (this.props.tags || []).map((sec, key) => {
         const percent = (sec/this.state.duration) * 100;
         return (
-          <span style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: playerColor}}></span>
+          <span key={key} style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: 'grey'}}></span>
         )
       })
 
@@ -182,67 +188,68 @@ class EpisodePlayer extends Component {
 
     return (
       <div>
-        <div style={{ width: '100%', height: 200, backgroundColor: playerColor }}>
+       <div style={{ width: '100%', height: 200, backgroundColor: 'grey' }}>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px', padding: '5px'}}>
-            <span style={{'color': '#fff', fontSize: '1.8em'}}>{this.props.title}</span>
-          </div>
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '12px', padding: '5px'}}>
-            <span style={{'color': '#fff', fontSize: '1em'}}>{this.props.subTitle}</span>
-          </div>
+         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px', padding: '5px'}}>
+           <span style={{'color': '#fff', fontSize: '1.8em'}}>{this.props.title}</span>
+         </div>
+         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '12px', padding: '5px'}}>
+           <span style={{'color': '#fff', fontSize: '1em'}}>{this.props.subTitle}</span>
+         </div>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px'}}>
+         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px'}}>
 
-            <img src={require("../../assets/icon_skip_back.png")} onClick={this.goBack} style={{width: '50px', padding: '1%'}}  />
-            {((playerStatus, play, pause) => {
-              if (playerStatus == 3) {
-                return (
-                  <Pause width={50} height={50} onClick={pause} style={{color: 'white', padding: '1%'}} fill="#fff" />
-                );
-              } else {
-                return (
-                  <Play width={50} height={50} onClick={play} style={{color: 'white', padding: '1%'}} fill="#fff" />
-                )
-              }
-            })(this.state.playerStatus, this.play, this.pause)}
-            <img src={require("../../assets/icon_skip_forward.png")} onClick={this.goForward} style={{width: '50px', padding: '1%'}} />
+           <img src={SkipBack} onClick={this.goBack} style={{width: '50px', padding: '1%'}}  />
+           {((playerStatus, play, pause) => {
+             if (playerStatus == 3) {
+               return (
+                <img src={(require('../../assets/icon_pause.png'))} onClick={pause}/>
+               );
+             } else {
+               return (
+                 <img src={(require('../../assets/icon_play.png'))} onClick={play}/>
+               )
 
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
-            <span style={{ color: 'white' }}>{secondsToHMS(parseInt(this.state.position))}</span>
-            <span style={{ color: 'white' }}>{secondsToHMS(parseInt(this.state.duration))}</span>
-          </div>
+             }
+           })(this.state.playerStatus, this.play, this.pause)}
+           <img src={SkipForward} onClick={this.goForward} style={{ width: '50px', padding: '1%' }} />
+
+         </div>
+         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%'}}>
+           <span style={{color: 'white'}}>{secondsToHMS(parseInt(this.state.position))}</span>
+           <span style={{color: 'white'}}>{secondsToHMS(parseInt(this.state.duration))}</span>
+         </div>
 
 
-          <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
-            <Slider
-              defaultValue={1}
-              step={1}
-              min={1}
-              value={parseInt(this.state.position)}
-              max={parseInt(this.state.duration) || 100}
-              onChange={this.moveSeek}
-              onAfterChange={this.seek}
-              maximumTrackStyle={{ backgroundColor: controlColor, height: 10 }}
-              minimumTrackStyle={{ backgroundColor: progressColor || 'blue', height: 10, borderRadius: 0, paddingRight: -50, }}
-              handleStyle={{
-                borderColor: progressColor,
-                borderWidth: 0,
-                height: 28,
-                width: 5,
-                marginLeft: -2,
-                marginTop: -9,
-                backgroundColor: progressColor,
-                borderRadius: 0,
-              }}
-            />
-            <div style={{ width: '100%', height: '0px', top: '-13px', position: 'relative' }}>
-              {tagBar}
-            </div>
-          </div>
+         <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
+           <Slider
+             defaultValue={1}
+             step={1}
+             min={1}
+             value={parseInt(this.state.position)}
+             max={parseInt(this.state.duration) || 100}
+             onChange={this.moveSeek}
+             onAfterChange={this.seek}
+             maximumTrackStyle={{ backgroundColor: 'white', height: 10 }}
+             minimumTrackStyle={{ backgroundColor: 'blue' || 'blue', height: 10, borderRadius: 0,paddingRight: -50, }}
+             handleStyle={{
+              //  borderColor: progressColor,
+               borderWidth: 0,
+               height: 28,
+               width: 5,
+               marginLeft: -2,
+               marginTop: -9,
+               backgroundColor: 'black',
+               borderRadius: 0,
+             }}
+           />
+           <div style={{width: '100%', height: '0px', top: '-13px', position: 'relative'}}>
+             {tagBar}
+           </div>
+         </div>
 
-        </div>
-      </div>
+       </div>
+     </div>
     );
   }
 }
@@ -264,7 +271,7 @@ EpisodePlayer.defaultProps = {
   title: '',
   subTitle: '',
   onProgress: {},
-  styleConfig: { progressColor: 'white', controlColor: '#56a0e5', seekColor: '#56a0e5', playerColor: '#0371d8' },
+  // styleConfig: { progressColor: 'white', controlColor: '#56a0e5', seekColor: '#56a0e5', playerColor: '#0371d8' },
   tags: [],
   // onAction: {},
   // onComplete: {},
