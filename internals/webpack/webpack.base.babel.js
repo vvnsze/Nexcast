@@ -68,12 +68,12 @@ module.exports = (options) => ({
           loader: 'react-svg-loader',
           query: {
             svgo: {
-              plugins: [{removeTitle: false}],
+              plugins: [{ removeTitle: false }],
               floatPrecision: 2,
-            }
-          }
-        }
-      ]
+            },
+          },
+        },
+      ],
     }, {
       test: /\.json$/,
       loader: 'json-loader',

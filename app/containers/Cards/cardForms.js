@@ -16,6 +16,7 @@ class CreateCard extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onUploadFinish = this.onUploadFinish.bind(this);
+    this.getCardTimeStamp = this.getCardTimeStamp.bind(this);
 
     this.state = {
       time_stamp: '123',
@@ -25,11 +26,22 @@ class CreateCard extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('+++line 30 cards props: ', nextProps);
+    const updatedCardTime = nextProps.selectedTimeStamp;
+    this.setState({ time_stamp: updatedCardTime });
+  }
+
   onUploadFinish(args) {
     this.setState({
       media_link: args.publicUrl,
       media_type: 'image',
     });
+  }
+
+  getCardTimeStamp() {
+    console.log('+++ 42: card time: ', this.state.time_stamp);
+    return this.state.time_stamp;
   }
 
   handleFormSubmit(event) {
@@ -52,7 +64,7 @@ class CreateCard extends React.Component {
         <form onSubmit={this.handleFormSubmit}>
           <fieldset>
             <label htmlFor="timeStamp">TimeStamp</label>
-            <input type="text" onChange={this.handleChange} name="timeStamp" value={this.state.time_stamp} />
+            <input type="text" onChange={this.handleChange} name="timeStamp" value={this.getCardTimeStamp()} />
           </fieldset>
           <fieldset>
             <label htmlFor="description">Description</label>
@@ -94,11 +106,13 @@ CreateCard.propTypes = {
   button_text: PropTypes.string,
   button_link: PropTypes.string,
   selectedEpisode: PropTypes.object,
+  selectedTimeStamp: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
     selectedEpisode: state.cards.selectedEpisode,
+    selectedTimeStamp: state.cards.cardTime,
   };
 }
 

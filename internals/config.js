@@ -46,6 +46,10 @@ const ReactBoilerplate = {
         'svgo',
         'react-audio-player-tags',
         'react-svg-loader',
+        'tunnel-agent',
+        'request',
+        'forever-agent',
+        'tough-cookie',
       ],
       /**
        * Specify any additional dependencies here. We include core-js and lodash

@@ -14,7 +14,23 @@ import {
   CARD_UPDATED,
 } from './constants';
 
+import {
+  UPDATE_CARD_TIME,
+} from '../EpisodePlayer/constants';
+
 const initialState = {};
+
+function removeDeletedCard(deletedCardPayload, cardState) {
+  var newState = cardState.allCards;
+  if (deletedCardPayload.result.data.result === 1) {
+    newState = cardState.allCards.filter(function remove(card) {
+      if (card.id !== deletedCardPayload.cardId) {
+        return card;
+      }
+    });
+  }
+  return newState;
+}
 
 function cardsReducer(state = initialState, action) {
   switch (action.type) {
@@ -32,13 +48,19 @@ function cardsReducer(state = initialState, action) {
         cards: action.payload.response,
         message: action.payload.message,
         success: action.payload.success,
+        closeForm: true,
+      };
+
+    case UPDATE_CARD_TIME:
+      return { ...state,
+        cardTime: action.payload,
       };
 
     case DELETE_CARD:
       return { ...state };
 
     case CARD_DELETED:
-      return { ...state };
+      return { ...state, allCards: removeDeletedCard(action.payload, state) };
 
     case UPDATE_CARD:
       return { ...state };
@@ -51,3 +73,9 @@ function cardsReducer(state = initialState, action) {
 }
 
 export default cardsReducer;
+
+// return cardState.allCards.filter(function remove(card) {
+//   if (card.id !== deletedCardPayload.cardId) {
+//     return card;
+//   }
+// });

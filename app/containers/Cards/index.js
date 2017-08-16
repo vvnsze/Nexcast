@@ -39,12 +39,23 @@ export class Cards extends React.Component {
     this.deleteCard = this.deleteCard.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.closeForm) {
+      this.setState({ revealCardCreatorForm: false })
+    }
+  }
+
   loadCards() {
     if (this.props.displayCards) {
       return this.props.displayCards.map((cardItem) => (
         (
-          <GridTile className="tileContainer" >
-            <CardItem card={cardItem} updateCard={this.updateCard} deleteCard={this.deleteCard} />
+          <GridTile
+            key={cardItem.id}
+            className="tileContainer"
+          >
+            <CardItem
+              card={cardItem}
+              updateCard={this.updateCard} deleteCard={this.deleteCard} />
           </GridTile>
         )
       ));
@@ -66,11 +77,16 @@ export class Cards extends React.Component {
     this.setState({ revealCardCreatorForm: true });
   }
 
+  cancel = () => {
+    this.setState({ revealCardCreatorForm: false });
+  }
+
   showCardButton() {
     if (this.state.revealCardCreatorForm) {
       return (
         <GridTile className="tileContainer">
           <CreateCard />
+          <button onClick={this.cancel}>cancel</button>
           {/* Put cancel button */}
         </GridTile>
       );
@@ -85,6 +101,7 @@ export class Cards extends React.Component {
         </FloatingActionButton>
       );
     }
+    return null;
   }
 
   render() {
@@ -109,6 +126,7 @@ function mapStateToProps(state) {
   return {
     displayCards: state.cards.allCards,
     selectedEpisode: state.cards.selectedEpisode,
+    closeForm: state.cards.closeForm,
   };
 }
 

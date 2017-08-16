@@ -58,10 +58,11 @@ function* deleteCard() {
 }
 
 function* callDeleteCard(action) {
-  console.log('+++line 61 action.payload in callDeleteCard: ', action.payload);
+  console.log('+++line 61 action.payload in callDeleteCard: ', action.payload.id);
   try {
-    const result = yield call(deleteCardAsync, action.payload);
-    yield put({ type: CARD_DELETED, payload: result });
+    const result = yield call(deleteCardAsync, action.payload.id);
+    console.log('+++line 64 result from deletedCard: ', result);
+    yield put({ type: CARD_DELETED, payload: { cardId: action.payload.id, result } });
   } catch (e) {
     console.error(e);
   }

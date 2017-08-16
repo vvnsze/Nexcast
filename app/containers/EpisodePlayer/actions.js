@@ -5,11 +5,12 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  UPDATE_CARD_TIME,
 } from './constants';
 
-export function defaultAction() {
+export function updateCardTime(time) {
   return {
-    type: DEFAULT_ACTION,
+    type: UPDATE_CARD_TIME,
+    payload: time,
   };
 }
