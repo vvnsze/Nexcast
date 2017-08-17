@@ -23,9 +23,9 @@ const styles = {
     flexWrap: 'nowrap',
     overflowX: 'auto',
   },
-  titleStyle: {
-    color: 'rgb(0, 188, 212)',
-  },
+  // titleStyle: {
+  //   color: 'rgb(0, 188, 212)',
+  // },
 };
 
 export class Cards extends React.Component {
@@ -66,7 +66,8 @@ export class Cards extends React.Component {
   }
 
   updateCard(cardValues) {
-    this.props.dispatch(actions.editCard(cardValues));
+    console.log('+++line 69 cardValue: ', cardValues);
+    this.props.dispatch(actions.editCard({ cardValues }));
   }
 
   deleteCard(cardId) {

@@ -2,7 +2,7 @@
 // const sequelize = require('../config/database');
 // const User = require('../user/user.model');
 // const Podcast = require('../podcast/podcast.model');
-const Whitelist = require('../whitelist/whitelist.model');
+// const Whitelist = require('../whitelist/whitelist.model');
 // const UserPodcast = require('../podcast/userPodcast.model');
 // const Episode = require('../episode/episode.model');
 // const chalk = require('chalk');
@@ -13,6 +13,7 @@ const Whitelist = require('../whitelist/whitelist.model');
 // User.sync({ force: true });
 // Podcast.sync({ force: true });
 // Whitelist.sync({ force: true });
+// Card.sync({ force: true });
 //
 // User.belongsToMany(Podcast, { through: UserPodcast, foreignKey: 'userId' });
 // Podcast.belongsToMany(User, { through: UserPodcast, foreignKey: 'podcastId' });

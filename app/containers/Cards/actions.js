@@ -25,10 +25,10 @@ export function createCard(payload) {
   };
 }
 
-export function editCard(payload) {
+export function editCard(cardDetail) {
   return {
     type: UPDATE_CARD,
-    payload,
+    payload: cardDetail,
   };
 }
 

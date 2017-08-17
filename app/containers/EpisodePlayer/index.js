@@ -14,12 +14,10 @@ import * as _ from 'lodash';
 
 // import Play from '../../assets/icon_play.png';
 // import Pause from '../../assets/icon_pause.png';
-// import SkipBack from '../../assets/icon_skip_back.png';
-// import SkipForward from '../../assets/icon_skip_forward.png';
+import SkipBack from '../../assets/material_ui_replay_ten.svg';
+import SkipForward from '../../assets/material_ui_forward_ten.svg';
 
 const Play = '';
-const SkipBack = '';
-const SkipForward = '';
 
 let playerInfo = {};
 var sound = {};
@@ -86,11 +84,13 @@ class EpisodePlayer extends Component {
   onToggle(e) {
   }
 
-  updateCardTimeStamp(time) {
-    console.log('+++line 91 updatingCardTime', time);
-    if (!time) {
+  updateCardTimeStamp(seconds) {
+    console.log('+++line 90 seconds in updateCardTimeStamp: ', seconds);
+    if (!seconds) {
       return;
     }
+    var time = secondsToHMS(seconds);
+    console.log('+++line 95 this is time: ', typeof (time), ' :', time);
     this.props.dispatch(actions.updateCardTime({ time }));
   }
 
@@ -103,7 +103,6 @@ class EpisodePlayer extends Component {
         src: [mediaUrl],
         volume: 0.1,
         onend: function end() {
-
         },
       });
       this.play();
@@ -150,9 +149,9 @@ class EpisodePlayer extends Component {
     sound.pause();
     this.setState({
       playerStatus: 2,
-      setCardTimeStamp: sound.seek(),
+      // setCardTimeStamp: sound.seek(),
     });
-    this.updateCardTimeStamp(sound.seek());
+    this.updateCardTimeStamp(playerInfo.position);
     // this.props.actions.playerPause(mediaUrl);
   }
 
@@ -200,7 +199,7 @@ class EpisodePlayer extends Component {
     return (
         <div>
 
-          <div style={{ width: '100%', height: 200, backgroundColor: 'grey' }}>
+          <div style={{ width: '100%', height: 200, backgroundColor: 'white' }}>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px', padding: '5px' }}>
               <span style={{ color: '#fff', fontSize: '1.8em' }}>{this.props.title}</span>
@@ -211,24 +210,24 @@ class EpisodePlayer extends Component {
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px' }}>
 
-              <img src={SkipBack} onClick={this.goBack} style={{ width: '50px', padding: '1%' }} />
+              <img src={SkipBack} onClick={this.goBack} style={{ width: '50px', padding: '1%', color: '#0371d8' }} />
               {((playerStatus, play, pause) => {
-                if (playerStatus == 3) {
+                if (playerStatus === 3) {
                   return (
-                    <img src={(require('../../assets/icon_pause.png'))} onClick={pause}/>
+                    <img src={(require('../../assets/material_ui_pause.png'))} onClick={pause} style={{ height: '42px', width: 'auto', color: '#0371d8' }}/>
                   );
                 } else {
                   return (
-                    <img src={(require('../../assets/icon_play.png'))} onClick={play} />
+                    <img src={(require('../../assets/material_ui_play.png'))} onClick={play} style={{ height: '42px', width: 'auto', color: '#0371d8' }}/>
                   );
                 }
               })(this.state.playerStatus, this.play, this.pause)}
-              <img src={SkipForward} onClick={this.goForward} style={{ width: '50px', padding: '1%' }} />
+              <img src={SkipForward} onClick={this.goForward} style={{ height: '42px', padding: '1%' }} />
 
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
-              <span style={{ color: 'white' }}>{secondsToHMS(parseInt(this.state.position))}</span>
-              <span style={{ color: 'white' }}>{secondsToHMS(parseInt(this.state.duration))}</span>
+              <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position))}</span>
+              <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.duration))}</span>
             </div>
 
 
@@ -241,8 +240,8 @@ class EpisodePlayer extends Component {
                 max={parseInt(this.state.duration) || 100}
                 onChange={this.moveSeek}
                 onAfterChange={this.seek}
-                railStyle={{ backgroundColor: 'pink', height: 10 }}
-                trackStyle={{ backgroundColor: 'blue' || 'blue', height: 10, borderRadius: 0, paddingRight: -50 }}
+                railStyle={{ backgroundColor: '#56a0e5', height: 10 }}
+                trackStyle={{ backgroundColor: '#0371d8' || '#0371d8', height: 10, borderRadius: 0, paddingRight: -50 }}
                 handleStyle={{
                 //  borderColor: progressColor,
                   borderWidth: 0,
@@ -250,7 +249,7 @@ class EpisodePlayer extends Component {
                   width: 5,
                   marginLeft: -2,
                   marginTop: -9,
-                  backgroundColor: 'black',
+                  backgroundColor: 'white',
                   borderRadius: 0,
                 }}
               />
@@ -310,8 +309,6 @@ EpisodePlayer.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  console.log('+++line 284 mapStateToProps episodePlayer selectedEpisode: ', state.cards.selectedEpisode);
-  console.log('+++line 285 mapStateToProps mediaUrl chosenEpisode: ', state.episodePlayer.chosenEpisode);
   return {
     mediaUrl: state.episodePlayer.chosenEpisode,
     player: state.cards.selectedEpisode,

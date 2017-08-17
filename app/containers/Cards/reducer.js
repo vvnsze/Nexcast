@@ -18,7 +18,7 @@ import {
   UPDATE_CARD_TIME,
 } from '../EpisodePlayer/constants';
 
-const initialState = {};
+const initialState = { cardTime: '00:00', cardDetail: {} };
 
 function removeDeletedCard(deletedCardPayload, cardState) {
   var newState = cardState.allCards;
@@ -63,7 +63,7 @@ function cardsReducer(state = initialState, action) {
       return { ...state, allCards: removeDeletedCard(action.payload, state) };
 
     case UPDATE_CARD:
-      return { ...state };
+      return { ...state, cardDetail: action.payload };
 
     case CARD_UPDATED:
       return { ...state };

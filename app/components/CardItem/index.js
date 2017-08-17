@@ -29,18 +29,26 @@ const CardItem = ({ card, updateCard, deleteCard }) => {
     );
   };
 
+  const printCardTime = function makeTitle(item) {
+    if (item) {
+      return (item.time_stamp + '');
+    }
+    return '00:00:00';
+  };
+
   return (
     <div className="cardOuterWrapper" style={{ border: '2px solid #ccc', borderRadius: '6px', marginLeft: '5px', marginRight: '5px', marginBottom: '5px' }}>
       <Card className="cardContainer" containerStyle={styles.Card}>
         <CardHeader
-          style={{ height: 100, background: '#0371d8', color: 'white' }}
-          title={card.time_stamp}
+          style={{ height: 100, background: '#0371d8' }}
+          titleColor="white"
+          title={printCardTime()}
         />
         <CardMedia>
           {checkMedia(card)}
         </CardMedia>
         <CardText>
-          {card.id}
+          {card.description}
         </CardText>
         <CardActions>
           <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />

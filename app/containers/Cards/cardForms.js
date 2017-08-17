@@ -6,7 +6,6 @@ import { Card } from 'material-ui/Card';
 
 import {
   CREATE_CARD,
-  DELETE_CARD,
   UPDATE_CARD,
 } from './constants';
 
@@ -19,16 +18,16 @@ class CreateCard extends React.Component {
     this.getCardTimeStamp = this.getCardTimeStamp.bind(this);
 
     this.state = {
-      time_stamp: '123',
+      time_stamp: '00:00',
       description: 'Enter description',
       button_text: 'Enter button text!',
       button_link: 'Enter external link for button',
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('+++line 30 cards props: ', nextProps);
-    const updatedCardTime = nextProps.selectedTimeStamp;
+  componentWillMount() {
+    console.log('+++line 30 cards props: ', this.props);
+    const updatedCardTime = this.props.selectedTimeStamp;
     this.setState({ time_stamp: updatedCardTime });
   }
 
@@ -40,7 +39,6 @@ class CreateCard extends React.Component {
   }
 
   getCardTimeStamp() {
-    console.log('+++ 42: card time: ', this.state.time_stamp);
     return this.state.time_stamp;
   }
 
@@ -48,7 +46,7 @@ class CreateCard extends React.Component {
     const cardData = { ...this.state,
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
-
+    console.log('+++line 49 card data: ', cardData);
     this.props.dispatch({ type: CREATE_CARD, payload: cardData });
   }
 
@@ -106,13 +104,16 @@ CreateCard.propTypes = {
   button_text: PropTypes.string,
   button_link: PropTypes.string,
   selectedEpisode: PropTypes.object,
-  selectedTimeStamp: PropTypes.object,
+  selectedTimeStamp: PropTypes.string,
+  editCardDetail: PropTypes.object,
 };
 
 function mapStateToProps(state) {
+  console.log('+++line 112: cardDetail in cardForm: ', state.cards.cardDetail);
   return {
     selectedEpisode: state.cards.selectedEpisode,
-    selectedTimeStamp: state.cards.cardTime,
+    selectedTimeStamp: state.cards.cardTime.time,
+    editCardDetail: state.cards.cardDetail,
   };
 }
 
