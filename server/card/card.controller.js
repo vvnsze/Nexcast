@@ -20,7 +20,6 @@ exports.fetchCards = (req, res) => {
     },
   };
   Card.findAll(query).then((cards) => {
-    // console.log(chalk.magenta('this is the cards!: '), cards);
     const allCards = cards.map((card) => {
       return card;
     });
@@ -92,6 +91,7 @@ exports.updateCard = (req, res) => {
 // helpers
 function paramsForCard(req) {
   const params = [
+    'tagged_timestamp',
     'podcast_id',
     'media_link',
     'media_type',

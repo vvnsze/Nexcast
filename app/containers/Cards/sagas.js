@@ -13,9 +13,11 @@ import {
 
 import HttpClient from '../../httpClient';
 
-const createCardAsync = (body) => (
-  HttpClient.post('/api/card', body)
-);
+const createCardAsync = (body) => {
+  console.log('++++line 17 card saga: ', body);
+  const params = { ...body, tagged_timestamp: body.time_stamp }
+  return HttpClient.post('/api/card', params)
+};
 
 const updateCardAsync = (params) => (
   HttpClient.put(`/api/card/${params.id}`, params)
@@ -45,6 +47,7 @@ function* updateCard() {
 }
 
 function* callUpdateCard(action) {
+  console.log('+++line 50 callUpdateCard action: ', action.payload);
   try {
     const result = yield call(updateCardAsync(action.payload));
     yield put({ type: CARD_UPDATED, payload: result });

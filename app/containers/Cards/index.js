@@ -5,12 +5,12 @@
  */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './actions';
-import { GridList, GridTile } from 'material-ui/GridList';
-import CardItem from '../../components/CardItem';
-import CreateCard from './cardForms';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { GridList, GridTile } from 'material-ui/GridList';
+import * as actions from './actions';
+import CardItem from '../../components/CardItem';
+import CreateCard from './cardForms';
 // This is styles for the grid list
 const styles = {
   root: {
@@ -35,13 +35,13 @@ export class Cards extends React.Component {
     this.loadCards = this.loadCards.bind(this);
     this.showCardButton = this.showCardButton.bind(this);
     this.toggleRevealForm = this.toggleRevealForm.bind(this);
-    this.updateCard = this.updateCard.bind(this);
+    this.editCard = this.editCard.bind(this);
     this.deleteCard = this.deleteCard.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.closeForm) {
-      this.setState({ revealCardCreatorForm: false })
+      this.setState({ revealCardCreatorForm: false });
     }
   }
 
@@ -55,7 +55,8 @@ export class Cards extends React.Component {
           >
             <CardItem
               card={cardItem}
-              updateCard={this.updateCard} deleteCard={this.deleteCard} />
+              editCard={this.editCard} deleteCard={this.deleteCard}
+            />
           </GridTile>
         )
       ));
@@ -65,9 +66,8 @@ export class Cards extends React.Component {
     );
   }
 
-  updateCard(cardValues) {
-    console.log('+++line 69 cardValue: ', cardValues);
-    this.props.dispatch(actions.editCard({ cardValues }));
+  editCard(cardValues) {
+    this.props.dispatch(actions.editCard(cardValues));
   }
 
   deleteCard(cardId) {
@@ -80,6 +80,7 @@ export class Cards extends React.Component {
 
   cancel = () => {
     this.setState({ revealCardCreatorForm: false });
+    this.props.dispatch(actions.resetEditingCard());
   }
 
   showCardButton() {
@@ -88,7 +89,6 @@ export class Cards extends React.Component {
         <GridTile className="tileContainer">
           <CreateCard />
           <button onClick={this.cancel}>cancel</button>
-          {/* Put cancel button */}
         </GridTile>
       );
     }

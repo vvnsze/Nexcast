@@ -12,7 +12,7 @@ const styles = {
   },
 };
 
-const CardItem = ({ card, updateCard, deleteCard }) => {
+const CardItem = ({ card, editCard, deleteCard }) => {
   const checkMedia = function check(item) {
     if (item.media_type === 'image') {
       return (
@@ -31,7 +31,7 @@ const CardItem = ({ card, updateCard, deleteCard }) => {
 
   const printCardTime = function makeTitle(item) {
     if (item) {
-      return (item.time_stamp + '');
+      return (`${item.tagged_timestamp}`);
     }
     return '00:00:00';
   };
@@ -42,7 +42,7 @@ const CardItem = ({ card, updateCard, deleteCard }) => {
         <CardHeader
           style={{ height: 100, background: '#0371d8' }}
           titleColor="white"
-          title={printCardTime()}
+          title={printCardTime(card)}
         />
         <CardMedia>
           {checkMedia(card)}
@@ -54,7 +54,7 @@ const CardItem = ({ card, updateCard, deleteCard }) => {
           <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
         </CardActions>
         <CardActions>
-          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { updateCard(card); }} label="edit" />
+          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { editCard(card); }} label="edit" />
         </CardActions>
         <CardActions>
           <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
@@ -66,7 +66,7 @@ const CardItem = ({ card, updateCard, deleteCard }) => {
 
 CardItem.propTypes = {
   card: PropTypes.object,
-  updateCard: PropTypes.func,
+  editCard: PropTypes.func,
   deleteCard: PropTypes.func,
 };
 

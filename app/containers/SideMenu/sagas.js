@@ -41,7 +41,6 @@ function* fetchEpisodeAsync(action) {
   try {
     const results = yield call(retrievePodcastEpisode({ params: { episodeTitle: action.payload.episodeTitle, guid: action.payload.guid, description: action.payload.episodeFullContent, nexcastPodcastId: action.payload.nexcastPodcastId } }));
     yield put({ type: PLAY_EPISODE, payload: action.payload.episodeFile });
-    console.log('+++line 44 sidemenu saga: ', typeof(action.payload.episodeFile), action.payload.episodeFile);
     yield put({ type: SELECTED_EPISODE, payload: action.payload });
     yield put({ type: DISPLAY_CARDS, payload: results.data });
   } catch (error) {

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import * as _ from 'lodash';
 import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
@@ -16,9 +17,10 @@ class CreateCard extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onUploadFinish = this.onUploadFinish.bind(this);
     this.getCardTimeStamp = this.getCardTimeStamp.bind(this);
+    this.editState = this.editState.bind(this);
 
     this.state = {
-      time_stamp: '00:00',
+      tagged_timestamp: '00:00:00',
       description: 'Enter description',
       button_text: 'Enter button text!',
       button_link: 'Enter external link for button',
@@ -27,8 +29,26 @@ class CreateCard extends React.Component {
 
   componentWillMount() {
     console.log('+++line 30 cards props: ', this.props);
-    const updatedCardTime = this.props.selectedTimeStamp;
-    this.setState({ time_stamp: updatedCardTime });
+    if (!this.props.selectedTimeStamp && !this.props.editCardDetail) {
+      return;
+    } else if (this.props.selectedTimeStamp) {
+      this.setState({ tagged_timestamp: this.props.selectedTimeStamp });
+    }
+    this.editState(this.props.editCardDetail);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedTimeStamp) {
+      this.editState({
+        ...nextProps.editCardDetail,
+        tagged_timestamp: nextProps.selectedTimeStamp,
+      });
+    } else {
+      this.editState({
+        ...nextProps.editCardDetail,
+      });
+    }
   }
 
   onUploadFinish(args) {
@@ -39,15 +59,34 @@ class CreateCard extends React.Component {
   }
 
   getCardTimeStamp() {
-    return this.state.time_stamp;
+    return this.state.tagged_timestamp;
+  }
+
+  editState(cardDetails) {
+    this.setState({
+      tagged_timestamp: cardDetails.tagged_timestamp,
+      description: cardDetails.description,
+      button_text: cardDetails.button_text,
+      button_link: cardDetails.button_link,
+      media_link: cardDetails.media_link,
+      media_type: cardDetails.media_type,
+    });
   }
 
   handleFormSubmit(event) {
-    const cardData = { ...this.state,
+    const createCardData = { ...this.state,
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
-    console.log('+++line 49 card data: ', cardData);
-    this.props.dispatch({ type: CREATE_CARD, payload: cardData });
+    const updateCardData = { ...this.state,
+      cardId: this.props.editCardDetail.id,
+      podcast_id: this.props.selectedEpisode.nexcastPodcastId,
+      episode_guid: this.props.selectedEpisode.guid };
+    if (!this.editCardDetail.editingCard) {
+      this.props.dispatch({ type: CREATE_CARD, payload: createCardData });
+    }
+    if (this.editCardDetail.editingCard) {
+      this.props.dispatch({ type: UPDATE_CARD, payload: updateCardData });
+    }
   }
 
   handleChange(event) {
@@ -74,7 +113,7 @@ class CreateCard extends React.Component {
           </fieldset>
           <fieldset>
             <label htmlFor="button_link">Button Link</label>
-            <input type="button_link" name="button_link" onChange={this.handleChange} value={this.props.button_link} />
+            <input type="button_link" name="button_link" onChange={this.handleChange} value={this.state.button_link} />
           </fieldset>
           <div>
             <ReactUpload
@@ -99,7 +138,7 @@ class CreateCard extends React.Component {
 
 CreateCard.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  timeStamp: PropTypes.string,
+  tagged_timestamp: PropTypes.string,
   text: PropTypes.string,
   button_text: PropTypes.string,
   button_link: PropTypes.string,
@@ -109,7 +148,6 @@ CreateCard.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log('+++line 112: cardDetail in cardForm: ', state.cards.cardDetail);
   return {
     selectedEpisode: state.cards.selectedEpisode,
     selectedTimeStamp: state.cards.cardTime.time,

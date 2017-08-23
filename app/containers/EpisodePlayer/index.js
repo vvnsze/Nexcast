@@ -4,14 +4,13 @@
  *
  */
 import React, { Component } from 'react';
+import * as _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import Slider from 'rc-slider';
 import { Howler } from 'howler';
 import 'rc-slider/assets/index.css';
-import * as _ from 'lodash';
-
 // import Play from '../../assets/icon_play.png';
 // import Pause from '../../assets/icon_pause.png';
 import SkipBack from '../../assets/material_ui_replay_ten.svg';
@@ -51,7 +50,6 @@ class EpisodePlayer extends Component {
       url: '',
       position: 0,
       intervalId: 0,
-      setCardTimeStamp: 0,
     };
     this.onToggle = this.onToggle.bind(this);
     this.play = this.play.bind(this);
@@ -149,7 +147,6 @@ class EpisodePlayer extends Component {
     sound.pause();
     this.setState({
       playerStatus: 2,
-      // setCardTimeStamp: sound.seek(),
     });
     this.updateCardTimeStamp(playerInfo.position);
     // this.props.actions.playerPause(mediaUrl);
@@ -181,6 +178,7 @@ class EpisodePlayer extends Component {
     this.setState({
       position: value,
     });
+    this.updateCardTimeStamp(this.state.position);
   }
 
   seek(value) {

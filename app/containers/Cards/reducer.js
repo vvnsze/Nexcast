@@ -10,15 +10,17 @@ import {
   CARD_CREATED,
   DELETE_CARD,
   CARD_DELETED,
+  EDIT_CARD,
   UPDATE_CARD,
   CARD_UPDATED,
+  TOGGLE_EDITING_CARD,
 } from './constants';
 
 import {
   UPDATE_CARD_TIME,
 } from '../EpisodePlayer/constants';
 
-const initialState = { cardTime: '00:00', cardDetail: {} };
+const initialState = { cardTime: '00:00', cardDetail: {}, editingCard: false };
 
 function removeDeletedCard(deletedCardPayload, cardState) {
   var newState = cardState.allCards;
@@ -60,13 +62,30 @@ function cardsReducer(state = initialState, action) {
       return { ...state };
 
     case CARD_DELETED:
-      return { ...state, allCards: removeDeletedCard(action.payload, state) };
+      return { ...state,
+        allCards: removeDeletedCard(action.payload, state),
+      };
+
+    case EDIT_CARD:
+      return { ...state,
+        cardDetail: action.payload,
+        closeForm: false,
+        editingCard: true,
+      };
+
+    case TOGGLE_EDITING_CARD:
+      return { ...state,
+        editingCard: true,
+      };
 
     case UPDATE_CARD:
-      return { ...state, cardDetail: action.payload };
+      return { ...state };
 
     case CARD_UPDATED:
-      return { ...state };
+      return { ...state,
+        closeForm: true,
+        editingCard: false,
+      };
     default:
       return state;
   }
