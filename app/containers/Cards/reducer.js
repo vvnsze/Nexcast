@@ -74,7 +74,7 @@ function cardsReducer(state = initialState, action) {
         cards: action.payload.response,
         message: action.payload.message,
         success: action.payload.success,
-        closeForm: true,
+        showForm: false,
         allCards: addCreatedCard(action.payload, state),
       };
 
@@ -94,7 +94,7 @@ function cardsReducer(state = initialState, action) {
     case EDIT_CARD:
       return { ...state,
         cardDetail: action.payload,
-        closeForm: false,
+        showForm: true,
         editingCard: true,
       };
 
@@ -108,7 +108,7 @@ function cardsReducer(state = initialState, action) {
 
     case CARD_UPDATED:
       return { ...state,
-        closeForm: true,
+        showForm: false,
         editingCard: false,
         allCards: updateSingleCard(action.payload, state),
       };

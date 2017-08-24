@@ -200,7 +200,7 @@ class EpisodePlayer extends Component {
           <div style={{ width: '100%', height: 200, backgroundColor: 'white' }}>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px', padding: '5px' }}>
-              <span style={{ color: '#fff', fontSize: '1.8em' }}>{this.props.title}</span>
+              {/* <span style={{ color: '#fff', fontSize: '1.8em' }}>{this.props.player.episodeTitle}</span> */}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '12px', padding: '5px' }}>
               <span style={{ color: '#fff', fontSize: '1em' }}>{this.props.subTitle}</span>

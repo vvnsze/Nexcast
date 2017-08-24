@@ -40,8 +40,11 @@ export class Cards extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.closeForm) {
-      this.setState({ revealCardCreatorForm: false });
+    if (nextProps.showForm) {
+      this.revealForm();
+    }
+    if (!nextProps.showForm) {
+      this.hideForm();
     }
   }
 
@@ -75,7 +78,16 @@ export class Cards extends React.Component {
   }
 
   toggleRevealForm() {
+    if (!this.state.revealCardCreatorForm) return this.revealForm();
+    return this.hideForm();
+  }
+
+  revealForm = () => {
     this.setState({ revealCardCreatorForm: true });
+  }
+
+  hideForm = () => {
+    this.setState({ revealCardCreatorForm: false });
   }
 
   cancel = () => {
@@ -127,7 +139,7 @@ function mapStateToProps(state) {
   return {
     displayCards: state.cards.allCards,
     selectedEpisode: state.cards.selectedEpisode,
-    closeForm: state.cards.closeForm,
+    showForm: state.cards.showForm,
   };
 }
 

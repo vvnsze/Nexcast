@@ -6,7 +6,7 @@ const styles = {
     display: 'flex',
   },
   podcastPicture: {
-    flex:1,
+    flex: 1,
     margin: '5px',
   },
   podcastDescription: {
