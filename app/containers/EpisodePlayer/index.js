@@ -100,17 +100,17 @@ class EpisodePlayer extends Component {
       sound = new Howl({
         src: [mediaUrl],
         volume: 0.1,
+        onload: function loaded() {
+          this.play();
+        },
         onend: function end() {
         },
       });
-      this.play();
     }
   }
 
   play() {
     const { mediaUrl } = this.props.player;
-
-    sound.play();
     playerInfo.intervalId = this.state.intervalId = setInterval(() => {
       playerInfo.position = sound.seek();
       this.state.position = sound.seek();

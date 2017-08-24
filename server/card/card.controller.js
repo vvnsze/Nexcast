@@ -77,15 +77,22 @@ exports.deleteCard = (req, res) => {
 };
 
 exports.updateCard = (req, res) => {
-  console.log(chalk.cyan('+++line 82 card.controller: '), req);
-  res.send({ update: 'card' });
-  // Card.update()
-  // .then(()=>{
-  //
-  // })
-  // .catch(() => (
-  //   res.send(responseFormatter(false, 'card failed to save'))
-  // ));
+  const query = {
+    tagged_timestamp: req.body.tagged_timestamp,
+    media_link: req.body.media_link,
+    media_type: req.body.media_type,
+    description: req.body.description,
+    button_text: req.body.buttong_text,
+    button_link: req.body.button_link,
+  };
+  const cardId = { id: req.params.id };
+  Card.update(query, { where: cardId })
+  .then((card) => (
+    res.send(responseFormatter(true, 'card updated', card))
+  ))
+  .catch(() => (
+    res.send(responseFormatter(false, 'card failed to save'))
+  ));
 };
 
 // helpers

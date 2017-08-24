@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
-import * as _ from 'lodash';
-import ReactUpload from 'react-s3-uploader';
 import { connect } from 'react-redux';
+import ReactUpload from 'react-s3-uploader';
 import FlatButton from 'material-ui/FlatButton';
 import { Card } from 'material-ui/Card';
+import * as actions from './actions';
 
 import {
   CREATE_CARD,
@@ -28,7 +28,6 @@ class CreateCard extends React.Component {
   }
 
   componentWillMount() {
-    console.log('+++line 30 cards props: ', this.props);
     if (!this.props.selectedTimeStamp && !this.props.editCardDetail) {
       return;
     } else if (this.props.selectedTimeStamp) {
@@ -78,13 +77,13 @@ class CreateCard extends React.Component {
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
     const updateCardData = { ...this.state,
-      cardId: this.props.editCardDetail.id,
+      id: this.props.editCardDetail.id,
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
-    if (!this.editCardDetail.editingCard) {
+    if (!this.props.isEditingCard) {
       this.props.dispatch({ type: CREATE_CARD, payload: createCardData });
     }
-    if (this.editCardDetail.editingCard) {
+    if (this.props.isEditingCard === true) {
       this.props.dispatch({ type: UPDATE_CARD, payload: updateCardData });
     }
   }
@@ -145,13 +144,17 @@ CreateCard.propTypes = {
   selectedEpisode: PropTypes.object,
   selectedTimeStamp: PropTypes.string,
   editCardDetail: PropTypes.object,
+  isEditingCard: PropTypes.bool,
+  id: PropTypes.number,
 };
 
 function mapStateToProps(state) {
+  // console.log('+++line 151 cardForm State: ', state.cards);
   return {
     selectedEpisode: state.cards.selectedEpisode,
     selectedTimeStamp: state.cards.cardTime.time,
     editCardDetail: state.cards.cardDetail,
+    isEditingCard: state.cards.editingCard,
   };
 }
 

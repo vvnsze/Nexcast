@@ -34,6 +34,30 @@ function removeDeletedCard(deletedCardPayload, cardState) {
   return newState;
 }
 
+function updateSingleCard(updatePayload, cardState) {
+  var newState = cardState.allCards;
+  console.log('this is the updatedPayload!', updatePayload);
+  if (updatePayload.result.data.success === true) {
+    newState = cardState.allCards.map(function updateSet(card) {
+      if (card.id !== updatePayload.updatedCard.id) {
+        return card;
+      }
+      if (card.id === updatePayload.updatedCard.id) {
+        return updatePayload.updatedCard;
+      }
+    });
+  }
+  return newState;
+}
+
+function addCreatedCard(createPayload, cardState) {
+  var newState = cardState.allCards;
+  if (createPayload.result.data.success === true) {
+    newState.push(createPayload.createdCard);
+  }
+  return newState;
+}
+
 function cardsReducer(state = initialState, action) {
   switch (action.type) {
     case DISPLAY_CARDS:
@@ -51,6 +75,7 @@ function cardsReducer(state = initialState, action) {
         message: action.payload.message,
         success: action.payload.success,
         closeForm: true,
+        allCards: addCreatedCard(action.payload, state),
       };
 
     case UPDATE_CARD_TIME:
@@ -85,6 +110,7 @@ function cardsReducer(state = initialState, action) {
       return { ...state,
         closeForm: true,
         editingCard: false,
+        allCards: updateSingleCard(action.payload, state),
       };
     default:
       return state;
@@ -92,9 +118,3 @@ function cardsReducer(state = initialState, action) {
 }
 
 export default cardsReducer;
-
-// return cardState.allCards.filter(function remove(card) {
-//   if (card.id !== deletedCardPayload.cardId) {
-//     return card;
-//   }
-// });
