@@ -3,7 +3,7 @@ const sequelize = require('../config/database');
 
 const Card = sequelize.define('card', {
   tagged_timestamp: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING(12),
   },
   podcast_id: {
     type: Sequelize.INTEGER,

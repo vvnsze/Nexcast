@@ -164,7 +164,23 @@
       }
     }
   },
-  "dllPlugin": false,
+  "dllPlugin": {
+    "path": "node_modules/react-boilerplate-dlls",
+    "exclude": [
+      "chalk",
+      "compression",
+      "cross-env",
+      "express",
+      "ip",
+      "minimist",
+      "sanitize.css"
+    ],
+    "include": [
+      "core-js",
+      "lodash",
+      "eventsource-polyfill"
+    ]
+  },
   "jest": {
     "collectCoverageFrom": [
       "app/**/*.{js,jsx}",
@@ -207,7 +223,7 @@
     "feedme": "^1.0.0",
     "fontfaceobserver": "2.0.7",
     "ftp": "^0.3.10",
-    "howler": "^2.0.3",
+    "howler": "^2.0.4",
     "invariant": "2.2.2",
     "ip": "1.1.4",
     "jwt-simple": "^0.5.1",

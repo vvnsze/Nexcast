@@ -1,8 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 import {
-  DISPLAY_CARDS,
-  SELECTED_EPISODE,
   CREATE_CARD,
   CARD_CREATED,
   DELETE_CARD,
@@ -13,9 +11,10 @@ import {
 
 import HttpClient from '../../httpClient';
 
-const createCardAsync = (body) => (
-  HttpClient.post('/api/card', body)
-);
+const createCardAsync = (body) => {
+  const params = { ...body, tagged_timestamp: body.time_stamp };
+  return HttpClient.post('/api/card', params);
+};
 
 const updateCardAsync = (params) => (
   HttpClient.put(`/api/card/${params.id}`, params)
@@ -31,10 +30,10 @@ function* createCard() {
 
 // ASYNC Actions (Sagas)
 function* callCreateCard(action) {
-  console.log('+++line 34 CallCreateCard: ', action);
   try {
     const result = yield call(createCardAsync, action.payload);
-    yield put({ type: CARD_CREATED, payload: result });
+    console.log('+++35 this is the result!: ', result);
+    yield put({ type: CARD_CREATED, payload: { result, createdCard: action.payload } });
   } catch (e) {
     console.error(e);
   }
@@ -46,8 +45,8 @@ function* updateCard() {
 
 function* callUpdateCard(action) {
   try {
-    const result = yield call(updateCardAsync(action.payload));
-    yield put({ type: CARD_UPDATED, payload: result });
+    const result = yield call(updateCardAsync, action.payload);
+    yield put({ type: CARD_UPDATED, payload: { result, updatedCard: action.payload } });
   } catch (e) {
     console.error(e);
   }
@@ -58,10 +57,10 @@ function* deleteCard() {
 }
 
 function* callDeleteCard(action) {
-  console.log('+++line 61 action.payload in callDeleteCard: ', action.payload);
   try {
-    const result = yield call(deleteCardAsync, action.payload);
-    yield put({ type: CARD_DELETED, payload: result });
+    const result = yield call(deleteCardAsync, action.payload.id);
+    console.log('+++line 64 result from deletedCard: ', result);
+    yield put({ type: CARD_DELETED, payload: { cardId: action.payload.id, result } });
   } catch (e) {
     console.error(e);
   }

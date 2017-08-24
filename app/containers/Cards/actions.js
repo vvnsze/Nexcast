@@ -9,6 +9,8 @@ import {
   CREATE_CARD,
   DELETE_CARD,
   UPDATE_CARD,
+  EDIT_CARD,
+  TOGGLE_EDITING_CARD,
 } from './constants';
 
 // export function displayCards(payload) {
@@ -26,6 +28,19 @@ export function createCard(payload) {
 }
 
 export function editCard(payload) {
+  return {
+    type: EDIT_CARD,
+    payload,
+  };
+}
+
+export function resetEditingCard() {
+  return {
+    type: TOGGLE_EDITING_CARD,
+  };
+}
+
+export function updateCard(payload) {
   return {
     type: UPDATE_CARD,
     payload,

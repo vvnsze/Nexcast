@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const svgLoader =  require('react-svg-loader');
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -46,15 +47,33 @@ module.exports = (options) => ({
           },
         },
       ],
-    }, {
+    },
+    // {
+    //   test: /\.svg$/,
+    //   loader: 'babel!react-svg?' + JSON.stringify({
+    //     svgo: {
+    //       // svgo options
+    //       plugins: [{ removeTitle: false }],
+    //       floatPrecision: 2,
+    //     },
+    //   }),
+    // },
+    {
       test: /\.svg$/,
-      loader: 'babel!react-svg?' + JSON.stringify({
-        svgo: {
-          // svgo options
-          plugins: [{ removeTitle: false }],
-          floatPrecision: 2,
+      use: [
+        {
+          loader: 'babel-loader',
         },
-      }),
+        {
+          loader: 'react-svg-loader',
+          query: {
+            svgo: {
+              plugins: [{ removeTitle: false }],
+              floatPrecision: 2,
+            },
+          },
+        },
+      ],
     }, {
       test: /\.json$/,
       loader: 'json-loader',

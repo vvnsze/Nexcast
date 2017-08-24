@@ -60,7 +60,8 @@ export class SideMenu extends React.Component {
               backgroundColor="#0371d8"
               onTouchTap={this.addShow}
               style={{ height: '22px', width: 'auto' }}
-              labelColor="#ffffff"
+              labelColor="white"
+
             >ADD SHOW
             </RaisedButton>
           </div>

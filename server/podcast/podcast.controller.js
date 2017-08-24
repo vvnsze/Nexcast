@@ -27,7 +27,6 @@ exports.searchItunes = (req, res) => {
 
 exports.getPodcasts = (req, res, next) => {
   const userId = req.user.id;
-  console.log(chalk.magenta(`this is the userId: ${userId}`));
   const query = {
     where: {
       userId,

@@ -7,9 +7,9 @@ router.post('/api/card', [
   controller.createCard,
 ]);
 
-router.put('/api/card/:id', (req, res) => {});
-
-router.get('/api/card/:id', (req, res) => {});
+router.put('/api/card/:id', [
+  controller.updateCard,
+]);
 
 router.get('/api/cards');
 
