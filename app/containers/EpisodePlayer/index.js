@@ -48,8 +48,16 @@ export function secondsToHMS(seconds = 0) {
 }
 
 export function hmsToSeconds(time) {
+  var seconds;
+  if (time === null) {
+    return 0;
+  }
   const timeString = time.split(':');
-  const seconds = (+timeString[0]) * 3600 + (+timeString[1]) * 60 + (+timeString[2]);
+  if (timeString.length === 3) {
+    seconds = (+timeString[0]) * 3600 + (+timeString[1]) * 60 + (+timeString[2]);
+  } else {
+    seconds = ((+timeString[0]) * 60) + (+timeString[1]);
+  }
   return seconds;
 }
 
@@ -108,8 +116,13 @@ class EpisodePlayer extends Component {
       sound = new Howl({
         src: [mediaUrl],
         volume: 0.3,
-        onload: () => (this.setState({ playerStatus: statusMap.loaded })),
-        onloaderror: (err) => (console.log(err)),
+        onload: () => {
+          console.log('finished loading!');
+          this.setState({
+            playerStatus: statusMap.loaded,
+          });
+        },
+        onloaderror: (err) => (console.log('onloaderror', err)),
         onplay: () => {
           this.setState({ playerStatus: statusMap.playing })
           this.play()
@@ -183,20 +196,20 @@ class EpisodePlayer extends Component {
   }
 
   pausePlayIconType = () => {
-    if (this.state.playerStatus !== 3) return 'play_arrow'
-    return 'pause'
+    if (this.state.playerStatus !== 3) return 'play_arrow';
+    return 'pause';
   }
 
   handlePausePlay = () => {
     if (this.state.playerStatus !== 3) return sound.play();
-    sound.pause();
+    return sound.pause();
   }
 
   showMediaPlayer(bar) {
     if (!this.props.mediaUrl) {
       return <div>Please select an episode to begin</div>
     }
-    if (this.playerStatus === 1) {
+    if (this.state.playerStatus === 1) {
       return <div>Hold on, we are loading your podcast episode!</div>
     }
 
@@ -204,9 +217,9 @@ class EpisodePlayer extends Component {
       <div>
         <div style={{ width: '100%', height: 200, backgroundColor: 'white' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px' }}>
-            <FontIcon className="material-icons" style={iconStyles} color={blue500}>replay_10</FontIcon>
+            <FontIcon className="material-icons" style={iconStyles} color={blue500} onClick={this.goBack}>replay_10</FontIcon>
             { this.PlayPauseIcon() }
-            <FontIcon className="material-icons" style={iconStyles} color={blue500}>forward_10</FontIcon>
+            <FontIcon className="material-icons" style={iconStyles} color={blue500} onClick={this.goForward}>forward_10</FontIcon>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
             <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position))}</span>

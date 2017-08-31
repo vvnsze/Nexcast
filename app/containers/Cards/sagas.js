@@ -30,6 +30,7 @@ function* createCard() {
 
 // ASYNC Actions (Sagas)
 function* callCreateCard(action) {
+  console.log('card before being sent to backend: ', action.payload);
   try {
     const result = yield call(createCardAsync, action.payload);
     console.log('+++35 this is the result!: ', result);

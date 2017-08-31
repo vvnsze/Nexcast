@@ -5,6 +5,7 @@ import { List } from 'material-ui/List';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import PodcastEpisodeList from '../../components/PodcastEpisodeList';
+import Searchbar from './Searchbar';
 
 export class SideMenu extends React.Component {
   constructor(props) {
@@ -48,24 +49,24 @@ export class SideMenu extends React.Component {
   render() {
     return (
       <div className="row" style={{ height: '100%', overflow: 'scroll' }}>
-          <div
-            className="col s9 blue-grey darken-4"
-            style={{ color: '#FFF', padding: '10px 20px' }}
-          >MY SHOWS
-          </div>
-          <div
-            className="col s3 blue-grey darken-4"
-            style={{ color: '#FFF', padding: '10px 10px' }}
-          >
-            <RaisedButton
-              backgroundColor="#0371d8"
-              onTouchTap={this.addShow}
-              style={{ height: '22px', width: 'auto' }}
-              labelColor="white"
-
-            >ADD SHOW
-            </RaisedButton>
-          </div>
+        <div
+          className="col s9 blue-grey darken-4"
+          style={{ color: '#FFF', padding: '10px 20px' }}
+        >MY SHOWS
+        </div>
+        <div
+          className="col s3 blue-grey darken-4"
+          style={{ color: '#FFF', padding: '10px 10px' }}
+        >
+          <RaisedButton
+            backgroundColor="#0371d8"
+            onTouchTap={this.addShow}
+            style={{ height: '22px', width: 'auto' }}
+            labelColor="white"
+          >ADD SHOW
+          </RaisedButton>
+        </div>
+        <div><Searchbar /> </div>
         {this.showPodcastEpisode()}
       </div>
     );

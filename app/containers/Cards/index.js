@@ -65,7 +65,7 @@ export class Cards extends React.Component {
       ));
     }
     return (
-      <li>You have no cards</li>
+      <li></li>
     );
   }
 
