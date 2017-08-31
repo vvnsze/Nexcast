@@ -37,7 +37,6 @@ exports.fetchEpisodeId = (req, res, next) => {
     },
   };
   Episode.findOne(query).then((episode) => {
-    console.log(chalk.cyan('+++line 40: episode found! '), episode.id);
     res.locals.episode_id = episode.id;
     next();
   }).catch((error) => {
@@ -68,7 +67,6 @@ exports.deleteCard = (req, res) => {
 
   Card.destroy(query)
     .then((result) => {
-      console.log(chalk.cyan('+++line 73 card destruction success!: '), result);
       res.send({ result });
     })
     .catch(() => (

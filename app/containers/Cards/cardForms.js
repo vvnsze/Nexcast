@@ -5,11 +5,6 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card } from 'material-ui/Card';
 import * as actions from './actions';
 
-import {
-  CREATE_CARD,
-  UPDATE_CARD,
-} from './constants';
-
 class CreateCard extends React.Component {
   constructor(props) {
     super(props);
@@ -81,10 +76,12 @@ class CreateCard extends React.Component {
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
     if (!this.props.isEditingCard) {
-      this.props.dispatch({ type: CREATE_CARD, payload: createCardData });
+      // this.props.dispatch({ type: CREATE_CARD, payload: createCardData });
+      this.props.dispatch(actions.createCard(createCardData));
     }
     if (this.props.isEditingCard === true) {
-      this.props.dispatch({ type: UPDATE_CARD, payload: updateCardData });
+      // this.props.dispatch({ type: UPDATE_CARD, payload: updateCardData });
+      this.props.dispatch(actions.editCard(updateCardData));
     }
   }
 

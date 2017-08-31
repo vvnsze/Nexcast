@@ -38,6 +38,7 @@ export class SideMenu extends React.Component {
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
             onSelectEpisode={this.selectPodcastEpisode}
+            selectedEpisode={this.props.selectedEpisode}
           />
         </List>
       </div>
@@ -74,11 +75,13 @@ export class SideMenu extends React.Component {
 SideMenu.propTypes = {
   dispatch: PropTypes.func.isRequired,
   podcastEpisodes: PropTypes.array,
+  selectedEpisode: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
     podcastEpisodes: state.sideMenu.episodes,
+    selectedEpisode: state.cards.selectedEpisode,
   };
 }
 

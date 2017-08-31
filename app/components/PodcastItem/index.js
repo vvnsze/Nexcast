@@ -7,7 +7,7 @@ import React, { PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 import PodcastEpisodeItem from '../PodcastEpisodeItem';
 
-function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId }) {
+function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId, podcastImage, selectedEpisode }) {
   const createEpisodeItem = (episode) => (
     <PodcastEpisodeItem
       key={episode.guid}
@@ -18,6 +18,9 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
       episodeContentSnippet={episode.contentSnippet}
       onSelectEpisode={onSelectEpisode}
       nexcastPodcastId={nexcastPodcastId}
+      showTitle={showTitle}
+      podcastImage={podcastImage}
+      selectedEpisode={selectedEpisode}
     />
   );
 
@@ -31,7 +34,7 @@ function PodcastItem({ showTitle, episodes, onSelectEpisode, nexcastPodcastId })
   return (
     <div className="PodcastSearchResultItemWrapper">
       <ListItem
-        style={{ color: '#ffffff', 'fontFamily': 'Lato,sans-serif' }}
+        style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}
         primaryText={showTitle}
         nestedItems={Episodes}
         primaryTogglesNestedList
@@ -47,6 +50,8 @@ PodcastItem.propTypes = {
   episodes: PropTypes.array,
   onSelectEpisode: PropTypes.func,
   nexcastPodcastId: PropTypes.number,
+  podcastImage: PropTypes.string,
+  selectedEpisode: PropTypes.object,
 };
 
 export default PodcastItem;

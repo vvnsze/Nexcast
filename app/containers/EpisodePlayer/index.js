@@ -5,31 +5,37 @@
  */
 import React, { Component } from 'react';
 import * as _ from 'lodash';
+import Slider from 'rc-slider';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from './actions';
-import Slider from 'rc-slider';
 import { Howler } from 'howler';
 import 'rc-slider/assets/index.css';
+import FontIcon from 'material-ui/FontIcon';
+import { blue500 } from 'material-ui/styles/colors';
 // import Play from '../../assets/icon_play.png';
 // import Pause from '../../assets/icon_pause.png';
-import SkipBack from '../../assets/material_ui_replay_ten.svg';
-import SkipForward from '../../assets/material_ui_forward_ten.svg';
-
+// import SkipBack from '../../assets/material_ui_replay_ten.svg';
+// import SkipForward from '../../assets/material_ui_forward_ten.svg';
 const Play = '';
 
 let playerInfo = {};
 var sound = {};
 
-/*
-PlayerStatus:
-unloaded: 0,
-loading: 1,
-loaded: 2,
-playing: 3,
-paused: 4,
-stopped: 5,
- */
+const iconStyles = {
+  fontSize: '35px',
+  marginLeft: '15px',
+  marginRight: '15px',
+};
+
+const statusMap = {
+  unloaded: 0,
+  loading: 1,
+  loaded: 2,
+  playing: 3,
+  paused: 4,
+  stopped: 5,
+};
 
 export function secondsToHMS(seconds = 0) {
   var start = 11;
@@ -41,21 +47,27 @@ export function secondsToHMS(seconds = 0) {
   return new Date(seconds * 1000).toISOString().substr(start, length);
 }
 
+export function hmsToSeconds(time) {
+  const timeString = time.split(':');
+  const seconds = (+timeString[0]) * 3600 + (+timeString[1]) * 60 + (+timeString[2]);
+  return seconds;
+}
+
 class EpisodePlayer extends Component {
   constructor() {
     super();
+    this.intervalId = null;
     this.state = {
       playerStatus: 0,
       duration: 0,
       url: '',
       position: 0,
-      intervalId: 0,
     };
     this.onToggle = this.onToggle.bind(this);
     this.play = this.play.bind(this);
     this.start = this.start.bind(this);
-    this.pause = this.pause.bind(this);
-    this.resume = this.resume.bind(this);
+    // this.pause = this.pause.bind(this);
+    // this.resume = this.resume.bind(this);
     this.goBack = this.goBack.bind(this);
     this.goForward = this.goForward.bind(this);
     this.seekToTime = this.seekToTime.bind(this);
@@ -65,11 +77,6 @@ class EpisodePlayer extends Component {
     this.test = this.test.bind(this);
     this.showMediaPlayer = this.showMediaPlayer.bind(this);
     this.updateCardTimeStamp = this.updateCardTimeStamp.bind(this);
-  }
-
-  componentWillMount() {
-    // const { mediaUrl, styleConfig: { progressColor, seekColor, playerColor, controlColor } } = this.props;
-    // this.start(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -83,86 +90,60 @@ class EpisodePlayer extends Component {
   }
 
   updateCardTimeStamp(seconds) {
-    console.log('+++line 90 seconds in updateCardTimeStamp: ', seconds);
     if (!seconds) {
       return;
     }
     var time = secondsToHMS(seconds);
-    console.log('+++line 95 this is time: ', typeof (time), ' :', time);
     this.props.dispatch(actions.updateCardTime({ time }));
   }
 
   start(props) {
     const { mediaUrl } = props;
-    if (playerInfo.mediaUrl !== mediaUrl) {
-      playerInfo.mediaUrl = mediaUrl;
-      this.state.url = mediaUrl;
+    if (this.state.url !== mediaUrl) {
+      this.setState({
+        playerStatus: 1,
+        url: mediaUrl,
+      });
+
       sound = new Howl({
         src: [mediaUrl],
-        volume: 0.1,
-        onload: function loaded() {
-          this.play();
+        volume: 0.3,
+        onload: () => (this.setState({ playerStatus: statusMap.loaded })),
+        onloaderror: (err) => (console.log(err)),
+        onplay: () => {
+          this.setState({ playerStatus: statusMap.playing })
+          this.play()
+        },
+        onpause: () => {
+          clearInterval(this.intervalId);
+          this.updateCardTimeStamp(this.state.position);
+          this.setState({ playerStatus: statusMap.paused });
         },
         onend: function end() {
+          this.setState({ playerStatus: statusMap.stopped });
         },
       });
     }
   }
 
   play() {
-    const { mediaUrl } = this.props.player;
-    playerInfo.intervalId = this.state.intervalId = setInterval(() => {
-      playerInfo.position = sound.seek();
-      this.state.position = sound.seek();
-
-      let status = sound.state();
-      let position = 0;
-      let duration = 0;
-      switch (status) {
-        case 'loading':
-          this.setState({
-            playerStatus: 1,
-            duration: 0,
-            position: 0,
-          });
-          break;
-        case 'loaded':
-          this.setState({
-            playerStatus: 3,
-            duration: sound.duration(),
-            position: sound.seek(),
-          });
-          break;
-        default:
-          break;
-      }
-
-      this.props.onProgress(sound.seek());
+    this.intervalId = setInterval(() => {
+      const position = sound.seek();
+      this.setState({
+        duration: sound.duration() || 0,
+        position: position || 0,
+      });
+      this.props.onProgress(position);
     }, 1000);
   }
 
-  pause() {
-    const { mediaUrl } = this.props.player;
-    clearInterval(this.state.intervalId);
-    sound.pause();
-    this.setState({
-      playerStatus: 2,
-    });
-    this.updateCardTimeStamp(playerInfo.position);
-    // this.props.actions.playerPause(mediaUrl);
-  }
-
-  resume() {
-    const { mediaUrl, title, episodeTitle, duration, imageUrl, episodeKey, progress } = this.props.player;
-    // this.props.actions.playerResume(mediaUrl, title, episodeTitle, duration, imageUrl, episodeKey, progress);
-  }
   goBack() {
     const { position } = this.state;
-    this.seek(position - 15);
+    this.seek(position - 10);
   }
   goForward() {
     const { position } = this.state;
-    this.seek(position + 15);
+    this.seek(position + 10);
   }
 
   seekToTime(percent) {
@@ -190,74 +171,77 @@ class EpisodePlayer extends Component {
 
   }
 
+  PlayPauseIcon = () => {
+    if (this.state.playerStatus === 1) return <span>"loading"</span>
+    return (
+      <FontIcon
+        className="material-icons"
+        style={iconStyles} color={blue500}
+        onClick={this.handlePausePlay}
+      >{this.pausePlayIconType()}</FontIcon>
+    );
+  }
+
+  pausePlayIconType = () => {
+    if (this.state.playerStatus !== 3) return 'play_arrow'
+    return 'pause'
+  }
+
+  handlePausePlay = () => {
+    if (this.state.playerStatus !== 3) return sound.play();
+    sound.pause();
+  }
+
   showMediaPlayer(bar) {
-    if(!this.props.mediaUrl) {
+    if (!this.props.mediaUrl) {
       return <div>Please select an episode to begin</div>
     }
+    if (this.playerStatus === 1) {
+      return <div>Hold on, we are loading your podcast episode!</div>
+    }
+
     return (
-        <div>
-
-          <div style={{ width: '100%', height: 200, backgroundColor: 'white' }}>
-
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px', padding: '5px' }}>
-              {/* <span style={{ color: '#fff', fontSize: '1.8em' }}>{this.props.player.episodeTitle}</span> */}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '12px', padding: '5px' }}>
-              <span style={{ color: '#fff', fontSize: '1em' }}>{this.props.subTitle}</span>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px' }}>
-
-              <img src={SkipBack} onClick={this.goBack} style={{ width: '50px', padding: '1%', color: '#0371d8' }} />
-              {((playerStatus, play, pause) => {
-                if (playerStatus === 3) {
-                  return (
-                    <img src={(require('../../assets/material_ui_pause.png'))} onClick={pause} style={{ height: '42px', width: 'auto', color: '#0371d8' }}/>
-                  );
-                } else {
-                  return (
-                    <img src={(require('../../assets/material_ui_play.png'))} onClick={play} style={{ height: '42px', width: 'auto', color: '#0371d8' }}/>
-                  );
-                }
-              })(this.state.playerStatus, this.play, this.pause)}
-              <img src={SkipForward} onClick={this.goForward} style={{ height: '42px', padding: '1%' }} />
-
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
-              <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position))}</span>
-              <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.duration))}</span>
-            </div>
-
-
-            <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
-              <Slider
-                defaultValue={1}
-                step={1}
-                min={1}
-                value={parseInt(this.state.position)}
-                max={parseInt(this.state.duration) || 100}
-                onChange={this.moveSeek}
-                onAfterChange={this.seek}
-                railStyle={{ backgroundColor: '#56a0e5', height: 10 }}
-                trackStyle={{ backgroundColor: '#0371d8' || '#0371d8', height: 10, borderRadius: 0, paddingRight: -50 }}
-                handleStyle={{
-                //  borderColor: progressColor,
-                  borderWidth: 0,
-                  height: 28,
-                  width: 5,
-                  marginLeft: -2,
-                  marginTop: -9,
-                  backgroundColor: 'white',
-                  borderRadius: 0,
-                }}
-              />
-              <div style={{ width: '100%', height: '0px', top: '-13px', position: 'relative' }}>
-                {bar}
-              </div>
-            </div>
-
+      <div>
+        <div style={{ width: '100%', height: 200, backgroundColor: 'white' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px' }}>
+            <FontIcon className="material-icons" style={iconStyles} color={blue500}>replay_10</FontIcon>
+            { this.PlayPauseIcon() }
+            <FontIcon className="material-icons" style={iconStyles} color={blue500}>forward_10</FontIcon>
           </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
+            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position))}</span>
+            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.duration))}</span>
+          </div>
+
+          <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
+            <Slider
+              defaultValue={1}
+              step={1}
+              min={1}
+              value={parseInt(this.state.position)}
+              max={parseInt(this.state.duration) || 100}
+              onChange={this.moveSeek}
+              onAfterChange={this.seek}
+              railStyle={{ backgroundColor: '#56a0e5', height: 10 }}
+              trackStyle={{ backgroundColor: '#0371d8' || '#0371d8', height: 10, borderRadius: 0, paddingRight: -50 }}
+              handleStyle={{
+              //  borderColor: progressColor,
+                borderWidth: 0,
+                height: 28,
+                width: 5,
+                marginLeft: -2,
+                marginTop: -9,
+                backgroundColor: 'white',
+                borderRadius: 0,
+              }}
+            />
+            <div style={{ width: '100%', height: '0px', top: '-13px', position: 'relative' }}>
+              {bar}
+            </div>
+          </div>
+
         </div>
+      </div>
     );
   }
 
@@ -285,8 +269,6 @@ EpisodePlayer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   player: PropTypes.object,
   mediaUrl: PropTypes.string,
-  title: PropTypes.string,
-  subTitle: PropTypes.string,
   onProgress: PropTypes.func,
   // styleConfig: PropTypes.objectOf(PropTypes.string),
   tags: PropTypes.arrayOf(PropTypes.number),
@@ -297,8 +279,6 @@ EpisodePlayer.propTypes = {
 EpisodePlayer.defaultProps = {
   player: {},
   mediaUrl: '',
-  title: '',
-  subTitle: '',
   onProgress: {},
   // styleConfig: { progressColor: 'white', controlColor: '#56a0e5', seekColor: '#56a0e5', playerColor: '#0371d8' },
   tags: [],
