@@ -18,7 +18,9 @@ export class Searchbar extends React.Component {
   }
 
   onInputChange(e) {
-    console.log(e);
+    debounce(() => {
+      this.props.dispatch(actions.fetchSideMenuResults(e));
+    }, 10000)();
   }
 
   render() {

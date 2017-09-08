@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import {
   LOAD_PODCAST_EPISODES,
   FETCH_PODCAST_EPISODES,
@@ -8,16 +9,14 @@ import {
 const initialState = { episodes: [] };
 
 function returnSideMenuSearchResults(keyword, state) {
-  var filteredEpisodes;
-  filteredEpisodes = state.episodes.forEach(function enterShow(show) {
-    return show.entries.filter(function filterEpisodes(episode) {
-      if (episode.title.indexOf(keyword) !== -1) {
-        return episode;
-      }
-    });
+  var filteredEpisodes = [];
+  state.episodes.forEach(function enterShow(show) {
+    return filteredEpisodes.push(show.entries.filter(function filterEpisodes(episode) {
+      return (episode.title.toLowerCase().indexOf(keyword) !== -1)
+    }));
   });
-  console.log('this is the filteredEpisode!: ', filteredEpisode);
-  return filteredEpisodes;
+  console.log('this is the filteredEpisode!: ', filteredEpisodes);
+  return _.flattenDepth(filteredEpisodes, 2);
 }
 
 function sideMenuReducer(state = initialState, action) {
