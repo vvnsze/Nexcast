@@ -6,18 +6,31 @@ import { connect } from 'react-redux';
 import * as actions from './actions';
 import PodcastEpisodeList from '../../components/PodcastEpisodeList';
 import Searchbar from './Searchbar';
+import PodcastEpisodeItem from '../../components/PodcastEpisodeItem';
 
 export class SideMenu extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showSideMenu: true,
+    };
     this.loadPodcastEpisode = this.loadPodcastEpisode.bind(this);
     this.showPodcastEpisode = this.showPodcastEpisode.bind(this);
     this.selectPodcastEpisode = this.selectPodcastEpisode.bind(this);
     this.addShow = this.addShow.bind(this);
+    this.displaySearchResult = this.displaySearchResult.bind(this);
+    this.toggleMenuState = this.toggleMenuState.bind(this);
   }
 
   componentWillMount() {
     this.loadPodcastEpisode();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.searchResult) {
+      console.log('+++line 26 this is searchResult!: ', nextProps.searchResult);
+      this.displaySearchResult(nextProps.searchResult);
+    }
   }
 
   loadPodcastEpisode() {
@@ -32,7 +45,33 @@ export class SideMenu extends React.Component {
     browserHistory.push('/searchpodcast');
   }
 
+  toggleMenuState() {
+    this.setState({ showSideMenu: false });
+  }
+
+  displaySearchResult(episodes) {
+    this.toggleMenuState();
+    if (episodes.length === 1) {
+      return (
+        <div style={{ color: '#FFF', padding: 20 }}>
+          <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
+            <PodcastEpisodeItem
+              episodeFile={episodes.link}
+              episodeTitle={episodes.title}
+              episodeFullContent={episodes.content}
+              guid={episodes.guid}
+            />
+          </List>
+        </div>
+      );
+    }
+    return <div></div>
+  }
+
   showPodcastEpisode() {
+    if (!this.state.showSideMenu) {
+      return <div></div>;
+    }
     return (
       <div style={{ color: '#FFF', padding: 20 }}>
         <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
@@ -66,8 +105,9 @@ export class SideMenu extends React.Component {
           >ADD SHOW
           </RaisedButton>
         </div>
-        <div><Searchbar /> </div>
+        {/* <div><Searchbar /> </div> */}
         {this.showPodcastEpisode()}
+        {/* {this.displaySearchResult()} */}
       </div>
     );
   }
@@ -83,6 +123,7 @@ function mapStateToProps(state) {
   return {
     podcastEpisodes: state.sideMenu.episodes,
     selectedEpisode: state.cards.selectedEpisode,
+    searchResult: state.sideMenu.sideMenuSearchResult,
   };
 }
 

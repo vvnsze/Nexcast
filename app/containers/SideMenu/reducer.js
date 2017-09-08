@@ -9,13 +9,15 @@ import {
 const initialState = { episodes: [] };
 
 function returnSideMenuSearchResults(keyword, state) {
+  if (keyword.length < 2 || keyword === ' ') {
+    return;
+  }
   var filteredEpisodes = [];
   state.episodes.forEach(function enterShow(show) {
     return filteredEpisodes.push(show.entries.filter(function filterEpisodes(episode) {
       return (episode.title.toLowerCase().indexOf(keyword) !== -1)
     }));
   });
-  console.log('this is the filteredEpisode!: ', filteredEpisodes);
   return _.flattenDepth(filteredEpisodes, 2);
 }
 
