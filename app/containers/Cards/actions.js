@@ -10,7 +10,7 @@ import {
   DELETE_CARD,
   UPDATE_CARD,
   EDIT_CARD,
-  TOGGLE_EDITING_CARD,
+  FALSIFY_EDITING_CARD,
 } from './constants';
 
 // export function displayCards(payload) {
@@ -36,7 +36,7 @@ export function editCard(payload) {
 
 export function resetEditingCard() {
   return {
-    type: TOGGLE_EDITING_CARD,
+    type: FALSIFY_EDITING_CARD,
   };
 }
 

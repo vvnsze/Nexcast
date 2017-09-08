@@ -13,12 +13,12 @@ import { Howler } from 'howler';
 import 'rc-slider/assets/index.css';
 import FontIcon from 'material-ui/FontIcon';
 import { blue500 } from 'material-ui/styles/colors';
+import LoadingPlayer from '../../assets/loadingPlayer.gif';
 // import Play from '../../assets/icon_play.png';
 // import Pause from '../../assets/icon_pause.png';
 // import SkipBack from '../../assets/material_ui_replay_ten.svg';
 // import SkipForward from '../../assets/material_ui_forward_ten.svg';
 const Play = '';
-
 let playerInfo = {};
 var sound = {};
 
@@ -70,6 +70,7 @@ class EpisodePlayer extends Component {
       duration: 0,
       url: '',
       position: 0,
+      tags: [],
     };
     this.onToggle = this.onToggle.bind(this);
     this.play = this.play.bind(this);
@@ -85,6 +86,7 @@ class EpisodePlayer extends Component {
     this.test = this.test.bind(this);
     this.showMediaPlayer = this.showMediaPlayer.bind(this);
     this.updateCardTimeStamp = this.updateCardTimeStamp.bind(this);
+    this.inputSecondsIntoTags = this.inputSecondsIntoTags.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -124,8 +126,8 @@ class EpisodePlayer extends Component {
         },
         onloaderror: (err) => (console.log('onloaderror', err)),
         onplay: () => {
-          this.setState({ playerStatus: statusMap.playing })
-          this.play()
+          this.setState({ playerStatus: statusMap.playing });
+          this.play();
         },
         onpause: () => {
           clearInterval(this.intervalId);
@@ -161,13 +163,14 @@ class EpisodePlayer extends Component {
 
   seekToTime(percent) {
     const { mediaUrl, title, episodeTitle, duration } = this.props.player;
-    // seekToTime
     const sec = (percent / 100) * duration;
     if (duration) this.props.actions.playerSeekTo(mediaUrl, sec);
   }
 
   stop() {
+
   }
+
   moveSeek(value) {
     this.setState({
       position: value,
@@ -185,7 +188,7 @@ class EpisodePlayer extends Component {
   }
 
   PlayPauseIcon = () => {
-    if (this.state.playerStatus === 1) return <span>"loading"</span>
+    if (this.state.playerStatus === 1) return <span>Loading Player</span>;
     return (
       <FontIcon
         className="material-icons"
@@ -205,12 +208,21 @@ class EpisodePlayer extends Component {
     return sound.pause();
   }
 
+  inputSecondsIntoTags(cards = []) {
+    const tags = cards.map(function insertSeconds(card) {
+      return card.seconds;
+    });
+    return tags;
+  }
+
   showMediaPlayer(bar) {
     if (!this.props.mediaUrl) {
-      return <div>Please select an episode to begin</div>
+      return <div>Please select an episode to begin</div>;
     }
     if (this.state.playerStatus === 1) {
-      return <div>Hold on, we are loading your podcast episode!</div>
+      // TODO Figure out why the loading gif does not work
+      // return <div><LoadingPlayer /></div>;
+      return <div>Loading Player </div>;
     }
 
     return (
@@ -222,8 +234,8 @@ class EpisodePlayer extends Component {
             <FontIcon className="material-icons" style={iconStyles} color={blue500} onClick={this.goForward}>forward_10</FontIcon>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
-            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position))}</span>
-            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.duration))}</span>
+            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position, 10))}</span>
+            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.duration, 10))}</span>
           </div>
 
           <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
@@ -231,8 +243,8 @@ class EpisodePlayer extends Component {
               defaultValue={1}
               step={1}
               min={1}
-              value={parseInt(this.state.position)}
-              max={parseInt(this.state.duration) || 100}
+              value={parseInt(this.state.position, 10)}
+              max={parseInt(this.state.duration, 10) || 100}
               onChange={this.moveSeek}
               onAfterChange={this.seek}
               railStyle={{ backgroundColor: '#56a0e5', height: 10 }}
@@ -259,14 +271,14 @@ class EpisodePlayer extends Component {
   }
 
   render() {
-    // const {tags} = this.props.tags;
+    var tags = this.inputSecondsIntoTags(this.props.cards);
     // const { styleConfig: {progressColor, seekColor, playerColor, controlColor} } = this.props;
     //
     const tagBar = (
-      (this.props.tags || []).map((sec, key) => {
+      (tags || []).map((sec, key) => {
         const percent = (sec / this.state.duration) * 100;
         return (
-          <span key={key} style={{ display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: 'grey' }}></span>
+          <span key={key} style={{ display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: 'white' }}></span>
         );
       })
     );
@@ -287,6 +299,7 @@ EpisodePlayer.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.number),
   // onAction: PropTypes.func,
   // onComplete: PropTypes.func,
+  cards: PropTypes.array,
 };
 
 EpisodePlayer.defaultProps = {
@@ -303,6 +316,7 @@ function mapStateToProps(state) {
   return {
     mediaUrl: state.episodePlayer.chosenEpisode,
     player: state.cards.selectedEpisode,
+    cards: state.cards.allCards,
   };
 }
 

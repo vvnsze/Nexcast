@@ -3,3 +3,7 @@ export const FETCH_PODCAST_EPISODES = 'app/SideMenu/FETCH_PODCAST_EPISODES';
 export const LOAD_PODCAST_EPISODES = 'app/SideMenu/LOAD_PODCAST_EPISODES';
 
 export const FETCH_EPISODE = 'app/SideMenu/FETCH_EPISODE';
+
+export const SIDEMENU_SEARCH_TERM = 'app/SideMenu/SIDEMENU_SEARCH_TERM';
+
+export const SIDEMENU_SEARCH_RESULT = 'app/SideMenu/SIDEMENU_SEARCH_RESULT';

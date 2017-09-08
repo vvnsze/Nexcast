@@ -85,9 +85,9 @@ exports.updateCard = (req, res) => {
   };
   const cardId = { id: req.params.id };
   Card.update(query, { where: cardId })
-  .then((card) => (
-    res.send(responseFormatter(true, 'card updated', card))
-  ))
+  .then((card) => {
+    res.send(responseFormatter(true, 'card updated', card[0]));
+  })
   .catch(() => (
     res.send(responseFormatter(false, 'card failed to save'))
   ));
