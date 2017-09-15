@@ -5,20 +5,12 @@
  */
 
 import {
-  // DISPLAY_CARDS,
   CREATE_CARD,
   DELETE_CARD,
   UPDATE_CARD,
   EDIT_CARD,
   FALSIFY_EDITING_CARD,
 } from './constants';
-
-// export function displayCards(payload) {
-//   return {
-//     type: DISPLAY_CARDS,
-//     payload,
-//   };
-// }
 
 export function createCard(payload) {
   return {

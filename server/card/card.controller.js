@@ -44,7 +44,6 @@ exports.fetchEpisodeId = (req, res, next) => {
   });
 };
 
-// Post create
 exports.createCard = (req, res) => {
   const params = paramsForCard(req);
   params.episode_id = res.locals.episode_id;
@@ -75,15 +74,11 @@ exports.deleteCard = (req, res) => {
 };
 
 exports.updateCard = (req, res) => {
-  const query = {
-    tagged_timestamp: req.body.tagged_timestamp,
-    media_link: req.body.media_link,
-    media_type: req.body.media_type,
-    description: req.body.description,
-    button_text: req.body.buttong_text,
-    button_link: req.body.button_link,
-  };
+
+  const query = paramsForCard(req);
+
   const cardId = { id: req.params.id };
+
   Card.update(query, { where: cardId })
   .then((card) => {
     res.send(responseFormatter(true, 'card updated', card[0]));
@@ -91,6 +86,11 @@ exports.updateCard = (req, res) => {
   .catch(() => (
     res.send(responseFormatter(false, 'card failed to save'))
   ));
+};
+
+exports.publishCards = (req, res) => {
+  console.log(chalk.cyan('IT IS IN PUBLISHCARDS!'));
+  res.send({ cheese: 'burger' });
 };
 
 // helpers

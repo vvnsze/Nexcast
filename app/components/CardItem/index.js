@@ -76,7 +76,12 @@ const CardItem = ({ card, editCard, deleteCard }) => {
           {card.description}
         </CardText>
         <CardActions>
-          <FlatButton style={styles.cardLinkButton} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
+          <FlatButton
+            style={styles.cardLinkButton} backgroundColor="#02dd78"
+            href={card.button_link}
+            label={card.button_text}
+            fullWidth={true}
+          />
         </CardActions>
         <CardActions>
           <FlatButton style={styles.modifyButton} backgroundColor="#02dd78" onTouchTap={() => { editCard(card); }} label="edit" />
