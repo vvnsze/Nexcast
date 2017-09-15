@@ -14,6 +14,7 @@ import {
   UPDATE_CARD,
   CARD_UPDATED,
   TOGGLE_EDITING_CARD,
+  FALSIFY_EDITING_CARD,
 } from './constants';
 
 import {
@@ -31,23 +32,20 @@ function removeDeletedCard(deletedCardPayload, cardState) {
       }
     });
   }
-  return newState;
+  return addTags(newState);
 }
 
 function updateSingleCard(updatePayload, cardState) {
   var newState = cardState.allCards;
-  console.log('this is the updatedPayload!', updatePayload);
   if (updatePayload.result.data.success === true) {
     newState = cardState.allCards.map(function updateSet(card) {
-      if (card.id !== updatePayload.updatedCard.id) {
-        return card;
-      }
       if (card.id === updatePayload.updatedCard.id) {
         return updatePayload.updatedCard;
       }
+      return card;
     });
   }
-  return newState;
+  return addTags(newState);
 }
 
 function addCreatedCard(createPayload, cardState) {
@@ -55,13 +53,35 @@ function addCreatedCard(createPayload, cardState) {
   if (createPayload.result.data.success === true) {
     newState.push(createPayload.createdCard);
   }
+  return addTags(newState);
+}
+
+function addTags(cardState) {
+  console.log('cardState!: ', cardState);
+  if (cardState.length === 0) {
+    return;
+  }
+  var newState = [];
+  cardState.forEach(function hmsToSeconds(card) {
+    let seconds;
+    const timeString = card.tagged_timestamp.split(':');
+    if (timeString.length === 3) {
+      seconds = (+timeString[0]) * 3600 + (+timeString[1]) * 60 + (+timeString[2]);
+      card.seconds = seconds;
+      newState.push(card);
+    } else {
+      seconds = ((+timeString[0]) * 60) + (+timeString[1]);
+      card.seconds = seconds;
+      newState.push(card);
+    }
+  });
   return newState;
 }
 
 function cardsReducer(state = initialState, action) {
   switch (action.type) {
     case DISPLAY_CARDS:
-      return { ...state, allCards: action.payload.results };
+      return { ...state, allCards: addTags(action.payload.results) };
 
     case SELECTED_EPISODE:
       return { ...state, selectedEpisode: action.payload };
@@ -101,6 +121,11 @@ function cardsReducer(state = initialState, action) {
     case TOGGLE_EDITING_CARD:
       return { ...state,
         editingCard: true,
+      };
+
+    case FALSIFY_EDITING_CARD:
+      return { ...state,
+        editingCard: false,
       };
 
     case UPDATE_CARD:

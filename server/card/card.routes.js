@@ -11,6 +11,10 @@ router.put('/api/card/:id', [
   controller.updateCard,
 ]);
 
+router.patch('/api/card/:id', [
+  controller.publishCards,
+]);
+
 router.get('/api/cards');
 
 router.delete('/api/card/:id', [

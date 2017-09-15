@@ -1,9 +1,25 @@
+import * as _ from 'lodash';
 import {
   LOAD_PODCAST_EPISODES,
   FETCH_PODCAST_EPISODES,
+  SIDEMENU_SEARCH_TERM,
+  SIDEMENU_SEARCH_RESULT,
 } from './constants';
 
 const initialState = { episodes: [] };
+
+function returnSideMenuSearchResults(keyword, state) {
+  if (keyword.length < 2 || keyword === ' ') {
+    return;
+  }
+  var filteredEpisodes = [];
+  state.episodes.forEach(function enterShow(show) {
+    return filteredEpisodes.push(show.entries.filter(function filterEpisodes(episode) {
+      return (episode.title.toLowerCase().indexOf(keyword) !== -1)
+    }));
+  });
+  return _.flattenDepth(filteredEpisodes, 2);
+}
 
 function sideMenuReducer(state = initialState, action) {
   switch (action.type) {
@@ -11,6 +27,10 @@ function sideMenuReducer(state = initialState, action) {
       return { ...state };
     case LOAD_PODCAST_EPISODES:
       return { episodes: action.payload };
+    case SIDEMENU_SEARCH_TERM:
+      return { ...state,
+        sideMenuSearchResult: returnSideMenuSearchResults(action.payload, state),
+      };
     default:
       return state;
   }

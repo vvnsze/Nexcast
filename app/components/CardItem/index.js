@@ -10,6 +10,25 @@ const styles = {
     overflow: 'scroll',
     margin: '10px',
   },
+  wrapper: {
+    border: '2px solid #ccc',
+    borderRadius: '6px',
+    marginLeft: '5px',
+    marginRight: '5px',
+    marginBottom: '5px',
+  },
+  modifyButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: '4px',
+    color: '#0371d8',
+    position: 'inline-block',
+    width: '10px',
+  },
+  cardLinkButton: {
+    width: '80%',
+    color: 'white',
+    borderRadius: '4px',
+  },
 };
 
 const CardItem = ({ card, editCard, deleteCard }) => {
@@ -37,8 +56,14 @@ const CardItem = ({ card, editCard, deleteCard }) => {
   };
 
   return (
-    <div className="cardOuterWrapper" style={{ border: '2px solid #ccc', borderRadius: '6px', marginLeft: '5px', marginRight: '5px', marginBottom: '5px' }}>
-      <Card className="cardContainer" containerStyle={styles.Card}>
+    <div
+      className="cardOuterWrapper"
+      style={styles.wrapper}
+    >
+      <Card
+        className="cardContainer"
+        containerStyle={styles.Card}
+      >
         <CardHeader
           style={{ height: 100, background: '#0371d8' }}
           titleColor="white"
@@ -51,13 +76,16 @@ const CardItem = ({ card, editCard, deleteCard }) => {
           {card.description}
         </CardText>
         <CardActions>
-          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" href={card.button_link} label={card.button_text} />
+          <FlatButton
+            style={styles.cardLinkButton} backgroundColor="#02dd78"
+            href={card.button_link}
+            label={card.button_text}
+            fullWidth={true}
+          />
         </CardActions>
         <CardActions>
-          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { editCard(card); }} label="edit" />
-        </CardActions>
-        <CardActions>
-          <FlatButton style={{ color: 'white', borderRadius: '4px' }} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
+          <FlatButton style={styles.modifyButton} backgroundColor="#02dd78" onTouchTap={() => { editCard(card); }} label="edit" />
+          <FlatButton style={styles.modifyButton} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
         </CardActions>
       </Card>
     </div>

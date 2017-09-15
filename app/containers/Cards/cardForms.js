@@ -2,13 +2,19 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ReactUpload from 'react-s3-uploader';
 import FlatButton from 'material-ui/FlatButton';
-import { Card } from 'material-ui/Card';
+import { Card, CardActions } from 'material-ui/Card';
 import * as actions from './actions';
 
-import {
-  CREATE_CARD,
-  UPDATE_CARD,
-} from './constants';
+const styles = {
+  // createCardForm: {
+  //   position: 'inline-block',
+  // },
+  createCardForm: {
+    width: '40%',
+    height: '400px',
+    position: 'inline-block',
+  },
+};
 
 class CreateCard extends React.Component {
   constructor(props) {
@@ -18,7 +24,6 @@ class CreateCard extends React.Component {
     this.onUploadFinish = this.onUploadFinish.bind(this);
     this.getCardTimeStamp = this.getCardTimeStamp.bind(this);
     this.editState = this.editState.bind(this);
-
     this.state = {
       tagged_timestamp: '00:00:00',
       description: 'Enter description',
@@ -39,6 +44,11 @@ class CreateCard extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedTimeStamp) {
+      this.setState({
+        tagged_timestamp: nextProps.selectedTimeStamp,
+      });
+    }
+    if (nextProps.selectedTimeStamp && nextProps.editCardDetail) {
       this.editState({
         ...nextProps.editCardDetail,
         tagged_timestamp: nextProps.selectedTimeStamp,
@@ -81,10 +91,10 @@ class CreateCard extends React.Component {
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
     if (!this.props.isEditingCard) {
-      this.props.dispatch({ type: CREATE_CARD, payload: createCardData });
+      this.props.dispatch(actions.createCard(createCardData));
     }
     if (this.props.isEditingCard === true) {
-      this.props.dispatch({ type: UPDATE_CARD, payload: updateCardData });
+      this.props.dispatch(actions.updateCard(updateCardData));
     }
   }
 
@@ -96,11 +106,15 @@ class CreateCard extends React.Component {
 
   render() {
     return (
-      <Card>
-        <form onSubmit={this.handleFormSubmit}>
+      <Card
+        style={styles.createCardForm}
+      >
+        <form
+          onSubmit={this.handleFormSubmit}
+        >
           <fieldset>
-            <label htmlFor="timeStamp">TimeStamp</label>
-            <input type="text" onChange={this.handleChange} name="timeStamp" value={this.getCardTimeStamp()} />
+            <label htmlFor="tagged_timestamp">TimeStamp</label>
+            <input type="text" onChange={this.handleChange} name="tagged_timestamp" value={this.state.tagged_timestamp} />
           </fieldset>
           <fieldset>
             <label htmlFor="description">Description</label>
@@ -128,7 +142,16 @@ class CreateCard extends React.Component {
               onFinish={this.onUploadFinish}
             />
           </div>
-          <FlatButton style={{ background: '#02dd78' }} onTouchTap={this.handleFormSubmit}>Save</FlatButton>
+          <CardActions>
+            <FlatButton
+              style={{ background: '#02dd78' }} onTouchTap={this.props.cancelCard}
+            >Cancel
+            </FlatButton>
+            <FlatButton
+              style={{ background: '#02dd78' }} onTouchTap={this.handleFormSubmit}
+            >Save
+            </FlatButton>
+          </CardActions>
         </form>
       </Card>
     );
@@ -146,10 +169,10 @@ CreateCard.propTypes = {
   editCardDetail: PropTypes.object,
   isEditingCard: PropTypes.bool,
   id: PropTypes.number,
+  cancelCard: PropTypes.func,
 };
 
 function mapStateToProps(state) {
-  // console.log('+++line 151 cardForm State: ', state.cards);
   return {
     selectedEpisode: state.cards.selectedEpisode,
     selectedTimeStamp: state.cards.cardTime.time,

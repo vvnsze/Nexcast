@@ -13,6 +13,7 @@ export const CARD_DELETED = 'app/Cards/CARD_DELETED';
 
 export const EDIT_CARD = 'app/Cards/EDIT_CARD';
 export const TOGGLE_EDITING_CARD = 'app/Cards/EDITING_CARD';
+export const FALSIFY_EDITING_CARD = 'app/Cards/FALSIFY_EDITING_CARD';
 
 export const UPDATE_CARD = 'app/Cards/UPDATE_CARD';
 export const CARD_UPDATED = 'app/Cards/CARD_UPDATED';

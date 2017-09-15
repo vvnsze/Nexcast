@@ -35,7 +35,6 @@ export class EmailVerificationPodcastItem extends React.Component {
 }
 
 EmailVerificationPodcastItem.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   pendingPodcast: PropTypes.object,
 };
 
@@ -45,10 +44,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmailVerificationPodcastItem);
+export default connect(mapStateToProps)(EmailVerificationPodcastItem);

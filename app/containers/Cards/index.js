@@ -11,7 +11,7 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import * as actions from './actions';
 import CardItem from '../../components/CardItem';
 import CreateCard from './cardForms';
-// This is styles for the grid list
+
 const styles = {
   root: {
     display: 'flex',
@@ -23,9 +23,9 @@ const styles = {
     flexWrap: 'nowrap',
     overflowX: 'auto',
   },
-  // titleStyle: {
-  //   color: 'rgb(0, 188, 212)',
-  // },
+  noLoadedCard: {
+    listStyleType: 'none',
+  },
 };
 
 export class Cards extends React.Component {
@@ -50,13 +50,17 @@ export class Cards extends React.Component {
 
   loadCards() {
     if (this.props.displayCards) {
-      return this.props.displayCards.map((cardItem) => (
+      var sorted = this.props.displayCards.sort(function sortSeconds(a, b){
+        return a.seconds - b.seconds;
+      });
+      return sorted.map((cardItem) => (
         (
           <GridTile
             key={cardItem.id}
             className="tileContainer"
           >
             <CardItem
+              key={cardItem.id}
               card={cardItem}
               editCard={this.editCard} deleteCard={this.deleteCard}
             />
@@ -65,7 +69,7 @@ export class Cards extends React.Component {
       ));
     }
     return (
-      <li>You have no cards</li>
+      <li style={styles.noLoadedCard}></li>
     );
   }
 
@@ -99,8 +103,9 @@ export class Cards extends React.Component {
     if (this.state.revealCardCreatorForm) {
       return (
         <GridTile className="tileContainer">
-          <CreateCard />
-          <button onClick={this.cancel}>cancel</button>
+          <CreateCard
+            cancelCard={this.cancel}
+          />
         </GridTile>
       );
     }
