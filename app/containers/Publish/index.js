@@ -23,7 +23,7 @@ export class Publish extends React.Component {
 
   filterPublishedCards(cards) {
     const unpublishedCards = cards.filter((card) => {
-      return !card.published;
+      return !card.is_published;
     });
     if (unpublishedCards.length === 0) {
       this.setState({ unpublishedCards: null });
@@ -35,9 +35,16 @@ export class Publish extends React.Component {
     var cardsToBePublished = this.state.unpublishedCards.map((card) => {
       const publishCard = card;
       publishCard.published = true;
-      return card;
-    });
-    this.props.dispatch(actions.publishCards(cardsToBePublished));
+      return card.id;
+    }).reduce((obj, id) => {
+      if (!obj.ids) {
+        obj.ids = [];
+      }
+      obj.ids.push(id);
+      return obj;
+    }, {});
+    console.log('cardsToBePublished: ', cardsToBePublished);
+    this.props.dispatch(actions.publishCard(cardsToBePublished));
   }
 
   render() {

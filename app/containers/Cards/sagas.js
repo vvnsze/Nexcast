@@ -7,11 +7,11 @@ import {
   UPDATE_CARD,
   CARD_UPDATED,
 } from './constants';
-
 import {
-  PUBLISH_CARDS,
+  PUBLISH_CARD,
   CARDS_PUBLISHED,
 } from '../Publish/constants';
+
 import HttpClient from '../../httpClient';
 
 const createCardAsync = (params) => (
@@ -27,7 +27,7 @@ const deleteCardAsync = (params) => (
 );
 
 const patchCardsAsync = (params) => (
-  HttpClient.patch(`/api/card'/${params}`)
+  HttpClient.patch('/api/card', params)
 );
 
 function* createCard() {
@@ -43,21 +43,22 @@ function* callCreateCard(action) {
   }
 }
 
-function* updateCard() {
-  yield takeLatest(UPDATE_CARD, callUpdateCard);
-}
-
 function* publishCards() {
-  yield takeLatest(PUBLISH_CARDS, callPublishCards);
+  yield takeLatest(PUBLISH_CARD, callPublishCards);
 }
 
 function* callPublishCards(action) {
+  console.log('inside callPublishCards!: ', action.payload);
   try {
     const result = yield call(patchCardsAsync, action.payload);
     yield put({ type: CARDS_PUBLISHED, payload: { result, publishedCards: action.payload } });
   } catch (e) {
     console.error(e);
   }
+}
+
+function* updateCard() {
+  yield takeLatest(UPDATE_CARD, callUpdateCard);
 }
 
 function* callUpdateCard(action) {
@@ -88,4 +89,5 @@ export default [
   createCard,
   updateCard,
   deleteCard,
+  publishCards,
 ];

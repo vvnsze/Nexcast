@@ -74,9 +74,7 @@ exports.deleteCard = (req, res) => {
 };
 
 exports.updateCard = (req, res) => {
-
   const query = paramsForCard(req);
-
   const cardId = { id: req.params.id };
 
   Card.update(query, { where: cardId })
@@ -89,9 +87,20 @@ exports.updateCard = (req, res) => {
 };
 
 exports.publishCards = (req, res) => {
-  console.log(chalk.cyan('IT IS IN PUBLISHCARDS!'));
-  res.send({ cheese: 'burger' });
+  console.log(chalk.cyan('this is the request!: '), req.body);
+
+  Card.find({
+    where: {
+      id: req.body.ids,
+    },
+  }).then((records) => {
+
+  }).catch((error) => {
+    res.send(responseFormatter(false, 'card failed to be published'))
+  })
+
 };
+
 
 // helpers
 function paramsForCard(req) {

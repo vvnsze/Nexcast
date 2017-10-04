@@ -57,7 +57,6 @@ function addCreatedCard(createPayload, cardState) {
 }
 
 function addTags(cardState) {
-  console.log('cardState!: ', cardState);
   if (cardState.length === 0) {
     return;
   }
