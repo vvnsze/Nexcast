@@ -15,6 +15,10 @@ export class Publish extends React.Component {
     this.disablePublishButton = this.disablePublishButton.bind(this);
   }
 
+  componentWillMount() {
+    this.disablePublishButton();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.cards) {
       this.filterPublishedCards(nextProps.cards);
@@ -26,12 +30,15 @@ export class Publish extends React.Component {
 
   filterPublishedCards(cards) {
     const unpublishedCards = cards.filter((card) => {
-      return !card.is_published;
+      if (!card.is_published) {
+        return card;
+      }
     });
     if (unpublishedCards.length === 0) {
       this.setState({ unpublishedCards: null });
     }
     this.setState({ unpublishedCards });
+    console.log('unpublishedCards: ', unpublishedCards);
   }
 
   publishCards() {
@@ -52,10 +59,11 @@ export class Publish extends React.Component {
   }
 
   disablePublishButton() {
-    if (this.state.unpublishedCards === null) {
+    if (this.state.unpublishedCards !== null) {
+      return false;
+    } else {
       return true;
     }
-    return false;
   }
 
   render() {
