@@ -87,18 +87,17 @@ exports.updateCard = (req, res) => {
 };
 
 exports.publishCards = (req, res) => {
-  console.log(chalk.cyan('this is the request!: '), req.body);
-
-  Card.find({
+  Card.update({
+    is_published: true,
+  }, {
     where: {
       id: req.body.ids,
     },
-  }).then((records) => {
-
-  }).catch((error) => {
-    res.send(responseFormatter(false, 'card failed to be published'))
-  })
-
+  }).then((success) => {
+    res.send(responseFormatter(true, 'cards published', success[0]));
+  }).catch(() => {
+    res.send(responseFormatter(false, 'card failed to be published'));
+  });
 };
 
 

@@ -21,7 +21,13 @@ import {
   UPDATE_CARD_TIME,
 } from '../EpisodePlayer/constants';
 
-const initialState = { cardTime: '00:00', cardDetail: {}, editingCard: false };
+import {
+  CARDS_PUBLISHED,
+  DISPLAY_CARDS_PUBLISHED,
+  DISPLAY_PUBLISHING_CARDS,
+} from '../Publish/constants';
+
+const initialState = { cardTime: '00:00', cardDetail: {}, editingCard: false, displaySavedMessage: false };
 
 function removeDeletedCard(deletedCardPayload, cardState) {
   var newState = cardState.allCards;
@@ -77,6 +83,14 @@ function addTags(cardState) {
   return newState;
 }
 
+function changeCardsToPublished(cardState) {
+  const newState = cardState.forEach(function changeToPublished(card) {
+    const newCard = card;
+    newCard.is_published = true;
+  });
+  return newState;
+}
+
 function cardsReducer(state = initialState, action) {
   switch (action.type) {
     case DISPLAY_CARDS:
@@ -95,6 +109,7 @@ function cardsReducer(state = initialState, action) {
         success: action.payload.success,
         showForm: false,
         allCards: addCreatedCard(action.payload, state),
+        displaySavedMessage: false,
       };
 
     case UPDATE_CARD_TIME:
@@ -135,6 +150,11 @@ function cardsReducer(state = initialState, action) {
         showForm: false,
         editingCard: false,
         allCards: updateSingleCard(action.payload, state),
+      };
+    case CARDS_PUBLISHED:
+      return { ...state,
+        allCards: changeCardsToPublished(state),
+        displaySavedMessage: true,
       };
     default:
       return state;

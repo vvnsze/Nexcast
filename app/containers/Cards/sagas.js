@@ -10,6 +10,7 @@ import {
 import {
   PUBLISH_CARD,
   CARDS_PUBLISHED,
+  DISPLAY_CARDS_PUBLISHED,
 } from '../Publish/constants';
 
 import HttpClient from '../../httpClient';
@@ -38,6 +39,7 @@ function* callCreateCard(action) {
   try {
     const result = yield call(createCardAsync, action.payload);
     yield put({ type: CARD_CREATED, payload: { result, createdCard: action.payload } });
+    yield put({ type: DISPLAY_CARDS_PUBLISHED });
   } catch (e) {
     console.error(e);
   }
