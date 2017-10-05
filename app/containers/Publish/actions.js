@@ -4,12 +4,12 @@
  *
  */
 import {
-  PUBLISH_CARDS,
+  PUBLISH_CARD,
 } from './constants';
 
-export function publishCards(payload) {
+export function publishCard(payload) {
   return {
-    type: PUBLISH_CARDS,
+    type: PUBLISH_CARD,
     payload,
   };
 }

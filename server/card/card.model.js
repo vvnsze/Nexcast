@@ -26,6 +26,10 @@ const Card = sequelize.define('card', {
   button_link: {
     type: Sequelize.STRING(3000),
   },
+  is_published: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 'false',
+  },
 },
   {
     underscored: true,

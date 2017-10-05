@@ -79,12 +79,14 @@ class CreateCard extends React.Component {
       button_link: cardDetails.button_link,
       media_link: cardDetails.media_link,
       media_type: cardDetails.media_type,
+      is_published: cardDetails.is_published,
     });
   }
 
   handleFormSubmit(event) {
     const createCardData = { ...this.state,
       podcast_id: this.props.selectedEpisode.nexcastPodcastId,
+      is_published: false,
       episode_guid: this.props.selectedEpisode.guid };
     const updateCardData = { ...this.state,
       id: this.props.editCardDetail.id,
