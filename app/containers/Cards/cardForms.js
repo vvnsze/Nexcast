@@ -10,9 +10,9 @@ const styles = {
   //   position: 'inline-block',
   // },
   createCardForm: {
-    width: '40%',
-    height: '400px',
-    position: 'inline-block',
+    width: '60%',
+    height: 'relative',
+    display: 'inline-block',
   },
 };
 

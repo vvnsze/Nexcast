@@ -125,10 +125,15 @@ export class Cards extends React.Component {
   render() {
     return (
       <div>
-        <GridList style={styles.gridList} cols={2.2} cellHeight={500}>
+        <GridList
+          className="cardGrid"
+          style={styles.gridList}
+          cols={2.2}
+          cellHeight={600}
+        >
           {this.loadCards()}
+          <div>{this.showCardButton()}</div>
         </GridList>
-        <div>{this.showCardButton()}</div>
       </div>
     );
   }

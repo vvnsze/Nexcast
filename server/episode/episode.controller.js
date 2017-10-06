@@ -1,4 +1,4 @@
-const Episode = require('./episode.model');
+const Episode = require('../config/database').Episodes;
 const chalk = require('chalk');
 const responseFormatter = require('../helpers/util').responseFormatter;
 

@@ -1,17 +1,19 @@
 const chalk = require('chalk');
-const Card = require('./card.model');
-const Podcast = require('../podcast/podcast.model');
-const Episode = require('../episode/episode.model');
+const Card = require('../config/database').Cards;
+const Podcast = require('../config/database').Podcasts;
+const Episode = require('../config/database').Episodes;
 const responseFormatter = require('../helpers/util').responseFormatter;
 const filterParams = require('../helpers/util').filterParams;
 
 // associations
-Card.belongsTo(Podcast, { foreignKey: 'podcast_id' });
-Card.belongsTo(Episode, { foreignKey: 'episode_id' });
-Podcast.hasMany(Card, { foreignKey: 'podcast_id' });
-Episode.hasMany(Card, { foreignKey: 'episode_id' });
-Episode.belongsTo(Podcast, { foreignKey: 'podcastId' });
-Podcast.hasMany(Episode, { foreignKey: 'podcastId' });
+// Card.belongsTo(Podcast, { foreignKey: 'podcast_id' });
+// Card.belongsTo(Episode, { foreignKey: 'episode_id' });
+// Podcast.hasMany(Card, { foreignKey: 'podcast_id' });
+// Episode.hasMany(Card, { foreignKey: 'episode_id' });
+// Episode.belongsTo(Podcast, { foreignKey: 'podcastId' });
+// Podcast.hasMany(Episode, { foreignKey: 'podcastId' });
+// Podcast.hasMany(userPodcast, { foreignKey: 'podcastId' });
+// userPodcast.belongsTo(Podcast, { foreignKey: 'podcastId' });
 
 exports.fetchCards = (req, res) => {
   const query = {

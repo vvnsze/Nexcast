@@ -1,13 +1,16 @@
-const Sequelize = require('sequelize');
-
-const db = new Sequelize(process.env.DB_URI);
+const chalk = require('chalk');
+const dbConfig = require('./initialize');
+const sequelize = dbConfig.sequelize;
+const models = dbConfig.db;
 /* eslint-disable no-console */
-db.authenticate()
+sequelize.authenticate()
     .then(() => {
-      console.log('Successful Connection to the database');
+      console.log(chalk.green('Successful Connection to the database'));
     })
     .catch((err) => {
-      console.log('+++line 10 config.database.js: cannot connect to the database ', err);
+      console.log(chalk.red('+++line 10 config.database.js: cannot connect to the database '), err);
     });
 
-module.exports = db;
+console.log('this is in databse models: ', models);
+
+module.exports = models;

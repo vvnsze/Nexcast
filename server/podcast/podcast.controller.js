@@ -2,15 +2,11 @@ const FeedMe = require('feedme');
 const request = require('request');
 const parser = require('rss-parser');
 const Axios = require('axios');
-const Podcast = require('./podcast.model');
-const userPodcast = require('./userPodcast.model');
-const Whitelist = require('../whitelist/whitelist.model');
+const Podcast = require('../config/database').Podcasts;
+const userPodcast = require('../config/database').userPodcast;
+const Whitelist = require('../config/database').Whitelist;
 const chalk = require('chalk');
 const confirmation = require('../services/mailgun');
-
-// TODO refactor this into config file.
-Podcast.hasMany(userPodcast, { foreignKey: 'podcastId' });
-userPodcast.belongsTo(Podcast, { foreignKey: 'podcastId' });
 
 exports.searchItunes = (req, res) => {
   const searchTerm = req.query.term;
