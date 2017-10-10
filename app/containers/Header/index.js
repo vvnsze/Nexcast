@@ -16,7 +16,10 @@ export class Header extends React.Component {
 
   showNameOnMenu() {
     if (this.props.currentUser.authenticated) {
-      return this.props.currentUser.user.data.user.name;
+      console.log('this.props.currentUser', this.props.currentUser);
+      if (this.props.currentUser.user) {
+        return this.props.currentUser.user.data.user.name;
+      }
     }
     return this.state.userName;
   }

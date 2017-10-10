@@ -1,6 +1,3 @@
-const Sequelize = require('sequelize');
-// const sequelize = require('../config/database');
-
 module.exports = function createEpisodeTable(sequelize, DataTypes) {
   const Episodes = sequelize.define('episodes', {
     podcastId: {

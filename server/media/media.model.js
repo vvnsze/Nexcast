@@ -1,7 +1,3 @@
-const Sequelize = require('sequelize');
-// const sequelize = require('../config/database');
-const chalk = require('chalk');
-
 module.exports = function createMediaTable(sequelize, DataTypes) {
   const Media = sequelize.define('media', {
     type: {

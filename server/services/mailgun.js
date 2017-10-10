@@ -34,8 +34,6 @@ module.exports = {
     });
   },
   podcastEmailPending: function emailPending(userId, userEmail, podcast) {
-    console.log(chalk.cyan('+++line 37 inside podcast email pending, user: '), userEmail);
-    console.log(chalk.cyan('+++line 38 inside podcast email pending, podcast: '), podcast);
     const toEmail = 'vvnsze@gmail.com';
     const generateMessage = () => {
       return 'User: ' + userEmail + '<br/>Wants to claim: ' + podcast.title + '<br/>Email Associated: ' + podcast.email + '<br/>Would you like to approve? ' + `<a href=${hostName}/verify-user-to-podcast?feed=${encodeURIComponent(podcast.feed)}&userId=${userId}&confirm=true&title=${encodeURIComponent(podcast.title)}&email=${encodeURIComponent(userEmail)}>Yes</a> <a href=${hostName}/verify-user-to-podcast?feed=${encodeURIComponent(podcast.feed)}&userId=${userId}&confirm=false>No</a>`;
@@ -62,8 +60,6 @@ module.exports = {
     });
   },
   podcastEmailMatched: function emailMatched(userEmail, podcastTitle) {
-    console.log(chalk.magenta('+++line 65 inside podcast email pending, user: '), userEmail);
-    console.log(chalk.magenta('+++line 66 inside podcast email pending, podcast: '), podcastTitle);
     const toEmail = userEmail;
     const generateMessage = () => {
       return `Success! We have verified you as the owner of ${podcastTitle} <br/> You can now start tagging content here:<a href=${hostName}/searchpodcast>Start Tagging</a><br/>Thanks,<br/>The Nexcast Team`;

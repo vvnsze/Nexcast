@@ -9,24 +9,24 @@ const Whitelist = require('../whitelist/whitelist.model');
 const UserPodcast = require('../podcast/userPodcast.model');
 
 const sequelize = new Sequelize(process.env.DB_URI);
-const db = {}
+const db = {};
 const models = {
-  Cards,
-  Episodes,
-  Media,
-  Podcasts,
   Users,
+  Podcasts,
+  UserPodcast,
+  Episodes,
+  Cards,
+  Media,
   Whitelist,
-  UserPodcast
-}
+};
 
 Object.keys(models).forEach((key) => {
-  db[key] = models[key](sequelize, Sequelize)
+  db[key] = models[key](sequelize, Sequelize);
 });
 
-Object.keys(db).forEach(key => {
+Object.keys(db).forEach((key) => {
   if (db[key].associate) {
-    db[key].associate(db)
+    db[key].associate(db);
   }
 });
 

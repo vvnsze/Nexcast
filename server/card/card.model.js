@@ -1,6 +1,3 @@
-const Sequelize = require('sequelize');
-// const sequelize = require('../config/database');
-
 module.exports = function createCardTable(sequelize, DataTypes) {
   const Cards = sequelize.define('card', {
     tagged_timestamp: {
@@ -39,8 +36,6 @@ module.exports = function createCardTable(sequelize, DataTypes) {
           Cards.belongsTo(models.Episodes, { foreignKey: 'episode_id' });
         },
       },
-    },
-    {
       underscored: true,
     }
   );
