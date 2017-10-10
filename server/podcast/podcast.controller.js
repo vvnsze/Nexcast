@@ -2,15 +2,10 @@ const FeedMe = require('feedme');
 const request = require('request');
 const parser = require('rss-parser');
 const Axios = require('axios');
-const Podcast = require('./podcast.model');
-const userPodcast = require('./userPodcast.model');
-const Whitelist = require('../whitelist/whitelist.model');
-const chalk = require('chalk');
+const Podcast = require('../config/database').Podcasts;
+const userPodcast = require('../config/database').UserPodcast;
+const Whitelist = require('../config/database').Whitelist;
 const confirmation = require('../services/mailgun');
-
-// TODO refactor this into config file.
-Podcast.hasMany(userPodcast, { foreignKey: 'podcastId' });
-userPodcast.belongsTo(Podcast, { foreignKey: 'podcastId' });
 
 exports.searchItunes = (req, res) => {
   const searchTerm = req.query.term;
@@ -73,7 +68,6 @@ exports.findOrCreateByFeedUrl = (req, res) => {
     full_name: podcast.collectionName,
     image_url: podcast.artworkUrl600,
   };
-
   return Podcast.findOrCreate(query);
 };
 
@@ -85,7 +79,7 @@ exports.verifyPodcast = (req, res, next) => {
     const parsed = new FeedMe(true);
     resp.pipe(parsed);
 
-    parsed.on('end', () => { 
+    parsed.on('end', () => {
       const podcastJSON = parsed.done();
       const itunesEmail = podcastJSON['itunes:owner'] ? podcastJSON['itunes:owner']['itunes:email'] : '';
 
@@ -93,7 +87,7 @@ exports.verifyPodcast = (req, res, next) => {
         // The users email matches the feeds itunes email
         // go to next step and mark verified.
         res.locals.verified = true;
-        confirmation.podcastEmailMatched(req.user.email, feedTitle)
+        confirmation.podcastEmailMatched(req.user.email, feedTitle);
         return next();
       } else {
         // If the emails don't match check the whitelist.
@@ -136,13 +130,11 @@ exports.setVerifyUserPodcast = (req, res) => {
 
 // Verify user to podcast through email
 exports.verifyUserPodcast = (req, res) => {
-  console.log(chalk.green('+++line 135 verifyUserPodcast req: '), req.query);
   const confirmed = req.query.confirm;
   const usersId = req.query.userId;
   const podcastsTitle = req.query.title;
   const usersEmail = req.query.email;
   Podcast.findOne({ where: { feed_url: req.query.feed } }).then((pod) => {
-    console.log(chalk.blue('+++line 187 found the pod!: '), pod);
     userPodcast.findOrCreate({ where: { userId: usersId, podcastId: pod.id } })
       .then((result) => {
         const userPodcastObj = result[0];

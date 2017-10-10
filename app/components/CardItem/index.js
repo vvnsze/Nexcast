@@ -5,10 +5,10 @@ import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
   Card: {
-    height: '500px',
-    width: '300px',
+    display: 'inline-block',
     overflow: 'scroll',
     margin: '10px',
+    height: 'auto',
   },
   wrapper: {
     border: '2px solid #ccc',
@@ -58,7 +58,7 @@ const CardItem = ({ card, editCard, deleteCard }) => {
   return (
     <div
       className="cardOuterWrapper"
-      style={styles.wrapper}
+      // style={styles.wrapper}
     >
       <Card
         className="cardContainer"

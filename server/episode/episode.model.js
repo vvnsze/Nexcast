@@ -1,21 +1,27 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
-
-const Episode = sequelize.define('episodes', {
-  podcastId: {
-    type: Sequelize.INTEGER,
+module.exports = function createEpisodeTable(sequelize, DataTypes) {
+  const Episodes = sequelize.define('episodes', {
+    podcastId: {
+      type: DataTypes.INTEGER,
+    },
+    name: {
+      type: DataTypes.STRING(100),
+    },
+    guid: {
+      type: DataTypes.STRING,
+    },
+    description: {
+      type: DataTypes.STRING(4000),
+    },
   },
-  name: {
-    type: Sequelize.STRING(100),
-  },
-  guid: {
-    type: Sequelize.STRING,
-  },
-  description: {
-    type: Sequelize.STRING(4000),
-  },
-});
+    {
+      classMethods: {
+        associate: function(models) {
+          Episodes.hasMany(models.Cards, { foreignKey: 'episode_id' });
+          Episodes.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
+        },
+      },
+    });
+  return Episodes;
+};
 
 // Episode.sync({ force: true });
-
-module.exports = Episode;

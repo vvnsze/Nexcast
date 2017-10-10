@@ -28,7 +28,6 @@ export class SideMenu extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.searchResult) {
-      console.log('+++line 26 this is searchResult!: ', nextProps.searchResult);
       this.displaySearchResult(nextProps.searchResult);
     }
   }

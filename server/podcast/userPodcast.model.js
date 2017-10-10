@@ -1,19 +1,27 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+// const sequelize = require('../config/database');
 
-const UserPodcast = sequelize.define('userPodcast', {
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
+module.exports = function createUserPodcast(sequelize, DataTypes) {
+  const UserPodcast = sequelize.define('userPodcast', {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    podcastId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
-  podcastId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  verified: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-});
-
-module.exports = UserPodcast;
+  {
+    classMethods: {
+      associate: function (models) {
+        UserPodcast.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
+      },
+    }
+  });
+  return UserPodcast;
+};

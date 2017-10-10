@@ -7,7 +7,10 @@ router.post('/api/podcast', (req, res) => {
     .then((podcast) => {
       res.send(podcast);
     })
-    .catch((error) => { res.send(error); });
+    .catch((error) => {
+      console.log(error, "HALP")
+      res.send(error);
+    });
 });
 
 router.get('/api/list', (req, res) => {
