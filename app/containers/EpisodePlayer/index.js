@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import { Howler } from 'howler';
-import 'rc-slider/assets/index.css';
+// import 'rc-slider/assets/index.css';
 import FontIcon from 'material-ui/FontIcon';
 import { blue500 } from 'material-ui/styles/colors';
 import LoadingPlayer from '../../assets/loadingPlayer.gif';
