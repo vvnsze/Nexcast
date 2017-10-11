@@ -41,7 +41,7 @@ exports.getPodcasts = (req, res, next) => {
 exports.parsePodcasts = (req, res) => {
   const promiseArray = res.locals.podcastResult.map((podcast) => (
     new Promise((resolve, reject) => {
-      parser.parseURL(podcast.feed_url, (err, parsed) => {
+      parser.parseURL(podcast.feedUrl, (err, parsed) => {
         if (err) reject(err);
         resolve({
           title: parsed.feed.title,
@@ -63,10 +63,10 @@ exports.findOrCreateByFeedUrl = (req, res) => {
   const podcast = req.body.podcast;
   const query = {
     where: {
-      feed_url: podcast.feedUrl,
+      feedUrl: podcast.feedUrl,
     },
-    full_name: podcast.collectionName,
-    image_url: podcast.artworkUrl600,
+    fullName: podcast.collectionName,
+    imageUrl: podcast.artworkUrl600,
   };
   return Podcast.findOrCreate(query);
 };
@@ -134,7 +134,7 @@ exports.verifyUserPodcast = (req, res) => {
   const usersId = req.query.userId;
   const podcastsTitle = req.query.title;
   const usersEmail = req.query.email;
-  Podcast.findOne({ where: { feed_url: req.query.feed } }).then((pod) => {
+  Podcast.findOne({ where: { feedUrl: req.query.feed } }).then((pod) => {
     userPodcast.findOrCreate({ where: { userId: usersId, podcastId: pod.id } })
       .then((result) => {
         const userPodcastObj = result[0];

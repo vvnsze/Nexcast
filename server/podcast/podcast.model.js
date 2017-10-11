@@ -10,16 +10,16 @@ module.exports = function createPodcastTable(sequelize, DataTypes) {
         autoIncrement: true,
         unique: true,
       },
-      full_name: {
+      fullName: {
         type: DataTypes.STRING(100),
       },
-      feed_url: {
+      feedUrl: {
         type: DataTypes.STRING,
       },
       description: {
         type: DataTypes.STRING(2000),
       },
-      image_url: {
+      imageUrl: {
         type: DataTypes.STRING(2680),
       },
       email: {
@@ -32,7 +32,7 @@ module.exports = function createPodcastTable(sequelize, DataTypes) {
         associate: function (models) {
           Podcasts.hasMany(models.UserPodcast, { foreignKey: 'podcastId' });
           Podcasts.hasMany(models.Episodes, { foreignKey: 'podcastId' });
-          Podcasts.hasMany(models.Cards, { foreignKey: 'podcast_id' });
+          Podcasts.hasMany(models.Cards, { foreignKey: 'podcastId' });
         },
       },
       underscored: true,
