@@ -63,6 +63,7 @@ module.exports = function createUserTable(sequelize, DataTypes) {
         confirmation.sendConfirmationEmail(_user);
       },
     },
+    underscored: true,
   });
   return User;
 };
