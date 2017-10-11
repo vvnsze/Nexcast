@@ -50,6 +50,7 @@ const ReactBoilerplate = {
         'request',
         'forever-agent',
         'tough-cookie',
+        'sequelize-cli',
       ],
       /**
        * Specify any additional dependencies here. We include core-js and lodash

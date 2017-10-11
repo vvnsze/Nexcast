@@ -258,6 +258,7 @@
     "rss-parser": "^2.7.0",
     "sanitize.css": "4.1.0",
     "sequelize": "^3.30.4",
+    "sequelize-cli": "^3.0.0",
     "styled-components": "1.1.2",
     "svgo": "^0.7.2",
     "warning": "3.0.0",

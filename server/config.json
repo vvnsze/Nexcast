@@ -1,0 +1,14 @@
+{
+  "development": {
+    "url": "postgres://vvnsze@localhost:5432/nexcast",
+    "dialect": "postgres"
+  },
+  "test": {
+    "url": "postgres://vvnsze@localhost:5432/nexcast",
+    "dialect": "postgres"
+  },
+  "production": {
+    "url": "postgres://vvnsze@localhost:5432/nexcast",
+    "dialect": "postgres"
+  }
+}
