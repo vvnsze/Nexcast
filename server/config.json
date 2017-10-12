@@ -1,0 +1,10 @@
+{
+  "development": {
+    "url": "postgres://vvnsze@localhost:5432/nexcast",
+    "dialect": "postgres"
+  },
+  "production": {
+    "url": "postgres://avsyjastyssjxr:19b614855feec675483aee76434a9ba0ef4d307ab0cee86a17a429bc39cab7e3@ec2-54-204-41-80.compute-1.amazonaws.com:5432/d7m4voob7ojj0q",
+    "dialect": "postgres"
+  }
+}

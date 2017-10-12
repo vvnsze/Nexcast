@@ -6,6 +6,7 @@ const Podcast = require('../config/database').Podcasts;
 const userPodcast = require('../config/database').UserPodcast;
 const Whitelist = require('../config/database').Whitelist;
 const confirmation = require('../services/mailgun');
+const chalk = require('chalk');
 
 exports.searchItunes = (req, res) => {
   const searchTerm = req.query.term;
@@ -41,7 +42,7 @@ exports.getPodcasts = (req, res, next) => {
 exports.parsePodcasts = (req, res) => {
   const promiseArray = res.locals.podcastResult.map((podcast) => (
     new Promise((resolve, reject) => {
-      parser.parseURL(podcast.feed_url, (err, parsed) => {
+      parser.parseURL(podcast.feedUrl, (err, parsed) => {
         if (err) reject(err);
         resolve({
           title: parsed.feed.title,
@@ -61,12 +62,16 @@ exports.parsePodcasts = (req, res) => {
 
 exports.findOrCreateByFeedUrl = (req, res) => {
   const podcast = req.body.podcast;
+  console.log(chalk.cyan('this is podcast: '), podcast);
   const query = {
     where: {
-      feed_url: podcast.feedUrl,
+      feedUrl: podcast.feedUrl,
     },
-    full_name: podcast.collectionName,
-    image_url: podcast.artworkUrl600,
+    defaults: {
+      fullName: podcast.collectionName,
+      imageUrl: podcast.artworkUrl600,
+
+    },
   };
   return Podcast.findOrCreate(query);
 };
@@ -74,7 +79,6 @@ exports.findOrCreateByFeedUrl = (req, res) => {
 exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
   const feedTitle = req.body.podcast.collectionName;
-
   request.get(feedUrl).on('response', (resp) => {
     const parsed = new FeedMe(true);
     resp.pipe(parsed);
@@ -99,7 +103,6 @@ exports.verifyPodcast = (req, res, next) => {
               confirmation.podcastEmailMatched(req.user.email, feedTitle)
               return next();
             }
-
             // user email not associated with this podcast
             // send unverified.
             res.locals.verified = false;
@@ -123,7 +126,10 @@ exports.setVerifyUserPodcast = (req, res) => {
       userPodcastObj.verified = res.locals.verified;
       userPodcastObj.save()
         .then((results) => res.send({ results, verified: res.locals.verified }))
-        .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
+        .catch((error) => {
+          console.log(chalk.red('error in setVerifyUserPodcast: '), error);
+          res.status(422).send({ error, message: 'failed to save' });
+        });
     })
     .catch((error) => (res.status(422).send({ error, message: 'failed to load' })));
 };
@@ -134,7 +140,7 @@ exports.verifyUserPodcast = (req, res) => {
   const usersId = req.query.userId;
   const podcastsTitle = req.query.title;
   const usersEmail = req.query.email;
-  Podcast.findOne({ where: { feed_url: req.query.feed } }).then((pod) => {
+  Podcast.findOne({ where: { feedUrl: req.query.feed } }).then((pod) => {
     userPodcast.findOrCreate({ where: { userId: usersId, podcastId: pod.id } })
       .then((result) => {
         const userPodcastObj = result[0];

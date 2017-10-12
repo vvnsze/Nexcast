@@ -5,20 +5,10 @@ const Episode = require('../config/database').Episodes;
 const responseFormatter = require('../helpers/util').responseFormatter;
 const filterParams = require('../helpers/util').filterParams;
 
-// associations
-// Card.belongsTo(Podcast, { foreignKey: 'podcast_id' });
-// Card.belongsTo(Episode, { foreignKey: 'episode_id' });
-// Podcast.hasMany(Card, { foreignKey: 'podcast_id' });
-// Episode.hasMany(Card, { foreignKey: 'episode_id' });
-// Episode.belongsTo(Podcast, { foreignKey: 'podcastId' });
-// Podcast.hasMany(Episode, { foreignKey: 'podcastId' });
-// Podcast.hasMany(userPodcast, { foreignKey: 'podcastId' });
-// userPodcast.belongsTo(Podcast, { foreignKey: 'podcastId' });
-
 exports.fetchCards = (req, res) => {
   const query = {
     where: {
-      episode_id: res.locals.episode.id,
+      episodeId: res.locals.episode.id,
     },
   };
   Card.findAll(query).then((cards) => {
@@ -39,7 +29,7 @@ exports.fetchEpisodeId = (req, res, next) => {
     },
   };
   Episode.findOne(query).then((episode) => {
-    res.locals.episode_id = episode.id;
+    res.locals.episodeId = episode.id;
     next();
   }).catch((error) => {
     res.send(responseFormatter(false, 'failed to find episode id for card'));
@@ -48,7 +38,7 @@ exports.fetchEpisodeId = (req, res, next) => {
 
 exports.createCard = (req, res) => {
   const params = paramsForCard(req);
-  params.episode_id = res.locals.episode_id;
+  params.episodeId = res.locals.episodeId;
   Card.create(params)
     .then((card) => {
       res.send(responseFormatter(true, 'card saved', card));
@@ -90,7 +80,7 @@ exports.updateCard = (req, res) => {
 
 exports.publishCards = (req, res) => {
   Card.update({
-    is_published: true,
+    isPublished: true,
   }, {
     where: {
       id: req.body.ids,
@@ -106,13 +96,13 @@ exports.publishCards = (req, res) => {
 // helpers
 function paramsForCard(req) {
   const params = [
-    'tagged_timestamp',
-    'podcast_id',
-    'media_link',
-    'media_type',
+    'taggedTimestamp',
+    'podcastId',
+    'mediaLink',
+    'mediaType',
     'description',
-    'button_text',
-    'button_link',
+    'buttonText',
+    'buttonLink',
   ];
   return filterParams(req, params);
 }

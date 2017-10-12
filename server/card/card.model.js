@@ -1,30 +1,37 @@
 module.exports = function createCardTable(sequelize, DataTypes) {
   const Cards = sequelize.define('card', {
-    tagged_timestamp: {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
+    taggedTimestamp: {
       type: DataTypes.STRING(12),
     },
-    podcast_id: {
+    podcastId: {
       type: DataTypes.INTEGER,
     },
-    episode_id: {
+    episodeId: {
       type: DataTypes.INTEGER,
     },
-    media_link: {
+    mediaLink: {
       type: DataTypes.TEXT,
     },
-    media_type: {
+    mediaType: {
       type: DataTypes.TEXT,
     },
     description: {
       type: DataTypes.TEXT,
     },
-    button_text: {
+    buttonText: {
       type: DataTypes.STRING(50),
     },
-    button_link: {
+    buttonLink: {
       type: DataTypes.STRING(3000),
     },
-    is_published: {
+    isPublished: {
       type: DataTypes.BOOLEAN,
       defaultValue: 'false',
     },
@@ -32,11 +39,10 @@ module.exports = function createCardTable(sequelize, DataTypes) {
     {
       classMethods: {
         associate: function (models) {
-          Cards.belongsTo(models.Podcasts, { foreignKey: 'podcast_id' });
-          Cards.belongsTo(models.Episodes, { foreignKey: 'episode_id' });
+          Cards.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
+          Cards.belongsTo(models.Episodes, { foreignKey: 'episodeId' });
         },
       },
-      underscored: true,
     }
   );
   return Cards;

@@ -1,5 +1,12 @@
 module.exports = function createEpisodeTable(sequelize, DataTypes) {
   const Episodes = sequelize.define('episodes', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
     podcastId: {
       type: DataTypes.INTEGER,
     },
@@ -15,8 +22,8 @@ module.exports = function createEpisodeTable(sequelize, DataTypes) {
   },
     {
       classMethods: {
-        associate: function(models) {
-          Episodes.hasMany(models.Cards, { foreignKey: 'episode_id' });
+        associate: function (models) {
+          Episodes.hasMany(models.Cards, { foreignKey: 'episodeId' });
           Episodes.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
         },
       },

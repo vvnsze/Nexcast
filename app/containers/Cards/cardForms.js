@@ -25,10 +25,10 @@ class CreateCard extends React.Component {
     this.getCardTimeStamp = this.getCardTimeStamp.bind(this);
     this.editState = this.editState.bind(this);
     this.state = {
-      tagged_timestamp: '00:00:00',
+      taggedTimestamp: '00:00:00',
       description: 'Enter description',
-      button_text: 'Enter button text!',
-      button_link: 'Enter external link for button',
+      buttonText: 'Enter button text!',
+      buttonLink: 'Enter external link for button',
     };
   }
 
@@ -36,7 +36,7 @@ class CreateCard extends React.Component {
     if (!this.props.selectedTimeStamp && !this.props.editCardDetail) {
       return;
     } else if (this.props.selectedTimeStamp) {
-      this.setState({ tagged_timestamp: this.props.selectedTimeStamp });
+      this.setState({ taggedTimestamp: this.props.selectedTimeStamp });
     }
     this.editState(this.props.editCardDetail);
   }
@@ -45,13 +45,13 @@ class CreateCard extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedTimeStamp) {
       this.setState({
-        tagged_timestamp: nextProps.selectedTimeStamp,
+        taggedTimestamp: nextProps.selectedTimeStamp,
       });
     }
     if (nextProps.selectedTimeStamp && nextProps.editCardDetail) {
       this.editState({
         ...nextProps.editCardDetail,
-        tagged_timestamp: nextProps.selectedTimeStamp,
+        taggedTimestamp: nextProps.selectedTimeStamp,
       });
     } else {
       this.editState({
@@ -62,35 +62,35 @@ class CreateCard extends React.Component {
 
   onUploadFinish(args) {
     this.setState({
-      media_link: args.publicUrl,
-      media_type: 'image',
+      mediaLink: args.publicUrl,
+      mediaType: 'image',
     });
   }
 
   getCardTimeStamp() {
-    return this.state.tagged_timestamp;
+    return this.state.taggedTimestamp;
   }
 
   editState(cardDetails) {
     this.setState({
-      tagged_timestamp: cardDetails.tagged_timestamp,
+      taggedTimestamp: cardDetails.taggedTimestamp,
       description: cardDetails.description,
-      button_text: cardDetails.button_text,
-      button_link: cardDetails.button_link,
-      media_link: cardDetails.media_link,
-      media_type: cardDetails.media_type,
-      is_published: cardDetails.is_published,
+      buttonText: cardDetails.buttonText,
+      buttonLink: cardDetails.buttonLink,
+      mediaLink: cardDetails.mediaLink,
+      mediaType: cardDetails.mediaType,
+      isPublished: cardDetails.isPublished,
     });
   }
 
   handleFormSubmit(event) {
     const createCardData = { ...this.state,
-      podcast_id: this.props.selectedEpisode.nexcastPodcastId,
-      is_published: false,
+      podcastId: this.props.selectedEpisode.nexcastPodcastId,
+      isPublished: false,
       episode_guid: this.props.selectedEpisode.guid };
     const updateCardData = { ...this.state,
       id: this.props.editCardDetail.id,
-      podcast_id: this.props.selectedEpisode.nexcastPodcastId,
+      podcastId: this.props.selectedEpisode.nexcastPodcastId,
       episode_guid: this.props.selectedEpisode.guid };
     if (!this.props.isEditingCard) {
       this.props.dispatch(actions.createCard(createCardData));
@@ -115,20 +115,20 @@ class CreateCard extends React.Component {
           onSubmit={this.handleFormSubmit}
         >
           <fieldset>
-            <label htmlFor="tagged_timestamp">TimeStamp</label>
-            <input type="text" onChange={this.handleChange} name="tagged_timestamp" value={this.state.tagged_timestamp} />
+            <label htmlFor="taggedTimestamp">TimeStamp</label>
+            <input type="text" onChange={this.handleChange} name="taggedTimestamp" value={this.state.taggedTimestamp} />
           </fieldset>
           <fieldset>
             <label htmlFor="description">Description</label>
             <input type="text" name="description" onChange={this.handleChange} value={this.state.description} />
           </fieldset>
           <fieldset>
-            <label htmlFor="button_text">Button Text</label>
-            <input type="button_text" name="button_text" onChange={this.handleChange} value={this.state.button_text} />
+            <label htmlFor="buttonText">Button Text</label>
+            <input type="buttonText" name="buttonText" onChange={this.handleChange} value={this.state.buttonText} />
           </fieldset>
           <fieldset>
-            <label htmlFor="button_link">Button Link</label>
-            <input type="button_link" name="button_link" onChange={this.handleChange} value={this.state.button_link} />
+            <label htmlFor="buttonLink">Button Link</label>
+            <input type="buttonLink" name="buttonLink" onChange={this.handleChange} value={this.state.buttonLink} />
           </fieldset>
           <div>
             <ReactUpload
@@ -162,10 +162,10 @@ class CreateCard extends React.Component {
 
 CreateCard.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  tagged_timestamp: PropTypes.string,
+  taggedTimestamp: PropTypes.string,
   text: PropTypes.string,
-  button_text: PropTypes.string,
-  button_link: PropTypes.string,
+  buttonText: PropTypes.string,
+  buttonLink: PropTypes.string,
   selectedEpisode: PropTypes.object,
   selectedTimeStamp: PropTypes.string,
   editCardDetail: PropTypes.object,

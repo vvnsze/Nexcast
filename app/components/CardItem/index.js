@@ -35,12 +35,12 @@ const CardItem = ({ card, editCard, deleteCard }) => {
   const checkMedia = function check(item) {
     if (item.media_type === 'image') {
       return (
-        <img role="presentation" src={item.media_link}></img>
+        <img role="presentation" src={item.mediaLink}></img>
       );
     }
     if (item.media_type === 'picture') {
       return (
-        <img role="presentation" src={item.media_link}></img>
+        <img role="presentation" src={item.mediaLink}></img>
       );
     }
     return (
@@ -50,7 +50,7 @@ const CardItem = ({ card, editCard, deleteCard }) => {
 
   const printCardTime = function makeTitle(item) {
     if (item) {
-      return (`${item.tagged_timestamp}`);
+      return (`${item.taggedTimestamp}`);
     }
     return '00:00:00';
   };
@@ -78,8 +78,8 @@ const CardItem = ({ card, editCard, deleteCard }) => {
         <CardActions>
           <FlatButton
             style={styles.cardLinkButton} backgroundColor="#02dd78"
-            href={card.button_link}
-            label={card.button_text}
+            href={card.buttonLink}
+            label={card.buttonText}
             fullWidth={true}
           />
         </CardActions>

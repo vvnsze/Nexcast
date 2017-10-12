@@ -8,7 +8,7 @@ router.post('/api/podcast', (req, res) => {
       res.send(podcast);
     })
     .catch((error) => {
-      console.log(error, "HALP")
+      console.log('there is an error in findOrCreateByFeedUrl: ', error);
       res.send(error);
     });
 });

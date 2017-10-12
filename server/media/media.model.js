@@ -1,5 +1,12 @@
 module.exports = function createMediaTable(sequelize, DataTypes) {
   const Media = sequelize.define('media', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
     type: {
       type: DataTypes.STRING(60),
     },
@@ -7,7 +14,6 @@ module.exports = function createMediaTable(sequelize, DataTypes) {
       type: DataTypes.STRING(2083),
       notNull: true,
     },
-    underscored: true,
   });
   return Media;
 };
