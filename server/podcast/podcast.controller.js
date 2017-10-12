@@ -71,9 +71,8 @@ exports.findOrCreateByFeedUrl = (req, res) => {
       fullName: podcast.collectionName,
       imageUrl: podcast.artworkUrl600,
 
-    }
+    },
   };
-  console.log(chalk.cyan('this is the query before is it saved: '), query);
   return Podcast.findOrCreate(query);
 };
 
