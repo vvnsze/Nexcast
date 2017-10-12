@@ -23,7 +23,7 @@ module.exports = function createEpisodeTable(sequelize, DataTypes) {
     {
       classMethods: {
         associate: function (models) {
-          Episodes.hasMany(models.Cards, { foreignKey: 'episode_id' });
+          Episodes.hasMany(models.Cards, { foreignKey: 'episodeId' });
           Episodes.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
         },
       },
