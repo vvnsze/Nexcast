@@ -1,5 +1,12 @@
 module.exports = function createEpisodeTable(sequelize, DataTypes) {
   const Episodes = sequelize.define('episodes', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
     podcastId: {
       type: DataTypes.INTEGER,
     },

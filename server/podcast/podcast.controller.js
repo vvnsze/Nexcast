@@ -62,21 +62,24 @@ exports.parsePodcasts = (req, res) => {
 
 exports.findOrCreateByFeedUrl = (req, res) => {
   const podcast = req.body.podcast;
+  console.log(chalk.cyan('this is podcast: '), podcast);
   const query = {
     where: {
       feedUrl: podcast.feedUrl,
     },
-    fullName: podcast.collectionName,
-    imageUrl: podcast.artworkUrl600,
+    defaults: {
+      fullName: podcast.collectionName,
+      imageUrl: podcast.artworkUrl600,
+
+    }
   };
+  console.log(chalk.cyan('this is the query before is it saved: '), query);
   return Podcast.findOrCreate(query);
 };
 
 exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
   const feedTitle = req.body.podcast.collectionName;
-  console.log(chalk.cyan('feedUrl: '), feedUrl, chalk.cyan('feedTitle: '), feedTitle);
-  console.log(chalk.cyan('req.user: '), req.user);
   request.get(feedUrl).on('response', (resp) => {
     const parsed = new FeedMe(true);
     resp.pipe(parsed);
