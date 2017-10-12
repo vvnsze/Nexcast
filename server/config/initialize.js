@@ -8,7 +8,14 @@ const Users = require('../user/user.model');
 const Whitelist = require('../whitelist/whitelist.model');
 const UserPodcast = require('../podcast/userPodcast.model');
 
-const sequelize = new Sequelize(process.env.DB_URI);
+var opts = {
+  define: {
+    // prevent sequelize from pluralizing table names
+    freezeTableName: true,
+  }
+};
+
+const sequelize = new Sequelize(process.env.DB_URI, opts);
 const db = {};
 const models = {
   Users,

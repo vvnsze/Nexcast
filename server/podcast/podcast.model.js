@@ -3,30 +3,30 @@ const Sequelize = require('sequelize');
 
 module.exports = function createPodcastTable(sequelize, DataTypes) {
   const Podcasts = sequelize.define('podcasts', {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        allowNull: false,
-        autoIncrement: true,
-        unique: true,
-      },
-      fullName: {
-        type: DataTypes.STRING(100),
-      },
-      feedUrl: {
-        type: DataTypes.STRING,
-      },
-      description: {
-        type: DataTypes.STRING(2000),
-      },
-      imageUrl: {
-        type: DataTypes.STRING(2680),
-      },
-      email: {
-        type: DataTypes.STRING(80),
-        isEmail: true,
-      },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
     },
+    fullName: {
+      type: DataTypes.STRING(100),
+    },
+    feedUrl: {
+      type: DataTypes.STRING,
+    },
+    description: {
+      type: DataTypes.STRING(2000),
+    },
+    imageUrl: {
+      type: DataTypes.STRING(2680),
+    },
+    email: {
+      type: DataTypes.STRING(80),
+      isEmail: true,
+    },
+  },
     {
       classMethods: {
         associate: function (models) {
@@ -35,7 +35,6 @@ module.exports = function createPodcastTable(sequelize, DataTypes) {
           Podcasts.hasMany(models.Cards, { foreignKey: 'podcastId' });
         },
       },
-      underscored: true,
     }
   );
   return Podcasts;

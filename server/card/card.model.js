@@ -1,5 +1,12 @@
 module.exports = function createCardTable(sequelize, DataTypes) {
   const Cards = sequelize.define('card', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
     taggedTimestamp: {
       type: DataTypes.STRING(12),
     },
@@ -36,7 +43,6 @@ module.exports = function createCardTable(sequelize, DataTypes) {
           Cards.belongsTo(models.Episodes, { foreignKey: 'episodeId' });
         },
       },
-      underscored: true,
     }
   );
   return Cards;

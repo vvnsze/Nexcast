@@ -3,6 +3,13 @@ const Sequelize = require('sequelize');
 
 module.exports = function createWhitelistTable(sequelize, DataTypes) {
   const Whitelist = sequelize.define('whitelist', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
     podcastTitle: {
       type: DataTypes.STRING(60),
     },

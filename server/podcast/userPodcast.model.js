@@ -3,6 +3,13 @@ const Sequelize = require('sequelize');
 
 module.exports = function createUserPodcast(sequelize, DataTypes) {
   const UserPodcast = sequelize.define('userPodcast', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -16,12 +23,12 @@ module.exports = function createUserPodcast(sequelize, DataTypes) {
       defaultValue: false,
     },
   },
-  {
-    classMethods: {
-      associate: function (models) {
-        UserPodcast.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
-      },
-    }
-  });
+    {
+      classMethods: {
+        associate: function (models) {
+          UserPodcast.belongsTo(models.Podcasts, { foreignKey: 'podcastId' });
+        },
+      }
+    });
   return UserPodcast;
 };

@@ -6,6 +6,7 @@ const Podcast = require('../config/database').Podcasts;
 const userPodcast = require('../config/database').UserPodcast;
 const Whitelist = require('../config/database').Whitelist;
 const confirmation = require('../services/mailgun');
+const chalk = require('chalk');
 
 exports.searchItunes = (req, res) => {
   const searchTerm = req.query.term;
@@ -74,7 +75,8 @@ exports.findOrCreateByFeedUrl = (req, res) => {
 exports.verifyPodcast = (req, res, next) => {
   const feedUrl = req.body.podcast.feedUrl;
   const feedTitle = req.body.podcast.collectionName;
-
+  console.log(chalk.cyan('feedUrl: '), feedUrl, chalk.cyan('feedTitle: '), feedTitle);
+  console.log(chalk.cyan('req.user: '), req.user);
   request.get(feedUrl).on('response', (resp) => {
     const parsed = new FeedMe(true);
     resp.pipe(parsed);
@@ -99,7 +101,6 @@ exports.verifyPodcast = (req, res, next) => {
               confirmation.podcastEmailMatched(req.user.email, feedTitle)
               return next();
             }
-
             // user email not associated with this podcast
             // send unverified.
             res.locals.verified = false;
@@ -123,7 +124,10 @@ exports.setVerifyUserPodcast = (req, res) => {
       userPodcastObj.verified = res.locals.verified;
       userPodcastObj.save()
         .then((results) => res.send({ results, verified: res.locals.verified }))
-        .catch((error) => { res.status(422).send({ error, message: 'failed to save' }); });
+        .catch((error) => {
+          console.log(chalk.red('error in setVerifyUserPodcast: '), error);
+          res.status(422).send({ error, message: 'failed to save' });
+        });
     })
     .catch((error) => (res.status(422).send({ error, message: 'failed to load' })));
 };
