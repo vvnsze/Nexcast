@@ -33,12 +33,12 @@ const styles = {
 
 const CardItem = ({ card, editCard, deleteCard }) => {
   const checkMedia = function check(item) {
-    if (item.media_type === 'image') {
+    if (item.mediaType === 'image') {
       return (
         <img role="presentation" src={item.mediaLink}></img>
       );
     }
-    if (item.media_type === 'picture') {
+    if (item.mediaType === 'picture') {
       return (
         <img role="presentation" src={item.mediaLink}></img>
       );

@@ -26,9 +26,9 @@ class CreateCard extends React.Component {
     this.editState = this.editState.bind(this);
     this.state = {
       taggedTimestamp: '00:00:00',
-      description: 'Enter description',
-      buttonText: 'Enter button text!',
-      buttonLink: 'Enter external link for button',
+      description: ' ',
+      buttonText: ' ',
+      buttonLink: ' ',
     };
   }
 
@@ -116,19 +116,41 @@ class CreateCard extends React.Component {
         >
           <fieldset>
             <label htmlFor="taggedTimestamp">TimeStamp</label>
-            <input type="text" onChange={this.handleChange} name="taggedTimestamp" value={this.state.taggedTimestamp} />
+            <input
+              type="text"
+              onChange={this.handleChange}
+              name="taggedTimestamp"
+              value={this.state.taggedTimestamp}
+            />
           </fieldset>
           <fieldset>
             <label htmlFor="description">Description</label>
-            <input type="text" name="description" onChange={this.handleChange} value={this.state.description} />
+            <input
+              type="text" name="description"
+              onChange={this.handleChange}
+              value={this.state.description}
+              placeholder="Enter description"
+            />
           </fieldset>
           <fieldset>
             <label htmlFor="buttonText">Button Text</label>
-            <input type="buttonText" name="buttonText" onChange={this.handleChange} value={this.state.buttonText} />
+            <input
+              type="buttonText"
+              name="buttonText"
+              onChange={this.handleChange}
+              value={this.state.buttonText}
+              placeholder="Name of button"
+            />
           </fieldset>
           <fieldset>
             <label htmlFor="buttonLink">Button Link</label>
-            <input type="buttonLink" name="buttonLink" onChange={this.handleChange} value={this.state.buttonLink} />
+            <input
+              type="buttonLink"
+              name="buttonLink"
+              placeholder="External link for button"
+              onChange={this.handleChange}
+              value={this.state.buttonLink}
+            />
           </fieldset>
           <div>
             <ReactUpload
