@@ -9,7 +9,7 @@ import Slider from 'rc-slider';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Howler } from 'howler';
-// import 'rc-slider/assets/index.css';
+import './rcSlider.css'
 import FontIcon from 'material-ui/FontIcon';
 import { blue500 } from 'material-ui/styles/colors';
 import * as actions from './actions';
