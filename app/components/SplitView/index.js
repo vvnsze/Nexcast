@@ -12,8 +12,8 @@ import MainContent from '../MainContent';
 class SplitView extends React.Component {
   render() {
     return (
-      <div className="row" style={{ height: '100%' }}>
-        <div style={{ height: '100%', padding: 0 }} className="col s3 blue-grey  darken-3">
+      <div className="row">
+        <div style={{ padding: 0, height: '100vh' }} className="col s3 blue-grey  darken-3">
           <SideMenu />
         </div>
 

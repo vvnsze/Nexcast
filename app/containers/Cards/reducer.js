@@ -58,7 +58,7 @@ function addCreatedCard(createPayload, cardState) {
   var newState = cardState.allCards;
 
   if (createPayload.result.data.success === true) {
-    if (newState.length === 0) {
+    if (!newState) {
       newState = [];
     }
     newState.push(createPayload.createdCard);
