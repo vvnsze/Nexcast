@@ -4,11 +4,11 @@ import FlatButton from 'material-ui/FlatButton';
 // import styled from 'styled-components';
 
 const styles = {
-  Card: {
+  containerStyle: {
     display: 'inline-block',
-    overflow: 'scroll',
     margin: '10px',
     height: 'auto',
+    minWidth: '200px',
   },
   wrapper: {
     border: '2px solid #ccc',
@@ -25,9 +25,16 @@ const styles = {
     width: '10px',
   },
   cardLinkButton: {
-    width: '80%',
+    width: '75%',
     color: 'white',
     borderRadius: '4px',
+  },
+  cardHeader: {
+    height: '80px',
+    background: '#0371d8',
+  },
+  cardMedia: {
+    height: 'auto',
   },
 };
 
@@ -62,14 +69,16 @@ const CardItem = ({ card, editCard, deleteCard }) => {
     >
       <Card
         className="cardContainer"
-        containerStyle={styles.Card}
+        containerStyle={styles.containerStyle}
       >
         <CardHeader
-          style={{ height: 100, background: '#0371d8' }}
+          style={styles.cardHeader}
           titleColor="white"
           title={printCardTime(card)}
         />
-        <CardMedia>
+        <CardMedia
+          mediaStyle={styles.cardMedia}
+        >
           {checkMedia(card)}
         </CardMedia>
         <CardText>
@@ -77,7 +86,8 @@ const CardItem = ({ card, editCard, deleteCard }) => {
         </CardText>
         <CardActions>
           <FlatButton
-            style={styles.cardLinkButton} backgroundColor="#02dd78"
+            style={styles.cardLinkButton}
+            backgroundColor="#02dd78"
             href={card.buttonLink}
             label={card.buttonText}
             fullWidth={true}

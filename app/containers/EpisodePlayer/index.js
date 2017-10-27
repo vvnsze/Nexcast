@@ -22,10 +22,41 @@ const Play = '';
 let playerInfo = {};
 var sound = {};
 
-const iconStyles = {
-  fontSize: '35px',
-  marginLeft: '15px',
-  marginRight: '15px',
+const styles = {
+  railStyle: {
+    backgroundColor: '#0371d8',
+    height: 17,
+    borderRadius: 0,
+  },
+  iconStyles: {
+    fontSize: '35px',
+    marginLeft: '15px',
+    marginRight: '15px',
+  },
+  barWrapper: {
+    width: '100%',
+    height: '0px',
+    top: '-13px',
+    position: 'relative',
+  },
+  trackStyle: {
+    backgroundColor: '#56a0e5' || '#56a0e5',
+    height: 17,
+    borderRadius: 0,
+    paddingRight: -50,
+  },
+  handleStyle: {
+    borderWidth: 0,
+    height: 17,
+    width: 5,
+    marginLeft: -2,
+    marginTop: 0,
+    backgroundColor: '#56a0e5',
+    borderRadius: 0,
+  },
+  time: {
+    color: 'black',
+  },
 };
 
 const statusMap = {
@@ -192,7 +223,7 @@ class EpisodePlayer extends Component {
     return (
       <FontIcon
         className="material-icons"
-        style={iconStyles} color={blue500}
+        style={styles.iconStyles} color={blue500}
         onClick={this.handlePausePlay}
       >{this.pausePlayIconType()}</FontIcon>
     );
@@ -227,15 +258,15 @@ class EpisodePlayer extends Component {
 
     return (
       <div>
-        <div style={{ width: '100%', height: 200, backgroundColor: 'white' }}>
+        <div className="mediaPlayer" style={{ width: '100%', height: '150px', backgroundColor: 'white' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px' }}>
-            <FontIcon className="material-icons" style={iconStyles} color={blue500} onClick={this.goBack}>replay_10</FontIcon>
+            <FontIcon className="material-icons" style={styles.iconStyles} color={blue500} onClick={this.goBack}>replay_10</FontIcon>
             { this.PlayPauseIcon() }
-            <FontIcon className="material-icons" style={iconStyles} color={blue500} onClick={this.goForward}>forward_10</FontIcon>
+            <FontIcon className="material-icons" style={styles.iconStyles} color={blue500} onClick={this.goForward}>forward_10</FontIcon>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
-            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.position, 10))}</span>
-            <span style={{ color: 'black' }}>{secondsToHMS(parseInt(this.state.duration, 10))}</span>
+            <span style={styles.time}>{secondsToHMS(parseInt(this.state.position, 10))}</span>
+            <span style={styles.time}>{secondsToHMS(parseInt(this.state.duration, 10))}</span>
           </div>
 
           <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
@@ -247,20 +278,11 @@ class EpisodePlayer extends Component {
               max={parseInt(this.state.duration, 10) || 100}
               onChange={this.moveSeek}
               onAfterChange={this.seek}
-              railStyle={{ backgroundColor: '#56a0e5', height: 10 }}
-              trackStyle={{ backgroundColor: '#0371d8' || '#0371d8', height: 10, borderRadius: 0, paddingRight: -50 }}
-              handleStyle={{
-              //  borderColor: progressColor,
-                borderWidth: 0,
-                height: 28,
-                width: 5,
-                marginLeft: -2,
-                marginTop: -9,
-                backgroundColor: 'white',
-                borderRadius: 0,
-              }}
+              railStyle={styles.railStyle}
+              trackStyle={styles.trackStyle}
+              handleStyle={styles.handleStyle}
             />
-            <div style={{ width: '100%', height: '0px', top: '-13px', position: 'relative' }}>
+            <div className="barWrapper" style={styles.barWrapper}>
               {bar}
             </div>
           </div>

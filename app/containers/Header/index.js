@@ -7,7 +7,17 @@ import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
   dropDownMenu: {
-    color: 'black',
+    color: 'white',
+    backgroundColor: '#37474f',
+  },
+  menuItemStyle: {
+    color: 'white',
+  },
+  navWrapper: {
+    width: '100%',
+  },
+  logo: {
+    marginLeft: '17px',
   },
 };
 
@@ -17,15 +27,7 @@ export class Header extends React.Component {
     this.logUserOut = this.logUserOut.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = { userName: 'Nexcast', value: 2 };
-    this.showNameOnMenu = this.showNameOnMenu.bind(this);
     this.routeToPage = this.routeToPage.bind(this);
-  }
-
-  routeToPage() {
-    if (localStorage.getItem('token')) {
-      return '/main';
-    }
-    return '/';
   }
 
   componentWillMount() {
@@ -35,13 +37,11 @@ export class Header extends React.Component {
     }
   }
 
-  showNameOnMenu() {
-    if (this.props.currentUser.authenticated) {
-      console.log('this.props.currentUser', this.props.currentUser);
-      if (this.props.currentUser.user) {
-        this.setState({ userName: localStorage.getItem('userName') });
-      }
+  routeToPage() {
+    if (localStorage.getItem('token')) {
+      return '/main';
     }
+    return '/signin';
   }
 
   logUserOut() {
@@ -63,10 +63,10 @@ export class Header extends React.Component {
     if (token) {
       return (
         <div>
-          <DropDownMenu onChange={this.handleChange} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} value={this.state.value}>
-            <MenuItem value={1} key={1} primaryText="Sign Out" style={styles.DropDownMenu} />
-            <MenuItem value={2} key={2} primaryText={this.state.userName} style={styles.DropDownMenu} />
-            <MenuItem value={3} key={3} primaryText="About" style={styles.DropDownMenu} />
+          <DropDownMenu onChange={this.handleChange} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} value={this.state.value} menuStyle={styles.dropDownMenu} menuItemStyle={styles.menuItemStyle}>
+            <MenuItem value={1} key={1} primaryText="Sign Out" />
+            <MenuItem value={2} key={2} primaryText={this.state.userName} />
+            <MenuItem value={3} key={3} primaryText="About" />
           </DropDownMenu>
         </div>
       );
@@ -85,9 +85,9 @@ export class Header extends React.Component {
   render() {
     return (
       <nav className="blue-grey  darken-3" role="navigation">
-        <div className="nav-wrapper container" style={{ width: '90%' }}>
+        <div className="nav-wrapper" style={styles.navWrapper}>
           <a id="logo-container" href={this.routeToPage()} className="brand-logo">
-            <img src={require('../../assets/nexcast_logo_white.png')} width={150} />
+            <img src={require('../../assets/nexcast_logo_white.png')} width={150} style={styles.logo} />
           </a>
           <ul className="right hide-on-med-and-down">
             <li>{this.showLinks()}</li>
