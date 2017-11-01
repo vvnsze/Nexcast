@@ -56,7 +56,11 @@ function updateSingleCard(updatePayload, cardState) {
 
 function addCreatedCard(createPayload, cardState) {
   var newState = cardState.allCards;
+
   if (createPayload.result.data.success === true) {
+    if (!newState) {
+      newState = [];
+    }
     newState.push(createPayload.createdCard);
   }
   return addTags(newState);
@@ -69,7 +73,10 @@ function addTags(cardState) {
   var newState = [];
   cardState.forEach(function hmsToSeconds(card) {
     let seconds;
-    const timeString = card.tagged_timestamp.split(':');
+    if (!card.taggedTimestamp) {
+      return;
+    }
+    const timeString = card.taggedTimestamp.split(':');
     if (timeString.length === 3) {
       seconds = (+timeString[0]) * 3600 + (+timeString[1]) * 60 + (+timeString[2]);
       card.seconds = seconds;

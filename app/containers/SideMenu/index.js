@@ -8,6 +8,21 @@ import PodcastEpisodeList from '../../components/PodcastEpisodeList';
 import Searchbar from './Searchbar';
 import PodcastEpisodeItem from '../../components/PodcastEpisodeItem';
 
+const styles = {
+  addShowWrapper: {
+    height: '42px',
+    paddingBottom: '5px',
+    paddingTop: '5px',
+  },
+  addShowButton: {
+    height: '100%',
+    width: 'auto',
+    borderRadius: '10px',
+    color: '#ffffff',
+    marginLeft: '10px',
+  },
+};
+
 export class SideMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -93,14 +108,15 @@ export class SideMenu extends React.Component {
         >MY SHOWS
         </div>
         <div
-          className="col s3 blue-grey darken-4"
-          style={{ color: '#FFF', padding: '10px 10px' }}
+          className="col s3 blue-grey darken-4 addShowWrapper"
+          style={styles.addShowWrapper}
+          // style={{ color: '#FFF', padding: '10px 10px' }}
         >
           <RaisedButton
             backgroundColor="#0371d8"
             onTouchTap={this.addShow}
-            style={{ height: '22px', width: 'auto' }}
-            labelColor="white"
+            style={styles.addShowButton}
+            labelColor="#ffffff"
           >ADD SHOW
           </RaisedButton>
         </div>

@@ -1,6 +1,6 @@
 const apiKey = process.env.MAILGUN_API_KEY;
 const domain = process.env.MAILGUN_DOMAIN;
-const BASE_URL = process.env.HOST_NAME;
+const BASE_URL = process.env.BASE_URL;
 const MailComposer = require('nodemailer/lib/mail-composer');
 const mailgun = require('mailgun-js')({ apiKey, domain });
 const chalk = require('chalk');

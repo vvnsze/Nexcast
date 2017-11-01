@@ -17,7 +17,7 @@ function onProgress(e) {
 class MainContent extends React.Component {
   render() {
     return (
-      <div>
+      <div className="mainContent">
         <InformationDisplay />
         <Publish />
         <EpisodePlayer onProgress={onProgress} />

@@ -21,10 +21,14 @@ const styles = {
   gridList: {
     display: 'flex',
     flexWrap: 'nowrap',
-    overflowX: 'auto',
+    overflowX: 'scroll',
   },
   noLoadedCard: {
     listStyleType: 'none',
+  },
+  gridTile: {
+    height: 'auto',
+    width: '400px',
   },
 };
 
@@ -58,6 +62,7 @@ export class Cards extends React.Component {
           <GridTile
             key={cardItem.id}
             className="tileContainer"
+            style={styles.gridTile}
           >
             <CardItem
               key={cardItem.id}
@@ -102,7 +107,7 @@ export class Cards extends React.Component {
   showCardButton() {
     if (this.state.revealCardCreatorForm) {
       return (
-        <GridTile className="tileContainer">
+        <GridTile className="createCardContainer">
           <CreateCard
             cancelCard={this.cancel}
           />
