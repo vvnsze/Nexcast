@@ -11,6 +11,4 @@ sequelize.authenticate()
       console.log(chalk.red('+++line 10 config.database.js: cannot connect to the database '), err);
     });
 
-console.log(chalk.magenta('models: '), models);
-
 module.exports = models;

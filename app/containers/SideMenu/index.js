@@ -9,7 +9,7 @@ import Searchbar from './Searchbar';
 import PodcastEpisodeItem from '../../components/PodcastEpisodeItem';
 
 const styles = {
-  addShowWrapper: {
+  addShowButtonWrapper: {
     height: '42px',
     paddingBottom: '5px',
     paddingTop: '5px',
@@ -20,6 +20,19 @@ const styles = {
     borderRadius: '10px',
     color: '#ffffff',
     marginLeft: '10px',
+  },
+  podcastEpisodesWrapper: {
+    color: '#FFF',
+    paddingTop: '55px',
+    paddingLeft: '12px',
+  },
+  sideMenu: {
+    height: '100%',
+    overflow: 'scroll',
+  },
+  myShowsBar: {
+    color: '#FFF',
+    padding: '10px 20px',
   },
 };
 
@@ -33,7 +46,7 @@ export class SideMenu extends React.Component {
     this.showPodcastEpisode = this.showPodcastEpisode.bind(this);
     this.selectPodcastEpisode = this.selectPodcastEpisode.bind(this);
     this.addShow = this.addShow.bind(this);
-    this.displaySearchResult = this.displaySearchResult.bind(this);
+    // this.displaySearchResult = this.displaySearchResult.bind(this);
     this.toggleMenuState = this.toggleMenuState.bind(this);
   }
 
@@ -41,11 +54,11 @@ export class SideMenu extends React.Component {
     this.loadPodcastEpisode();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.searchResult) {
-      this.displaySearchResult(nextProps.searchResult);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.searchResult) {
+  //     this.displaySearchResult(nextProps.searchResult);
+  //   }
+  // }
 
   loadPodcastEpisode() {
     this.props.dispatch(actions.loadPodcast());
@@ -63,31 +76,31 @@ export class SideMenu extends React.Component {
     this.setState({ showSideMenu: false });
   }
 
-  displaySearchResult(episodes) {
-    this.toggleMenuState();
-    if (episodes.length === 1) {
-      return (
-        <div style={{ color: '#FFF', padding: 20 }}>
-          <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
-            <PodcastEpisodeItem
-              episodeFile={episodes.link}
-              episodeTitle={episodes.title}
-              episodeFullContent={episodes.content}
-              guid={episodes.guid}
-            />
-          </List>
-        </div>
-      );
-    }
-    return <div></div>
-  }
+  // displaySearchResult(episodes) {
+  //   this.toggleMenuState();
+  //   if (episodes.length === 1) {
+  //     return (
+  //       <div className="searchResultWrapper" style={{ color: '#FFF', padding: 20 }}>
+  //         <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
+  //           <PodcastEpisodeItem
+  //             episodeFile={episodes.link}
+  //             episodeTitle={episodes.title}
+  //             episodeFullContent={episodes.content}
+  //             guid={episodes.guid}
+  //           />
+  //         </List>
+  //       </div>
+  //     );
+  //   }
+  //   return <div></div>;
+  // }
 
   showPodcastEpisode() {
     if (!this.state.showSideMenu) {
       return <div></div>;
     }
     return (
-      <div style={{ color: '#FFF', padding: 20 }}>
+      <div className="podcastEpisodesWrapper" style={styles.podcastEpisodesWrapper}>
         <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
@@ -101,16 +114,15 @@ export class SideMenu extends React.Component {
 
   render() {
     return (
-      <div className="row" style={{ height: '100%', overflow: 'scroll' }}>
+      <div className="row sideMenu" style={styles.sideMenu}>
         <div
-          className="col s9 blue-grey darken-4"
-          style={{ color: '#FFF', padding: '10px 20px' }}
+          className="col s9 blue-grey darken-4 myShowsBar"
+          style={styles.myShowsBar}
         >MY SHOWS
         </div>
         <div
-          className="col s3 blue-grey darken-4 addShowWrapper"
-          style={styles.addShowWrapper}
-          // style={{ color: '#FFF', padding: '10px 10px' }}
+          className="col s3 blue-grey darken-4 addShowButtonWrapper"
+          style={styles.addShowButtonWrapper}
         >
           <RaisedButton
             backgroundColor="#0371d8"
@@ -120,9 +132,7 @@ export class SideMenu extends React.Component {
           >ADD SHOW
           </RaisedButton>
         </div>
-        {/* <div><Searchbar /> </div> */}
         {this.showPodcastEpisode()}
-        {/* {this.displaySearchResult()} */}
       </div>
     );
   }
