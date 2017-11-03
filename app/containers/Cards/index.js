@@ -33,6 +33,12 @@ const styles = {
     borderColor: '#C5CCC7',
     borderRadius: '10px',
   },
+  createCardContainer: {
+    borderStyle: 'solid',
+    borderColor: '#C5CCC7',
+    borderWidth: '2px',
+    width: '420px',
+  },
 };
 
 export class Cards extends React.Component {
@@ -110,7 +116,7 @@ export class Cards extends React.Component {
   showCardButton() {
     if (this.state.revealCardCreatorForm) {
       return (
-        <GridTile className="createCardContainer" style={{ borderStyle: 'solid', borderColor: '#C5CCC7', borderWidth: '2px' }}>
+        <GridTile className="createCardContainer" style={styles.createCardContainer}>
           <CreateCard
             cancelCard={this.cancel}
           />

@@ -56,7 +56,7 @@ export class Publish extends React.Component {
           {this.state.message}
         </div>
         <FlatButton
-          backgroundColor="#02dd78"
+          backgroundColor="white"
           onClick={() => {
             this.publishCards();
           }}
