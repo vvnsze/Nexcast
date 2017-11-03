@@ -6,13 +6,55 @@ import { Card, CardActions } from 'material-ui/Card';
 import * as actions from './actions';
 
 const styles = {
-  // createCardForm: {
-  //   position: 'inline-block',
-  // },
   createCardForm: {
-    width: '60%',
-    height: 'relative',
+    width: '420px',
+    height: 'auto',
     display: 'inline-block',
+    marginTop: '10px',
+    borderStyle: 'normal',
+    borderColor: '#C5CCC7',
+    borderRadius: '10px',
+  },
+  cardLabel: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: '14px',
+  },
+  cardInput: {
+    borderColor: '#C5CCC7',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    marginTop: '5px',
+    height: '25px',
+    width: '100%',
+  },
+  descriptionInput: {
+    borderColor: '#C5CCC7',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    marginTop: '5px',
+    height: '155px',
+    width: '100%',
+  },
+  cancelButton: {
+    background: 'white',
+    color: 'black',
+    borderStyle: 'solid',
+    borderWidth: '2px',
+    borderColor: '#C5CCC7',
+  },
+  saveButton: {
+    background: '#02dd78',
+    color: 'white',
+    float: 'right',
+  },
+  fieldset: {
+    border: 'none',
+  },
+  uploaderWrapper: {
+    marginLeft: '8px',
+    marginTop: '28px',
+    marginBottom: '10px',
   },
 };
 
@@ -114,45 +156,68 @@ class CreateCard extends React.Component {
         <form
           onSubmit={this.handleFormSubmit}
         >
-          <fieldset>
-            <label htmlFor="taggedTimestamp">TimeStamp</label>
+          <fieldset style={styles.fieldset}>
+            <label
+              htmlFor="taggedTimestamp"
+              style={styles.cardLabel}
+            >TimeStamp</label>
             <input
               type="text"
               onChange={this.handleChange}
               name="taggedTimestamp"
               value={this.state.taggedTimestamp}
+              placeholder="0:00:00"
+              style={styles.cardInput}
             />
           </fieldset>
-          <fieldset>
-            <label htmlFor="description">Description</label>
-            <input
-              type="text" name="description"
+          <fieldset style={styles.fieldset}>
+            <label
+              htmlFor="description"
+              style={styles.cardLabel}
+            >Description</label>
+            <textarea
+              row="10"
+              cols="40"
+              type="text"
+              name="description"
               onChange={this.handleChange}
               value={this.state.description}
               placeholder="Enter description"
+              style={styles.descriptionInput}
             />
           </fieldset>
-          <fieldset>
-            <label htmlFor="buttonText">Button Text</label>
+          <fieldset style={styles.fieldset}>
+            <label
+              htmlFor="buttonText"
+              style={styles.cardLabel}
+            >Button Text</label>
             <input
               type="buttonText"
               name="buttonText"
               onChange={this.handleChange}
               value={this.state.buttonText}
               placeholder="Name of button"
+              style={styles.cardInput}
             />
           </fieldset>
-          <fieldset>
-            <label htmlFor="buttonLink">Button Link</label>
+          <fieldset style={styles.fieldset}>
+            <label
+              htmlFor="buttonLink"
+              style={styles.cardLabel}
+            >Button Link</label>
             <input
               type="buttonLink"
               name="buttonLink"
               placeholder="External link for button"
               onChange={this.handleChange}
               value={this.state.buttonLink}
+              style={styles.cardInput}
             />
           </fieldset>
-          <div>
+          <div
+            className="uploaderWrapper"
+            style={styles.uploaderWrapper}
+          >
             <ReactUpload
               className="uploader"
               signingUrl="/s3/sign"
@@ -168,11 +233,13 @@ class CreateCard extends React.Component {
           </div>
           <CardActions>
             <FlatButton
-              style={{ background: '#02dd78' }} onTouchTap={this.props.cancelCard}
+              style={styles.cancelButton}
+              onTouchTap={this.props.cancelCard}
             >Cancel
             </FlatButton>
             <FlatButton
-              style={{ background: '#02dd78' }} onTouchTap={this.handleFormSubmit}
+              style={styles.saveButton}
+              onTouchTap={this.handleFormSubmit}
             >Save
             </FlatButton>
           </CardActions>

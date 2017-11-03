@@ -24,6 +24,14 @@ const styles = {
     position: 'inline-block',
     width: '10px',
   },
+  deleteButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: '4px',
+    color: '#0371d8',
+    position: 'inline-block',
+    width: '10px',
+    float: 'right',
+  },
   cardLinkButton: {
     width: '75%',
     color: 'white',
@@ -95,7 +103,7 @@ const CardItem = ({ card, editCard, deleteCard }) => {
         </CardActions>
         <CardActions>
           <FlatButton style={styles.modifyButton} backgroundColor="#02dd78" onTouchTap={() => { editCard(card); }} label="edit" />
-          <FlatButton style={styles.modifyButton} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
+          <FlatButton style={styles.deleteButton} backgroundColor="#02dd78" onTouchTap={() => { deleteCard({ id: card.id }); }} label="delete" />
         </CardActions>
       </Card>
     </div>
