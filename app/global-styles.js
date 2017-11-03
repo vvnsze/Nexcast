@@ -12,6 +12,7 @@ injectGlobal`
 
   body {
     font-family: 'Lato', 'sans-serif';
+
   }
 
   body.fontLoaded {
