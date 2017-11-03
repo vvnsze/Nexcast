@@ -21,10 +21,10 @@ const leftIcon = (episode, guid) => {
 };
 
 const PodcastEpisodeItem = ({ showTitle, episodeFile, episodeTitle, episodeFullContent, guid, nexcastPodcastId, onSelectEpisode, podcastImage, selectedEpisode }) => (
-  <div style={{ overflow: 'scroll' }}>
+  <div className="podcastEpisodeItem" style={{ overflow: 'scroll' }}>
     <ListItem
       initiallyOpen
-      style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif', fontSize: '16px' }}
+      style={{ color: '#C5CCC7', fontFamily: 'Lato,sans-serif', fontSize: '16px' }}
       leftIcon={leftIcon(selectedEpisode, guid)}
       key={guid}
       primaryText={episodeTitle}

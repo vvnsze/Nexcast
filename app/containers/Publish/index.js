@@ -56,12 +56,13 @@ export class Publish extends React.Component {
           {this.state.message}
         </div>
         <FlatButton
-          backgroundColor="white"
+          backgroundColor="#02dd78"
           onClick={() => {
             this.publishCards();
           }}
           label="Publish"
           disabled={this.disablePublishButton()}
+          style={{ color: 'white' }}
         />
       </div>
     );

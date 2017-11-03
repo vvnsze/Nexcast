@@ -101,7 +101,7 @@ export class SideMenu extends React.Component {
     }
     return (
       <div className="podcastEpisodesWrapper" style={styles.podcastEpisodesWrapper}>
-        <List style={{ color: '#ffffff', fontFamily: 'Lato,sans-serif' }}>
+        <List style={{ color: '#C5CCC7', fontFamily: 'Lato,sans-serif' }}>
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
             onSelectEpisode={this.selectPodcastEpisode}
