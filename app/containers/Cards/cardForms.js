@@ -12,7 +12,7 @@ const styles = {
     display: 'inline-block',
     marginTop: '10px',
     borderStyle: 'normal',
-    borderColor: '#C5CCC7',
+    borderColor: '#E0E0E0',
     borderRadius: '10px',
   },
   cardLabel: {
@@ -21,7 +21,7 @@ const styles = {
     fontSize: '14px',
   },
   cardInput: {
-    borderColor: '#C5CCC7',
+    borderColor: '#E0E0E0',
     borderWidth: '2px',
     borderStyle: 'solid',
     marginTop: '5px',
@@ -29,7 +29,7 @@ const styles = {
     width: '100%',
   },
   descriptionInput: {
-    borderColor: '#C5CCC7',
+    borderColor: '#E0E0E0',
     borderWidth: '2px',
     borderStyle: 'solid',
     marginTop: '5px',
@@ -41,7 +41,7 @@ const styles = {
     color: 'black',
     borderStyle: 'solid',
     borderWidth: '2px',
-    borderColor: '#C5CCC7',
+    borderColor: '#E0E0E0',
   },
   saveButton: {
     background: '#02dd78',

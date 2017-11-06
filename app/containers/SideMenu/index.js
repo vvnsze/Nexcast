@@ -18,11 +18,11 @@ const styles = {
     height: '100%',
     width: 'auto',
     borderRadius: '10px',
-    color: '#ffffff',
+    color: '#E0E0E0',
     marginLeft: '10px',
   },
   podcastEpisodesWrapper: {
-    color: '#FFF',
+    // color: '#E0E0E0',
     paddingTop: '55px',
     paddingLeft: '12px',
   },
@@ -31,7 +31,7 @@ const styles = {
     overflow: 'scroll',
   },
   myShowsBar: {
-    color: '#FFF',
+    color: '#E0E0E0',
     padding: '10px 20px',
   },
 };
@@ -101,7 +101,7 @@ export class SideMenu extends React.Component {
     }
     return (
       <div className="podcastEpisodesWrapper" style={styles.podcastEpisodesWrapper}>
-        <List style={{ color: '#C5CCC7', fontFamily: 'Lato,sans-serif' }}>
+        <List style={{ color: '#E0E0E0', fontFamily: 'Lato,sans-serif' }}>
           <PodcastEpisodeList
             episodeList={this.props.podcastEpisodes}
             onSelectEpisode={this.selectPodcastEpisode}

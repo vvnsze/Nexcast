@@ -7,11 +7,17 @@ import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
   dropDownMenu: {
-    color: 'white',
+    color: '#E0E0E0',
     backgroundColor: '#37474f',
+    font: 'Lato, sans-serif',
   },
   menuItemStyle: {
-    color: 'white',
+    color: '#E0E0E0',
+    font: 'Lato, sans-serif',
+  },
+  labelStyle: {
+    color: '#E0E0E0',
+    font: 'Lato, sans-serif',
   },
   navWrapper: {
     width: '100%',
@@ -63,7 +69,14 @@ export class Header extends React.Component {
     if (token) {
       return (
         <div>
-          <DropDownMenu onChange={this.handleChange} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} value={this.state.value} menuStyle={styles.dropDownMenu} menuItemStyle={styles.menuItemStyle}>
+          <DropDownMenu
+            onChange={this.handleChange}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} value={this.state.value}
+            menuStyle={styles.dropDownMenu}
+            menuItemStyle={styles.menuItemStyle}
+            labelStyle={styles.labelStyle}
+            className="dropDownMenu"
+          >
             <MenuItem value={1} key={1} primaryText="Sign Out" />
             <MenuItem value={2} key={2} primaryText={this.state.userName} />
             <MenuItem value={3} key={3} primaryText="About" />
@@ -89,7 +102,7 @@ export class Header extends React.Component {
           <a id="logo-container" href={this.routeToPage()} className="brand-logo">
             <img src={require('../../assets/nexcast_logo_white.png')} width={150} style={styles.logo} />
           </a>
-          <ul className="right hide-on-med-and-down">
+          <ul className="right hide-on-med-and-down dropDownList">
             <li>{this.showLinks()}</li>
           </ul>
         </div>

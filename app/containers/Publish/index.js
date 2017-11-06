@@ -70,7 +70,7 @@ export class Publish extends React.Component {
 
   filterPublishedCards(cards) {
     const unpublishedCards = cards.filter((card) => {
-      if (!card.is_published) {
+      if (!card.isPublished) {
         return card;
       }
     });

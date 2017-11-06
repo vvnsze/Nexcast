@@ -24,7 +24,7 @@ const PodcastEpisodeItem = ({ showTitle, episodeFile, episodeTitle, episodeFullC
   <div className="podcastEpisodeItem" style={{ overflow: 'scroll' }}>
     <ListItem
       initiallyOpen
-      style={{ color: '#C5CCC7', fontFamily: 'Lato,sans-serif', fontSize: '16px' }}
+      style={{ color: '#E0E0E0', fontFamily: 'Lato,sans-serif', fontSize: '16px' }}
       leftIcon={leftIcon(selectedEpisode, guid)}
       key={guid}
       primaryText={episodeTitle}
