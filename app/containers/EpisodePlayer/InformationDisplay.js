@@ -19,6 +19,11 @@ const styles = {
     height: '70px',
     width: '70px',
   },
+  informationDisplayWrapper: {
+    width: '500px',
+    height: 'auto',
+    display: 'inline-block',
+  },
 };
 
 class InformationDisplay extends React.Component {
@@ -42,7 +47,7 @@ class InformationDisplay extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="informationDisplayWrapper" style={styles.informationDisplayWrapper}>
         {this.showInformation()}
       </div>
     );

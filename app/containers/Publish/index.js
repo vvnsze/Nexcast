@@ -1,7 +1,18 @@
 import React, { PropTypes } from 'react';
+import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux';
 import * as actions from './actions';
-import FlatButton from 'material-ui/FlatButton';
+
+const styles = {
+  publishWrapper: {
+    display: 'inlineBlock',
+    float: 'right',
+  },
+  publishMessage: {
+    display: 'inlineBlock',
+    paddingRight: '20px',
+  },
+};
 
 export class Publish extends React.Component {
   constructor(props) {
@@ -13,6 +24,7 @@ export class Publish extends React.Component {
     this.filterPublishedCards = this.filterPublishedCards.bind(this);
     this.publishCards = this.publishCards.bind(this);
     this.disablePublishButton = this.disablePublishButton.bind(this);
+    this.showButton = this.showButton.bind(this);
   }
 
   componentWillMount() {
@@ -28,9 +40,37 @@ export class Publish extends React.Component {
     }
   }
 
+  showButton() {
+    if (this.props.chosenEpisode === null) {
+      return <div></div>;
+    }
+    return (
+      <div
+        className="publishWrapper"
+        style={styles.publishWrapper}
+      >
+        <div
+          className="publishMessage"
+          style={styles.publishMessage}
+        >
+          {this.state.message}
+        </div>
+        <FlatButton
+          backgroundColor="#02dd78"
+          onClick={() => {
+            this.publishCards();
+          }}
+          label="Publish"
+          disabled={this.disablePublishButton()}
+          style={{ color: 'white' }}
+        />
+      </div>
+    );
+  }
+
   filterPublishedCards(cards) {
     const unpublishedCards = cards.filter((card) => {
-      if (!card.is_published) {
+      if (!card.isPublished) {
         return card;
       }
     });
@@ -53,7 +93,6 @@ export class Publish extends React.Component {
       obj.ids.push(id);
       return obj;
     }, {});
-    console.log('cardsToBePublished: ', cardsToBePublished);
     this.props.dispatch(actions.publishCard(cardsToBePublished));
     this.setState({ message: 'Saving' });
   }
@@ -61,24 +100,13 @@ export class Publish extends React.Component {
   disablePublishButton() {
     if (this.state.unpublishedCards !== null) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   render() {
     return (
-      <div>
-        <div>{this.state.message}</div>
-        <FlatButton
-          backgroundColor="#02dd78"
-          onClick={() => {
-            this.publishCards();
-          }}
-          label="Publish"
-          disabled={this.disablePublishButton()}
-        />
-      </div>
+      this.showButton()
     );
   }
 }
@@ -91,6 +119,7 @@ function mapStateToProps(state) {
   return {
     cards: state.cards.allCards,
     displaySavedMessage: state.cards.displaySavedMessage,
+    chosenEpisode: state.episodePlayer.chosenEpisode,
   };
 }
 

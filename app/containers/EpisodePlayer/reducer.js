@@ -7,7 +7,7 @@ import {
   PLAY_EPISODE,
 } from './constants';
 
-const initialState = {};
+const initialState = { chosenEpisode: null };
 
 function episodePlayerReducer(state = initialState, action) {
   switch (action.type) {

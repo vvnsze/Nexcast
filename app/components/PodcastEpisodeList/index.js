@@ -21,7 +21,7 @@ const PodcastEpisodeList = ({ episodeList, onSelectEpisode, selectedEpisode }) =
   ));
 
   return (
-    <div>
+    <div className="podcastEpisodeItemWrapper">
       {podcastEpisodeItems}
     </div>
   );

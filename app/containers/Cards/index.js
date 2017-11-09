@@ -29,6 +29,15 @@ const styles = {
   gridTile: {
     height: 'auto',
     width: '400px',
+    borderStyle: 'solid',
+    borderColor: '#E0E0E0',
+    borderRadius: '10px',
+  },
+  createCardContainer: {
+    borderStyle: 'solid',
+    borderColor: '#E0E0E0',
+    borderWidth: '2px',
+    width: '420px',
   },
 };
 
@@ -54,7 +63,7 @@ export class Cards extends React.Component {
 
   loadCards() {
     if (this.props.displayCards) {
-      var sorted = this.props.displayCards.sort(function sortSeconds(a, b){
+      var sorted = this.props.displayCards.sort(function sortSeconds(a, b) {
         return a.seconds - b.seconds;
       });
       return sorted.map((cardItem) => (
@@ -107,7 +116,7 @@ export class Cards extends React.Component {
   showCardButton() {
     if (this.state.revealCardCreatorForm) {
       return (
-        <GridTile className="createCardContainer">
+        <GridTile className="createCardContainer" style={styles.createCardContainer}>
           <CreateCard
             cancelCard={this.cancel}
           />
@@ -129,7 +138,7 @@ export class Cards extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="gridListWrapper">
         <GridList
           className="cardGrid"
           style={styles.gridList}
