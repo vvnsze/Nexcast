@@ -65,12 +65,14 @@ class CreateCard extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onUploadFinish = this.onUploadFinish.bind(this);
     this.getCardTimeStamp = this.getCardTimeStamp.bind(this);
+    this.onUploadProgress = this.onUploadProgress.bind(this);
     this.editState = this.editState.bind(this);
     this.state = {
       taggedTimestamp: '00:00:00',
       description: ' ',
       buttonText: ' ',
       buttonLink: ' ',
+      uploading: ' ',
     };
   }
 
@@ -107,6 +109,10 @@ class CreateCard extends React.Component {
       mediaLink: args.publicUrl,
       mediaType: 'image',
     });
+  }
+
+  onUploadProgress(args) {
+    console.log(args);
   }
 
   getCardTimeStamp() {
@@ -227,8 +233,9 @@ class CreateCard extends React.Component {
                 'x-amz-acl': 'public-read',
               }}
               signingUrlWithCredentials
-              contentDisposition="auto"
+              contentDisposition="inline"
               onFinish={this.onUploadFinish}
+              onProgress={this.onUploadProgress}
             />
           </div>
           <CardActions>

@@ -91,7 +91,6 @@ function addTags(cardState) {
 }
 
 function changeCardsToPublished(cardState) {
-  console.log('this is card state in cards published: ', cardState);
   const newState = cardState.allCards.map(function changeToPublished(card) {
     const newCard = card;
     newCard.is_published = true;
