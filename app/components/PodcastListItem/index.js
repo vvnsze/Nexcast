@@ -22,7 +22,7 @@ const PodcastListItem = ({ onSelectPodcast, podcast }) => {
     <li id={podcast.trackId}>
       <div style={styles.podcastResultItemContainer} className="podcastResultItemContainer" onClick={() => { onSelectPodcast({ podcast }); }}>
         <div style={styles.podcastPicture}>
-          <img role="presentation" src={imageUrl} />
+          <img className="responsive-img" role="presentation" src={imageUrl} />
         </div>
         <div style={styles.podcastDescription}>
           { podcast.trackName} by: {<br />} {podcast.artistName }

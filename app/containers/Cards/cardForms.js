@@ -233,7 +233,7 @@ class CreateCard extends React.Component {
                 'x-amz-acl': 'public-read',
               }}
               signingUrlWithCredentials
-              contentDisposition="inline"
+              contentDisposition="auto"
               onFinish={this.onUploadFinish}
               onProgress={this.onUploadProgress}
             />

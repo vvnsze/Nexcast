@@ -14,6 +14,7 @@ import FontIcon from 'material-ui/FontIcon';
 import { blue500 } from 'material-ui/styles/colors';
 import * as actions from './actions';
 import LoadingPlayer from '../../assets/loadingPlayer.gif';
+import InformationDisplay from './InformationDisplay';
 // import Play from '../../assets/icon_play.png';
 // import Pause from '../../assets/icon_pause.png';
 // import SkipBack from '../../assets/material_ui_replay_ten.svg';
@@ -57,6 +58,9 @@ const styles = {
   time: {
     color: 'black',
   },
+  mediaPlayerInnerWrapper: {
+    position: 'relative',
+  }
 };
 
 const statusMap = {
@@ -257,14 +261,15 @@ class EpisodePlayer extends Component {
     }
 
     return (
-      <div>
+      <div className="mediaPlayerInnerWrapper" style={styles.mediaPlayerInnerWrapper}>
+        <InformationDisplay />
         <div className="mediaPlayer" style={{ width: '100%', height: '150px', backgroundColor: 'white' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '10px', padding: '5px' }}>
             <FontIcon className="material-icons" style={styles.iconStyles} color={blue500} onClick={this.goBack}>replay_10</FontIcon>
             { this.PlayPauseIcon() }
             <FontIcon className="material-icons" style={styles.iconStyles} color={blue500} onClick={this.goForward}>forward_10</FontIcon>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px 0px 12px', padding: '5px 2%' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '12px 12px -25px 12px', padding: '15px 2%' }}>
             <span style={styles.time}>{secondsToHMS(parseInt(this.state.position, 10))}</span>
             <span style={styles.time}>{secondsToHMS(parseInt(this.state.duration, 10))}</span>
           </div>
@@ -305,7 +310,7 @@ class EpisodePlayer extends Component {
       })
     );
     return (
-      <div>
+      <div className= "MediaPlayerWrapper">
         {this.showMediaPlayer(tagBar)}
       </div>
     );

@@ -6,7 +6,7 @@
 import React from 'react';
 import Cards from '../../containers/Cards';
 import EpisodePlayer from '../../containers/EpisodePlayer';
-import InformationDisplay from '../../containers/EpisodePlayer/InformationDisplay';
+// import InformationDisplay from '../../containers/EpisodePlayer/InformationDisplay';
 import Publish from '../../containers/Publish';
 // import styled from 'styled-components';
 
@@ -18,7 +18,7 @@ class MainContent extends React.Component {
   render() {
     return (
       <div className="mainContent">
-        <InformationDisplay />
+        {/* <InformationDisplay /> */}
         <Publish />
         <EpisodePlayer onProgress={onProgress} />
         <Cards />

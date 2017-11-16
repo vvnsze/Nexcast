@@ -100,7 +100,7 @@ export class Header extends React.Component {
       <nav className="blue-grey  darken-3" role="navigation">
         <div className="nav-wrapper" style={styles.navWrapper}>
           <a id="logo-container" href={this.routeToPage()} className="brand-logo">
-            <img src={require('../../assets/nexcast_logo_white.png')} width={150} style={styles.logo} />
+            <img className="responsive-img" src={require('../../assets/nexcast_logo_white.png')} width={150} style={styles.logo} />
           </a>
           <ul className="right hide-on-med-and-down dropDownList">
             <li>{this.showLinks()}</li>
