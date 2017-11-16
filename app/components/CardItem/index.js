@@ -50,12 +50,12 @@ const CardItem = ({ card, editCard, deleteCard }) => {
   const checkMedia = function check(item) {
     if (item.mediaType === 'image') {
       return (
-        <img role="presentation" src={item.mediaLink}></img>
+        <img className="responsive-img" role="presentation" src={item.mediaLink}></img>
       );
     }
     if (item.mediaType === 'picture') {
       return (
-        <img role="presentation" src={item.mediaLink}></img>
+        <img className="responsive-img" role="presentation" src={item.mediaLink}></img>
       );
     }
     return (
@@ -76,7 +76,7 @@ const CardItem = ({ card, editCard, deleteCard }) => {
       // style={styles.wrapper}
     >
       <Card
-        className="cardContainer"
+        className="cardContainer hoverable"
         containerStyle={styles.containerStyle}
       >
         <CardHeader

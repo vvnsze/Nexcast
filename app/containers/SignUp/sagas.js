@@ -26,7 +26,6 @@ function* signUpUserAsync(action) {
 }
 
 function createAccount(params) {
-  console.log('in the create account');
   return () => (Axios.post('/signup', params));
 }
 

@@ -78,7 +78,6 @@ export class Publish extends React.Component {
       this.setState({ unpublishedCards: null });
     }
     this.setState({ unpublishedCards });
-    console.log('unpublishedCards: ', unpublishedCards);
   }
 
   publishCards() {

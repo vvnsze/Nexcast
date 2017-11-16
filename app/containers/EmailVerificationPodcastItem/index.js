@@ -15,7 +15,7 @@ export class EmailVerificationPodcastItem extends React.Component {
       const imageUrl = this.props.pendingPodcast.artworkUrl60;
       return (
         <Paper style={{ width: '300px', height: '200px', textalign: 'center' }}>
-          <img role="presentation" src={imageUrl} />
+          <img className="responsive-img" role="presentation" src={imageUrl} />
           <div>{this.props.pendingPodcast.collectionName} by {this.props.pendingPodcast.artistName}</div>
         </Paper>
       );

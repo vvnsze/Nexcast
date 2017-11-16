@@ -27,7 +27,6 @@ function searchPodcastReducer(state = initialState, action) {
       return { ...state, podcasts: action.podcasts.results, loading: false, message: '' };
 
     case SELECTED_PODCAST:
-      console.log('++line 29: selectedPodcast', action.payload);
       return { ...state, loading: true, selectedPodcast: action.payload, message: '' };
 
     case CREATING_PODCAST_RECORD:

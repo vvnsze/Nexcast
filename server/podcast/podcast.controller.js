@@ -62,7 +62,6 @@ exports.parsePodcasts = (req, res) => {
 
 exports.findOrCreateByFeedUrl = (req, res) => {
   const podcast = req.body.podcast;
-  console.log(chalk.cyan('this is podcast: '), podcast);
   const query = {
     where: {
       feedUrl: podcast.feedUrl,

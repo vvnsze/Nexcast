@@ -10,19 +10,32 @@ const styles = {
   showTitle: {
     color: 'black',
     fontSize: '17px',
+    textAlign: 'left',
+    paddingLeft: '70px',
+    wordWrap: 'breakWord',
   },
   episodeTitle: {
     color: 'black',
     fontSize: '12px',
+    textAlign: 'left',
+    paddingLeft: '72px',
+    wordWrap: 'breakWord',
   },
   podcastImage: {
     height: '70px',
     width: '70px',
+    position: 'absolute',
   },
   informationDisplayWrapper: {
-    width: '500px',
+    width: '45%',
     height: 'auto',
     display: 'inline-block',
+    position: 'absolute',
+    float: 'left',
+  },
+  showInformation: {
+    position: 'absolute',
+    width: '45%',
   },
 };
 
@@ -35,10 +48,10 @@ class InformationDisplay extends React.Component {
   showInformation() {
     if (this.props.selectedEpisode) {
       return (
-        <div>
-          <img role="presentation" style={styles.podcastImage} src={this.props.selectedEpisode.podcastImage} />
-          <div style={styles.showTitle}>{this.props.selectedEpisode.showTitle}</div>
-          <div style={styles.episodeTitle}>{this.props.selectedEpisode.episodeTitle}</div>
+        <div className="showInformation" style={styles.showInformation}>
+          <img className="responsive-img" role="presentation" style={styles.podcastImage} src={this.props.selectedEpisode.podcastImage} />
+          <p className="showTitle" style={styles.showTitle}>{this.props.selectedEpisode.showTitle}</p>
+          <div className="episodeTitle truncate" style={styles.episodeTitle}>{this.props.selectedEpisode.episodeTitle}</div>
         </div>
       );
     }
@@ -47,9 +60,9 @@ class InformationDisplay extends React.Component {
 
   render() {
     return (
-      <div className="informationDisplayWrapper" style={styles.informationDisplayWrapper}>
-        {this.showInformation()}
-      </div>
+      // <div className="informationDisplayWrapper" style={styles.informationDisplayWrapper}>
+        this.showInformation()
+      // </div>
     );
   }
 }

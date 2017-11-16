@@ -62,7 +62,6 @@ export class SignIn extends React.Component {
 
   componentDidUpdate() {
     if (this.props.currentUser !== undefined && this.props.currentUser.user !== null) {
-      console.log('+++line 26 signin index: ', this.props.currentUser);
       browserHistory.push('/main');
     }
   }
