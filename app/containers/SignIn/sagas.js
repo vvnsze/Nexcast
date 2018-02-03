@@ -17,7 +17,7 @@ function* signInUserAsync(action) {
 
     yield setUserToken(response);
     yield setUserName(response);
-
+    console.log('signin saga response', response.user)
     yield put({ type: SET_CURRENT_USER, user: response });
     yield put({ type: USER_SIGNED_IN, user: response.user, message: response.message });
   } catch (e) {

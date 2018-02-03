@@ -48,7 +48,6 @@ function* publishCards() {
 }
 
 function* callPublishCards(action) {
-  console.log('inside callPublishCards!: ', action.payload);
   try {
     const result = yield call(patchCardsAsync, action.payload);
     yield put({ type: CARDS_PUBLISHED, payload: { result, publishedCards: action.payload } });

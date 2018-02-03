@@ -182,7 +182,7 @@ class CreateCard extends React.Component {
               style={styles.cardLabel}
             >Description</label>
             <textarea
-              row="10"
+              rows="10"
               cols="40"
               type="text"
               name="description"

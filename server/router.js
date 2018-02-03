@@ -13,8 +13,8 @@ module.exports = function baseRoutes(app) {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(s3uploads);
-  app.use(cards);
   app.use('/api', requireAuth);
+  app.use(cards);
   app.use(podcast);
   app.use(episode);
   app.post('/signin', requireSignin, Authentication.signin);

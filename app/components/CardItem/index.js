@@ -11,11 +11,12 @@ const styles = {
     minWidth: '200px',
   },
   wrapper: {
-    border: '2px solid #ccc',
-    borderRadius: '6px',
-    marginLeft: '5px',
-    marginRight: '5px',
-    marginBottom: '5px',
+    // border: '2px solid #ccc',
+    // borderRadius: '6px',
+    // marginLeft: '5px',
+    // marginRight: '5px',
+    // marginBottom: '5px',
+    backgroundColor: 'pink',
   },
   modifyButton: {
     backgroundColor: '#FFFFFF',
@@ -73,7 +74,7 @@ const CardItem = ({ card, editCard, deleteCard }) => {
   return (
     <div
       className="cardOuterWrapper"
-      // style={styles.wrapper}
+      style={styles.wrapper}
     >
       <Card
         className="cardContainer hoverable"
